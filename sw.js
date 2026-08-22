@@ -31,7 +31,7 @@ function isFont(url) { return FONT_HOSTS.indexOf(url.hostname) !== -1; }
 // la ubicación del sw.js (mismo directorio), así funciona bajo un subdirectorio
 // de GitHub Pages. Se precachea en install para que la app y su icono estén
 // disponibles offline desde el primer momento (incl. añadir a pantalla de inicio).
-var SHELL = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-180.png', 'favicon-32.png'];
+var SHELL = ['./', 'manifest.webmanifest', 'icon192.png', 'icon512.png', 'icon180.png', 'favicon32.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(

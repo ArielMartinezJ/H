@@ -10,13 +10,13 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v116</title>
+<title>Hábitos v117</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon32.png">
+<link rel="apple-touch-icon" href="icon180.png">
 <style>
 :root{
   --bg:#0B0E14; --surface:#0E1116; --surface2:#121722;
@@ -889,7 +889,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v116</span></h1>
+      <h1>Hábitos <span class="ver">v117</span></h1>
     </div>
     <div class="hdrright">
       <span class="date" id="todayLabel"></span>
@@ -971,6 +971,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v117</b> — Arreglo de despliegue: los nombres de los iconos se ajustan a como se suben a GitHub (sin guion), para que la app se pueda <b>instalar</b> de verdad en el móvil (antes Chrome solo ofrecía un acceso directo porque no encontraba el icono).</div>
   <div class="vrow"><b>v116</b> — <b>Sincronización entre dispositivos</b> (opcional): en Ajustes, abajo, aparece «Nube». Creas una cuenta con correo y contraseña y, entrando con los mismos datos en el móvil y en el PC, tus hábitos, diario y todo lo demás viajan de uno a otro. Si los dos han cambiado desde la última vez, la app te <b>pregunta</b> cuál conservar en vez de pisar nada. Sin cuenta, la app funciona igual que siempre, guardando en el propio dispositivo.</div>
   <div class="vrow"><b>v115</b> — Iconos y <code>manifest.webmanifest</code> como archivos reales (igual que las otras apps), enlazados en la cabecera; al instalar la PWA usa el icono ámbar con el ✓. Abierta en local (sin servidor) los sigue generando sobre la marcha, así que no cambia nada de puertas adentro.</div>
   <div class="vrow"><b>v114</b> — La app estrena <b>service worker</b> (2º archivo, <code>sw.js</code>): una vez alojada en https, abre <b>sin conexión</b> con su tipografía incluida. El documento va a red primero (siempre ves la versión nueva) y la caché se versiona sola; en Diagnóstico aparecen «Service worker» y «Caché», con aviso ⚠ si la caché no cuadra con la versión. Abierta como archivo local no hace nada (el SW necesita https): queda lista para cuando la subas.</div>
@@ -1097,7 +1098,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v116';
+const APPVER='v117';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 

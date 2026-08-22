@@ -27,11 +27,20 @@ var CACHE = 'diario-habitos-' + VER;
 var FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 function isFont(url) { return FONT_HOSTS.indexOf(url.hostname) !== -1; }
 
+// El casco: documento (raíz estable './') + manifest + iconos. Rutas RELATIVAS a
+// la ubicación del sw.js (mismo directorio), así funciona bajo un subdirectorio
+// de GitHub Pages. Se precachea en install para que la app y su icono estén
+// disponibles offline desde el primer momento (incl. añadir a pantalla de inicio).
+var SHELL = ['./', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-180.png', 'favicon-32.png'];
+
 self.addEventListener('install', function (e) {
-  // Nada crítico que precachear: el documento tiene el nombre versionado y en
-  // Supabase Storage la ruta no es './index.html', así que el casco se cachea
-  // en la 1ª carga en línea (red-primero) y las fuentes en su 1er uso. Activa ya.
-  self.skipWaiting();
+  e.waitUntil(
+    caches.open(CACHE).then(function (c) {
+      // add() individual y tolerante: si algún recurso falta en un deploy, no
+      // tumba la instalación entera (a diferencia de addAll).
+      return Promise.all(SHELL.map(function (u) { return c.add(u).catch(function () {}); }));
+    }).then(function () { return self.skipWaiting(); })
+  );
 });
 
 self.addEventListener('activate', function (e) {

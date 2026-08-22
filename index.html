@@ -9,11 +9,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob:; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v114</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
+<title>Hábitos v116</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <style>
 :root{
   --bg:#0B0E14; --surface:#0E1116; --surface2:#121722;
@@ -322,6 +325,25 @@ td.hname{text-align:left;min-width:190px;position:relative}
 .empty{color:var(--muted);text-align:center;padding:28px 10px;font-size:0.875rem}
 .footer-note{margin-top:26px;color:var(--muted);font-size:0.78125rem;text-align:center}
 .verbox{max-width:560px;margin:14px auto 0;color:var(--muted);font-size:0.75rem}
+/* v116: nube (sincronización) */
+.eyebrow{display:block;max-width:560px;margin:16px auto 6px;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+#cloudCard{max-width:560px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+#cloudCard h3{font-size:.95rem;margin:0 0 6px}
+#cloudCard p{font-size:.85rem;color:var(--muted);margin:0 0 6px}
+.cloud-state{display:flex;align-items:center;gap:8px;font-size:.86rem;margin-bottom:10px}
+.cloud-dot{width:10px;height:10px;border-radius:50%;background:var(--line2);flex:none}
+.cloud-dot.ok{background:var(--ok)} .cloud-dot.sync{background:var(--acc)}
+.cloud-dot.error{background:var(--danger)} .cloud-dot.conflict{background:var(--danger)}
+.cloud-form{display:flex;gap:8px;margin-top:10px}
+.cloud-form input{flex:1;min-height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--surface2);color:var(--text);padding:0 12px;font-size:max(16px,1rem)}
+.cloud-form button.eye{padding:0;width:44px;min-width:44px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--surface2);border:1px solid var(--line2);border-radius:12px;color:var(--muted)}
+.cloud-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.cloud-row button{flex:1;min-width:130px;min-height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--surface2);color:var(--text);font-weight:600;font-size:.85rem;padding:10px}
+.cloud-row button.accent{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.conflict-box{background:var(--surface2);border:1px solid var(--danger);border-radius:14px;padding:14px;margin-top:10px}
+.conflict-box h3{font-size:.95rem;margin:0 0 6px}
+.conflict-box .opt{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.conflict-box .opt button{flex:1;min-width:130px;padding:12px;min-height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);color:var(--text);font-weight:600;font-size:.85rem}
 .verbox summary{font-family:'Inter',system-ui,sans-serif;font-size:0.625rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;text-align:center}
 .verbox .vrow{padding:6px 0;border-bottom:1px solid var(--line);text-align:left}
 .verbox .vrow b{font-family:'Inter',system-ui,sans-serif;color:var(--acc);font-weight:500}
@@ -867,7 +889,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v114</span></h1>
+      <h1>Hábitos <span class="ver">v116</span></h1>
     </div>
     <div class="hdrright">
       <span class="date" id="todayLabel"></span>
@@ -941,12 +963,16 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div id="backupWarn"></div>
   <div class="bkbox" id="backupBox"></div>
 </details>
+<span class="eyebrow">Nube — sincronizar entre dispositivos</span>
+<div id="cloudCard"></div>
 <details class="verbox" id="diagBox">
   <summary onclick="setTimeout(renderDiag,0)">🩺 Diagnóstico</summary>
   <div class="diagbody" id="diagBody"></div>
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v116</b> — <b>Sincronización entre dispositivos</b> (opcional): en Ajustes, abajo, aparece «Nube». Creas una cuenta con correo y contraseña y, entrando con los mismos datos en el móvil y en el PC, tus hábitos, diario y todo lo demás viajan de uno a otro. Si los dos han cambiado desde la última vez, la app te <b>pregunta</b> cuál conservar en vez de pisar nada. Sin cuenta, la app funciona igual que siempre, guardando en el propio dispositivo.</div>
+  <div class="vrow"><b>v115</b> — Iconos y <code>manifest.webmanifest</code> como archivos reales (igual que las otras apps), enlazados en la cabecera; al instalar la PWA usa el icono ámbar con el ✓. Abierta en local (sin servidor) los sigue generando sobre la marcha, así que no cambia nada de puertas adentro.</div>
   <div class="vrow"><b>v114</b> — La app estrena <b>service worker</b> (2º archivo, <code>sw.js</code>): una vez alojada en https, abre <b>sin conexión</b> con su tipografía incluida. El documento va a red primero (siempre ves la versión nueva) y la caché se versiona sola; en Diagnóstico aparecen «Service worker» y «Caché», con aviso ⚠ si la caché no cuadra con la versión. Abierta como archivo local no hace nada (el SW necesita https): queda lista para cuando la subas.</div>
   <div class="vrow"><b>v113</b> — En Diario, Agenda y Logros aparece ahora un separador de año (más marcado que el del mes) cuando el timeline cruza de un año a otro; y como el año ya se ve en esa banda, los meses dejan de repetirlo («Agosto» en vez de «Agosto 2026»). En «Próximos» de la Agenda no se pinta la banda del año en curso, para no repetir lo evidente.</div>
   <div class="vrow"><b>v112</b> — En el Diario, los meses vuelven a poder plegarse: cada mes es ahora un separador que se abre y se cierra al tocarlo, con la cuenta de apuntes a su lado. El mes en curso aparece abierto y los anteriores, plegados (a un toque de abrirlos); la app recuerda cuáles dejas abiertos o cerrados. Así una historia de muchos meses no se despliega entera de golpe.</div>
@@ -1071,7 +1097,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v114';
+const APPVER='v116';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1730,6 +1756,9 @@ function pwaIcon(){ try{ const s=512, cv=document.createElement('canvas'); cv.wi
     g.beginPath(); g.moveTo(s*0.37,s*0.52); g.lineTo(s*0.46,s*0.62); g.lineTo(s*0.64,s*0.40); g.stroke();
     return cv.toDataURL('image/png'); }catch(e){ return null; } }
 function setupPWA(){ try{
+    /* v115: en HTTPS se usan los archivos reales del <head> (manifest.webmanifest + iconos).
+       Solo en file:// (sin servidor que los sirva) se generan en runtime como respaldo. */
+    if(location.protocol!=='file:') return;
     const png=pwaIcon();
     if(png){ let at=document.querySelector('link[rel="apple-touch-icon"]'); if(!at){ at=document.createElement('link'); at.rel='apple-touch-icon'; document.head.appendChild(at); } at.href=png; }
     const manifest={ name:'Diario de Hábitos', short_name:'Hábitos', start_url:location.href.split('#')[0], scope:'./', display:'standalone', orientation:'portrait', background_color:'#0B0E14', theme_color:'#0B0E14', description:'Rastreador de hábitos, diario y planificación.', icons: png?[{src:png,sizes:'512x512',type:'image/png',purpose:'any maskable'}]:[] };
@@ -1793,6 +1822,241 @@ document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) maybeRe
 /* v103: a11y — aria-label automático desde placeholder en inputs/textarea sin nombre accesible */
 function syncInputLabels(root){ (root||document).querySelectorAll('input[placeholder]:not([aria-label]),textarea[placeholder]:not([aria-label])').forEach(el=>{ const p=el.getAttribute('placeholder'); if(p) el.setAttribute('aria-label',p); }); }
 try{ let _lblT=null; new MutationObserver(()=>{ if(_lblT) return; _lblT=setTimeout(()=>{ _lblT=null; try{ syncInputLabels(document); }catch(e){} }, 60); }).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
+/* ============================================================
+   MÓDULO NUBE (portado de Calma modulonube.js v3 a Diario de Hábitos, v116).
+   Adaptaciones: state (no S), store (no window.storage), announce (no toast),
+   onclick (no data-act), persist/store.set (no writeState). REST puro con fetch:
+   no carga ninguna librería externa. decideSync usa !== (arreglo del reloj
+   desajustado que el módulo dejaba pendiente).
+   SERVIDOR (lo prepara Leandro): tabla app_state + RLS (auth.uid()=user_id) +
+   "Confirm email" desactivado en Supabase Auth. url/anonKey compartidas con las
+   otras apps; appId 'habitos' separa los datos de esta app en la tabla común. */
+function $(s){ return document.querySelector(s); }
+function toast(t){ try{ announce(t); }catch(e){} }
+let cloudReady=false;   /* true tras el primer load(): evita marcar cambio local en el arranque */
+
+const CLOUD_CFG = {
+  url:     'https://tyfqmnfcmbljfginqebc.supabase.co',
+  anonKey: 'sb_publishable_ZnVZTzFrOf7q72AAWSqdNw_AbUa5wze',
+  appId:   'habitos'
+};
+const CLOUD = { session:null, meta:{lastLocalChange:0, lastSyncedAt:0, lastRemoteUpdatedAt:0}, busy:false, status:'off' };
+const SESS_KEY = CLOUD_CFG.appId + '-cloud-session';
+function cloudConfigured(){ return !!(CLOUD_CFG.url && CLOUD_CFG.anonKey); }
+
+/* decisión de sincronización (pura, testeable). !== y no >: un reloj adelantado
+   no debe hacer que un aparato pise al otro sin mostrar conflicto. */
+function decideSync(meta, remote){
+  const localChanged = meta.lastLocalChange > meta.lastSyncedAt;
+  if(!remote) return localChanged || meta.lastSyncedAt===0 ? 'push' : 'none';
+  const remoteChanged = remote.updated_ms !== meta.lastRemoteUpdatedAt;
+  if(remoteChanged && localChanged) return 'conflict';
+  if(remoteChanged) return 'pull';
+  if(localChanged) return 'push';
+  return 'none';
+}
+
+async function api(path, opts){
+  const o = opts || {};
+  const headers = Object.assign({'apikey':CLOUD_CFG.anonKey,'Content-Type':'application/json'}, o.headers||{});
+  if(CLOUD.session && CLOUD.session.access_token && !o.noAuth) headers['Authorization']='Bearer '+CLOUD.session.access_token;
+  const res = await fetch(CLOUD_CFG.url.replace(/\/+$/,'') + path, {method:o.method||'GET', headers, body:o.body?JSON.stringify(o.body):undefined});
+  if(res.status===401 && !o.retried && CLOUD.session && CLOUD.session.refresh_token){
+    const ok = await refreshSession();
+    if(ok) return api(path, Object.assign({}, o, {retried:true}));
+  }
+  const txt = await res.text();
+  let data=null; try{ data = txt?JSON.parse(txt):null; }catch(e){ data = txt; }
+  if(!res.ok) throw new Error((data && (data.msg||data.message||data.error_description)) || ('HTTP '+res.status));
+  return data;
+}
+async function refreshSession(){
+  try{
+    const d = await api('/auth/v1/token?grant_type=refresh_token', {method:'POST', noAuth:true, body:{refresh_token:CLOUD.session.refresh_token}});
+    CLOUD.session = {access_token:d.access_token, refresh_token:d.refresh_token, email:(d.user&&d.user.email)||CLOUD.session.email, user_id:(d.user&&d.user.id)||CLOUD.session.user_id};
+    await store.set(SESS_KEY, JSON.stringify(CLOUD.session));
+    return true;
+  }catch(e){ return false; }
+}
+async function cloudSaveSession(d, email){
+  if(!d || !d.access_token) throw new Error('Supabase no devolvió sesión. Revisa que "Confirm email" esté desactivado.');
+  CLOUD.session = {access_token:d.access_token, refresh_token:d.refresh_token, email:(d.user&&d.user.email)||email, user_id:d.user&&d.user.id};
+  await store.set(SESS_KEY, JSON.stringify(CLOUD.session));
+}
+async function cloudSignUp(email, password){
+  const d = await api('/auth/v1/signup', {method:'POST', noAuth:true, body:{email:email, password:password}});
+  await cloudSaveSession(d, email);
+}
+async function cloudSignIn(email, password){
+  const d = await api('/auth/v1/token?grant_type=password', {method:'POST', noAuth:true, body:{email:email, password:password}});
+  await cloudSaveSession(d, email);
+}
+async function cloudDisconnect(){
+  CLOUD.session=null; CLOUD.status='off';
+  try{ await store.set(SESS_KEY, ''); }catch(e){}
+}
+
+async function cloudFetchRemote(){
+  const rows = await api('/rest/v1/app_state?app_id=eq.'+encodeURIComponent(CLOUD_CFG.appId)+'&select=data,updated_at');
+  if(!rows || !rows.length) return null;
+  return {data:rows[0].data, updated_ms:Date.parse(rows[0].updated_at)||0, updated_at:rows[0].updated_at};
+}
+async function cloudPush(){
+  const now = new Date().toISOString();
+  await api('/rest/v1/app_state', {method:'POST',
+    headers:{'Prefer':'resolution=merge-duplicates,return=minimal'},
+    body:[{user_id:CLOUD.session.user_id, app_id:CLOUD_CFG.appId, data:getState(), updated_at:now}]});
+  const ms = Date.parse(now);
+  CLOUD.meta.lastSyncedAt = Date.now();
+  CLOUD.meta.lastRemoteUpdatedAt = ms;
+  await saveMeta(true);
+}
+async function cloudPull(remote){
+  setState(remote.data);
+  CLOUD.meta.lastSyncedAt = Date.now();
+  CLOUD.meta.lastLocalChange = CLOUD.meta.lastSyncedAt;
+  CLOUD.meta.lastRemoteUpdatedAt = remote.updated_ms;
+  await saveMeta(true);
+}
+/* la meta viaja DENTRO del estado (state.__sync): un cambio = una escritura.
+   persistir=true donde nadie más va a escribir después (push/pull): si no, al
+   recargar volvería la meta vieja y el conflicto reaparecería en cada F5. */
+async function saveMeta(persistir){
+  try{
+    if(typeof state!=='object' || !state) return;
+    state.__sync = CLOUD.meta;
+    if(persistir){ if(!READ_OK) return; await store.set(KEY, JSON.stringify(state)); saveCount++; try{ renderDiag(); }catch(e){} }
+  }catch(e){}
+}
+function markLocalChange(){ CLOUD.meta.lastLocalChange = Date.now(); saveMeta(); }
+
+async function cloudSync(opts){
+  const o=opts||{};
+  if(!cloudConfigured() || !CLOUD.session || CLOUD.busy) return;
+  CLOUD.busy=true; CLOUD.status='sync'; renderCloud();
+  try{
+    const remote = await cloudFetchRemote();
+    let action = decideSync(CLOUD.meta, remote);
+    if(o.force) action = o.force;
+    if(action==='conflict'){ CLOUD.status='conflict'; CLOUD.busy=false; showConflict(remote); return; }
+    if(action==='push') await cloudPush();
+    else if(action==='pull'){ await cloudPull(remote); renderAll(); }
+    CLOUD.status='ok';
+  }catch(e){
+    CLOUD.status='error'; CLOUD.lastError=e.message||String(e);
+  }
+  CLOUD.busy=false; renderCloud();
+}
+async function cloudInit(){
+  if(!cloudConfigured()) return;
+  try{ if(state && state.__sync) CLOUD.meta=Object.assign(CLOUD.meta, state.__sync); }catch(e){}
+  try{ const s=await store.get(SESS_KEY); if(s&&s.value){ CLOUD.session=JSON.parse(s.value); CLOUD.status='idle'; } }catch(e){}
+  renderCloud();
+  if(CLOUD.session) cloudSync();
+}
+
+/* PUENTE: los dos únicos sitios que tocan los datos de la app.
+   getState() sube el estado entero (incl. __sync). setState() mete lo que baja,
+   pasándolo por saneEstado (3 puertas: almacén, copias, nube) + migrate(). */
+function getState(){ return Object.assign({}, state); }
+function setState(obj){
+  state = saneEstado(obj);
+  migrate();
+  try{ store.set(KEY, JSON.stringify(state)); }catch(e){}
+}
+
+function fmtWhen(ms){
+  if(!ms) return 'nunca';
+  const d=new Date(ms);
+  return d.toLocaleDateString('es-ES',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+}
+const ICON_EYE = "<svg viewBox='0 0 24 24' width='20' height='20' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12Z'/><circle cx='12' cy='12' r='3.1'/></svg>";
+const ICON_EYE_OFF = "<svg viewBox='0 0 24 24' width='20' height='20' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12Z'/><circle cx='12' cy='12' r='3.1'/><path d='M4 3.6 20 20.4'/></svg>";
+function renderCloud(){
+  const el=$('#cloudCard'); if(!el) return;
+  if(!cloudConfigured()){
+    el.innerHTML='<h3>Sin configurar</h3><p>La sincronización aún no está conectada a un proyecto de Supabase. La app funciona igual: guarda en este dispositivo.</p>';
+    return;
+  }
+  if(!CLOUD.session){
+    el.innerHTML='<h3>Conectar este dispositivo</h3>'+
+      '<p>Entra con tu correo y contraseña. La primera vez, pulsa «Crear cuenta»; en los demás dispositivos, «Entrar» con los mismos datos.</p>'+
+      '<div class="cloud-form"><input id="cloudEmail" type="email" inputmode="email" autocomplete="username" placeholder="tu correo" aria-label="Correo"></div>'+
+      '<div class="cloud-form"><input id="cloudPass" type="password" autocomplete="current-password" placeholder="contraseña (mínimo 6)" aria-label="Contraseña"><button id="cloudEye" class="eye" onclick="uiTogglePass()" aria-label="Mostrar la contraseña" title="Mostrar la contraseña">'+ICON_EYE+'</button></div>'+
+      '<div class="cloud-row"><button class="accent" onclick="uiLogin()">Entrar</button><button onclick="uiSignup()">Crear cuenta</button></div>';
+    return;
+  }
+  const st=CLOUD.status;
+  const label={off:'Desconectado', idle:'Conectado', sync:'Sincronizando…', ok:'Al día', error:'Error: '+(CLOUD.lastError||''), conflict:'Hay un conflicto que resolver'}[st]||st;
+  el.innerHTML='<div class="cloud-state"><span class="cloud-dot '+st+'"></span><span>'+esc(label)+'</span></div>'+
+    '<p>Cuenta: <span class="mono">'+esc(CLOUD.session.email||'')+'</span><br>Última sincronización: '+fmtWhen(CLOUD.meta.lastSyncedAt)+'</p>'+
+    '<div class="cloud-row"><button class="accent" onclick="cloudSync()">Sincronizar ahora</button><button onclick="uiDisconnect()">Desconectar</button></div>'+
+    '<div id="conflictSlot"></div>';
+}
+function uiTogglePass(){
+  const i=$('#cloudPass'), b=$('#cloudEye'); if(!i||!b) return;
+  const shown = i.type==='text';
+  i.type = shown ? 'password' : 'text';
+  b.innerHTML = shown ? ICON_EYE : ICON_EYE_OFF;
+  const lbl = shown ? 'Mostrar la contraseña' : 'Ocultar la contraseña';
+  b.setAttribute('aria-label', lbl); b.setAttribute('title', lbl);
+  i.focus();
+}
+function cloudCreds(){
+  const em=(($('#cloudEmail')||{}).value||'').trim(), pw=(($('#cloudPass')||{}).value||'');
+  if(!em){ toast('Escribe tu correo.'); return null; }
+  if(pw.length<6){ toast('La contraseña necesita al menos 6 caracteres.'); return null; }
+  return {em:em, pw:pw};
+}
+async function uiLogin(){
+  const c=cloudCreds(); if(!c) return;
+  try{ await cloudSignIn(c.em,c.pw); CLOUD.status='idle'; renderCloud(); toast('Dispositivo conectado.'); cloudSync(); }
+  catch(e){ toast('No se pudo entrar: '+(e.message||e)); }
+}
+async function uiSignup(){
+  const c=cloudCreds(); if(!c) return;
+  try{ await cloudSignUp(c.em,c.pw); CLOUD.status='idle'; renderCloud(); toast('Cuenta creada y dispositivo conectado.'); cloudSync(); }
+  catch(e){ toast('No se pudo crear la cuenta: '+(e.message||e)); }
+}
+async function uiDisconnect(){
+  if(!confirm('¿Desconectar este dispositivo? Tus datos siguen aquí y en la nube; solo se corta el enlace.')) return;
+  await cloudDisconnect(); renderCloud();
+}
+function showConflict(remote){
+  renderCloud();
+  const slot=$('#conflictSlot'); if(!slot) return;
+  slot.innerHTML='<div class="conflict-box"><h3>Dos versiones distintas</h3>'+
+    '<p>Este dispositivo cambió el '+fmtWhen(CLOUD.meta.lastLocalChange)+'.<br>'+
+    'La nube cambió el '+fmtWhen(remote.updated_ms)+'.<br>'+
+    'No elijo por ti. Si quieres, exporta antes una copia con «Copia de seguridad», arriba.</p>'+
+    '<div class="opt">'+
+    '<button onclick="uiResolve(this)" data-which="push">Mandar lo de este dispositivo</button>'+
+    '<button onclick="uiResolve(this)" data-which="pull">Traer lo de la nube</button>'+
+    '</div></div>';
+}
+/* uiResolve acepta el botón (lee data-which) o directamente 'push'/'pull' (tests).
+   try/catch: si la red falla a mitad, se avisa y el cuadro NO se borra, para
+   reintentar; la meta a medio cambiar se deshace. */
+async function uiResolve(btnOrWhich){
+  const which = (btnOrWhich && btnOrWhich.dataset) ? btnOrWhich.dataset.which : btnOrWhich;
+  if(!confirm(which==='push'?'La versión de la nube se reemplazará por la de este dispositivo. ¿Seguro?':'Los datos de este dispositivo se reemplazarán por los de la nube. ¿Seguro?')) return;
+  const previo = CLOUD.meta.lastRemoteUpdatedAt;
+  try{
+    if(which==='push'){ CLOUD.meta.lastRemoteUpdatedAt=0; await cloudSync({force:'push'}); }
+    else {
+      const remote=await cloudFetchRemote();
+      if(remote){ await cloudPull(remote); renderAll(); }
+    }
+    const slot=$('#conflictSlot'); if(slot) slot.innerHTML='';
+    CLOUD.status='ok'; renderCloud();
+  }catch(e){
+    CLOUD.meta.lastRemoteUpdatedAt = previo;
+    CLOUD.status='error'; CLOUD.lastError=(e&&e.message)||String(e);
+    toast('No se pudo resolver: '+CLOUD.lastError+'. El conflicto sigue ahí; puedes reintentarlo.');
+    renderCloud();
+  }
+}
+
 async function load(){
   await loadTheme(); applyTheme();
   const res = await readWithRetries();
@@ -1815,6 +2079,7 @@ async function load(){
     persist();                            /* seguro: READ_OK ya es true */
     maybeAutoBackup();
     setupPWA(); maybeRemind();            /* v78 */
+    cloudInit(); cloudReady=true;          /* v116: nube (solo tras lectura correcta) */
   }else{
     /* D10: la lectura falló tras 3 intentos. NO escribimos: eso borraría los datos. */
     READ_OK = false;
@@ -1985,6 +2250,7 @@ let persistT=null, persistBusy=false, persistAgain=false;
 function persist(){
   if(!storageOK) return;
   if(!READ_OK) return;   /* D10: jamás escribir encima de datos que no se han podido leer */
+  if(cloudReady){ try{ markLocalChange(); }catch(e){} }   /* v116: cada guardado real cuenta como cambio local para la nube */
   clearTimeout(persistT);
   persistT = setTimeout(doPersist, 250);
 }

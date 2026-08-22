@@ -1,0 +1,58 @@
+# Keep-alive de Supabase — evita que el plan gratuito pause el proyecto por
+# inactividad. Hace un ping diario a la API REST (una consulta mínima) que
+# cuenta como actividad de base de datos. Usa la clave anon (pública por diseño;
+# la seguridad real es el RLS, no esconderla).
+#
+# INSTALACIÓN (una vez):
+#  1. Sube ESTE archivo a tu repo en la ruta:  .github/workflows/keepalive.yml
+#  2. En el repo: Settings → Secrets and variables → Actions → New repository secret.
+#     Crea DOS secretos (los valores te los paso en el chat):
+#       - SUPABASE_URL        (la Project URL, https://....supabase.co)
+#       - SUPABASE_ANON_KEY   (la clave anon / publishable)
+#  3. Pestaña «Actions»: si pide activar los workflows, acéptalo. Puedes lanzarlo
+#     a mano con «Run workflow» para probar (debe salir verde).
+#
+# OJO (limitación de GitHub): si el repo pasa ~60 días SIN NINGÚN commit, GitHub
+# desactiva los workflows programados. Como subes versiones de la app cada poco,
+# el repo se mantiene activo y no te afectará; si algún día lo dejas parado mucho
+# tiempo, entra en «Actions» y reactívalo (o haz un commit cualquiera).
+
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: '17 6 * * *'      # a diario, 06:17 UTC (hora arbitraria; el cron va en UTC)
+  workflow_dispatch: {}        # botón para lanzarlo a mano cuando quieras
+
+# No necesita permisos de escritura: solo hace una petición de red.
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping a Supabase (cuenta como actividad de BD)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_ANON_KEY:-}" ]; then
+            echo "Faltan los secretos SUPABASE_URL / SUPABASE_ANON_KEY. Ver la cabecera del archivo."
+            exit 1
+          fi
+          base="${SUPABASE_URL%/}"
+          code=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" \
+            "${base}/rest/v1/app_state?select=app_id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" || true)
+          echo "Respuesta HTTP: ${code}"
+          echo "Cuerpo:"; cat /tmp/resp.txt || true; echo
+          # 200 (lista vacía por RLS) = perfecto: la consulta llegó a la BD.
+          if [ "${code}" -ge 200 ] && [ "${code}" -lt 300 ]; then
+            echo "Keep-alive OK: el proyecto ha recibido actividad."
+          else
+            echo "Keep-alive FALLÓ (HTTP ${code}). ¿Secretos correctos? ¿Proyecto reanudado?"
+            exit 1
+          fi

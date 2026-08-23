@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v121</title>
+<title>Hábitos v123</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -73,6 +73,9 @@ header{margin-bottom:18px;position:relative}
 .hdrleft{flex:1 1 auto;min-width:0}
 .hdrright{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
 #hdrbtns{position:static;display:flex;gap:8px;align-items:center}
+/* v122: cabecera B — fecha+botones en su propia fila; frase pegada al título */
+.hdrbottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
+header>.sub{margin-top:4px}
 /* #themeWrap ahora es un .popwrap dentro de #hdrbtns */
 .tbtn{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:38px;padding:0 13px;background:var(--btnbg);border:1px solid var(--btnbd);border-radius:999px;color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:1rem;line-height:1;cursor:pointer;transition:.14s}
 .tbtn:hover{border-color:var(--acc)}
@@ -485,18 +488,19 @@ html.hc[data-effmode="light"] .cell{border-color:rgba(0,0,0,.55)}
 .adhleg .al.miss::before{border:1px dashed var(--danger)}
 .adhleg .al.prevpend::before{border:1px dashed var(--tab-line)}
 /* v76: panel de constancia */
-.statwin{margin:2px 0 14px}
+.statwin{margin:2px 0 14px;flex-wrap:wrap;row-gap:6px}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
 .ckpi{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px}
 .ckpi .big{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;line-height:1}
 .ckpi .lb{font-size:0.72rem;color:var(--muted);margin-top:5px}
 .csec{font-family:'Space Grotesk',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 2px 8px}
-.cmeter{display:grid;grid-template-columns:minmax(90px,140px) 1fr 46px;align-items:center;gap:10px;padding:6px 0}
+.cmeter{display:grid;grid-template-columns:minmax(90px,140px) 1fr 56px;align-items:center;gap:10px;padding:6px 0}
 .cname{display:flex;align-items:center;gap:8px;font-size:0.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cdot{width:10px;height:10px;border-radius:50%;flex:none}
 .ctrack{height:10px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden}
 .cfill{height:100%;border-radius:99px}
 .cpct{font-family:'Space Grotesk',sans-serif;font-size:0.8rem;text-align:right;color:var(--text)}
+.ccount{display:block;font-family:'Inter',system-ui,sans-serif;font-size:0.66rem;color:var(--muted);margin-top:1px}
 .wkbars{display:flex;align-items:flex-end;gap:8px;height:120px;padding:4px 2px 0}
 .wkbar{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end}
 .wkbar .wkb{width:70%;max-width:34px;background:var(--tab);border-radius:5px 5px 0 0;min-height:2px}
@@ -925,11 +929,13 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v121</span></h1>
+      <h1>Hábitos <span class="ver">v123</span></h1>
     </div>
-    <div class="hdrright">
-      <span class="date" id="todayLabel"></span>
-      <div id="hdrbtns">
+  </div>
+  <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
+  <div class="hdrbottom">
+    <span class="date" id="todayLabel"></span>
+    <div id="hdrbtns">
     <button class="tbtn" id="searchBtn" onclick="openGlobalSearch()" title="Buscar en toda la app ( / )" aria-label="Buscar en toda la app">🔍</button>
     <div class="popwrap">
       <button class="tbtn" id="setBtn" onclick="toggleSetPop()" title="Ajustes" aria-label="Ajustes" aria-haspopup="true">⚙️</button>
@@ -940,9 +946,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
         <div class="themepop hidden" id="themePop"></div>
       </div>
       </div>
-    </div>
   </div>
-  <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
 </header>
 
 <div id="live" class="sronly" aria-live="polite" role="status"></div>
@@ -1007,6 +1011,8 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v123</b> — En Panorama → Constancia ahora puedes elegir el rango: <b>esta semana, este mes, 6 meses, 1 año o todo</b> (1+ año). Y cada hábito muestra, además del %, <b>cuántas veces lo has cumplido</b> (p. ej. 5/7) en el rango elegido.</div>
+  <div class="vrow"><b>v122</b> — Cabecera más limpia: la frase inspiradora ahora aparece <b>justo debajo del título</b>, y la fecha y los botones (buscar / ajustes / tema) bajan a una fila propia. Se nota sobre todo en el móvil, donde antes la fecha y los botones separaban la frase del título.</div>
   <div class="vrow"><b>v121</b> — El <b>recordatorio diario</b> ya puede llegarte como notificación <b>aunque tengas la app cerrada</b>. Cuando lo tienes activado (y con sesión en la nube), la app programa su próxima hora en el servidor; una tarea en Supabase se encarga de enviártelo. Si lo apagas, se cancela. (Requiere tener las notificaciones activadas y la tarea programada en Supabase.)</div>
   <div class="vrow"><b>v120</b> — Ajustes ⚙ más de móvil: los ajustes de sí/no y de dos opciones (filas con banda o borde, alto contraste, ocultar notas, repetir la animación de entrada y el recordatorio diario) ahora son <b>interruptores</b> en vez de botones. Los de varias opciones (tamaño del texto y velocidad de animación) siguen como cápsulas. Solo cambia el aspecto; hace lo mismo.</div>
   <div class="vrow"><b>v119</b> — Notificaciones que te llegan <b>aunque tengas la app cerrada</b>: en Ajustes ⚙ hay un apartado nuevo, «Notificaciones», con un <b>interruptor</b> para activarlas. Necesitas haber iniciado sesión en la nube (la misma cuenta del sync). Al activarlo, este dispositivo queda suscrito y podrás apagarlas cuando quieras. Es el primer paso: de momento sirve para la prueba; los recordatorios reales a su hora llegan en la siguiente versión.</div>
@@ -1138,7 +1144,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v121';
+const APPVER='v123';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -3730,8 +3736,13 @@ function monthStats(y,m,hid){
 /* v76: panel de constancia (solo hábitos; sin rachas) --------------------- */
 function statWindowDays(){
   const today=new Date(); today.setHours(0,0,0,0); const out=[];
-  if(statWin==='4w'){ for(let i=27;i>=0;i--){ const d=new Date(today); d.setDate(today.getDate()-i); out.push(d); } }
-  else { const y=today.getFullYear(), m=today.getMonth(), last=today.getDate(); for(let d=1; d<=last; d++) out.push(new Date(y,m,d)); }
+  if(statWin==='month'){ const y=today.getFullYear(), m=today.getMonth(), last=today.getDate(); for(let d=1; d<=last; d++) out.push(new Date(y,m,d)); return out; }
+  let start;
+  if(statWin==='week') start=monday(today);
+  else if(statWin==='6m'){ start=new Date(today); start.setMonth(start.getMonth()-6); }
+  else if(statWin==='1y'){ start=new Date(today); start.setFullYear(start.getFullYear()-1); }
+  else { let min=null; for(const k in state.checks){ if(!min||k<min) min=k; } if(min){ const p=min.split('-'); start=new Date(+p[0],+p[1]-1,+p[2]); } else { start=new Date(today); start.setFullYear(start.getFullYear()-1); } }
+  for(const d=new Date(start); d<=today; d.setDate(d.getDate()+1)) out.push(new Date(d));
   return out; }
 function habitDueOn(h,dt){ const ds=habitTargetDays(h); return ds ? ds.includes((dt.getDay()+6)%7) : true; }
 function habitStat(h,days){ let done=0,exp=0; for(const dt of days){ if(habitDueOn(h,dt)){ exp++; if(isChecked(iso(dt),h.id)) done++; } } return {done, expected:exp, pct: exp?Math.min(100,Math.round(100*done/exp)):0}; }
@@ -3763,7 +3774,7 @@ function renderConstancia(){
   const top=ranked[0]||null;
   const wr=weekdayRates(days);
   let bi=-1, bv=-1; for(let i=0;i<7;i++){ if(wr.den[i]>0 && wr.pct[i]>bv){ bv=wr.pct[i]; bi=i; } }
-  const winLabel = statWin==='4w' ? 'últimas 4 semanas' : MONTHS[new Date().getMonth()];
+  const winLabel = statWin==='week'?'esta semana' : statWin==='month'?'este mes' : statWin==='6m'?'últimos 6 meses' : statWin==='1y'?'último año' : 'todo el histórico';
   const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
   const kpis = `<div class="kpis">
     <div class="ckpi"><div class="big" style="color:var(--tab)">${globalPct}%</div><div class="lb">Constancia global · ${winLabel}</div></div>
@@ -3774,7 +3785,7 @@ function renderConstancia(){
   const meters = order.map(p=>`<div class="cmeter">
     <div class="cname"><span class="cdot" style="background:${p.h.color}"></span>${esc(p.h.name)}</div>
     <div class="ctrack"><div class="cfill" style="width:${p.pct}%;background:${p.h.color}"></div></div>
-    <div class="cpct">${p.expected>0?p.pct+'%':'—'}</div></div>`).join('') || `<div class="empty">Sin hábitos activos.</div>`;
+    <div class="cpct">${p.expected>0?p.pct+'%':'—'}<span class="ccount">${p.expected>0?p.done+'/'+p.expected:''}</span></div></div>`).join('') || `<div class="empty">Sin hábitos activos.</div>`;
   const wkbars = wr.pct.map((v,i)=>`<div class="wkbar ${i===bi?'best':''}">
     <div class="wv">${wr.den[i]?v+'%':''}</div><div class="wkb" style="height:${wr.den[i]?Math.max(2,v):0}%"></div><div class="wl">${DAYS[i]}</div></div>`).join('');
   const hh=habitById(panoHabit);
@@ -3783,12 +3794,15 @@ function renderConstancia(){
   const recs = state.tasks.filter(t=>t.repeat);
   let recHtml='';
   if(recs.length){
-    const rmeters = recs.map(t=>{ const s=recStat(t,days); return `<div class="cmeter"><div class="cname"><span class="cdot" style="background:#6FD08C"></span>${esc(t.text)} <span class="rminibadge">🔁 ${esc(repBadgeText(t.repeat))}</span></div><div class="ctrack"><div class="cfill" style="width:${(s&&s.expected)?s.pct:0}%;background:#6FD08C"></div></div><div class="cpct">${(s&&s.expected)?s.pct+'%':'—'}</div></div>`; }).join('');
+    const rmeters = recs.map(t=>{ const s=recStat(t,days); return `<div class="cmeter"><div class="cname"><span class="cdot" style="background:#6FD08C"></span>${esc(t.text)} <span class="rminibadge">🔁 ${esc(repBadgeText(t.repeat))}</span></div><div class="ctrack"><div class="cfill" style="width:${(s&&s.expected)?s.pct:0}%;background:#6FD08C"></div></div><div class="cpct">${(s&&s.expected)?s.pct+'%':'—'}<span class="ccount">${(s&&s.expected)?s.done+'/'+s.expected:''}</span></div></div>`; }).join('');
     recHtml = `<div class="csec">Constancia de recurrentes</div><div class="card">${rmeters}<div class="statline" style="margin-top:8px">Cuenta desde que activaste cada repetición (${winLabel}).</div></div>`;
   }
   return `<div class="modes statwin">
+      <button class="mode ${statWin==='week'?'active':''}" onclick="setStatWin('week')">Esta semana</button>
       <button class="mode ${statWin==='month'?'active':''}" onclick="setStatWin('month')">Este mes</button>
-      <button class="mode ${statWin==='4w'?'active':''}" onclick="setStatWin('4w')">Últimas 4 semanas</button>
+      <button class="mode ${statWin==='6m'?'active':''}" onclick="setStatWin('6m')">6 meses</button>
+      <button class="mode ${statWin==='1y'?'active':''}" onclick="setStatWin('1y')">1 año</button>
+      <button class="mode ${statWin==='all'?'active':''}" onclick="setStatWin('all')">1+ año</button>
     </div>
     ${kpis}
     <div class="csec">Cumplimiento por hábito</div>

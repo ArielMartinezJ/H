@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v118</title>
+<title>Hábitos v119</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -93,6 +93,15 @@ header{margin-bottom:18px;position:relative}
 .thpeek{display:block;width:100%;text-align:left;font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:0.78125rem;color:var(--acc);background:none;border:none;padding:6px 2px;cursor:pointer;margin-top:4px}
 .tchip.on{color:var(--acc);border-color:var(--acc);background:var(--acc-soft)}
 .thlab{font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:0.6875rem;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+/* v119: interruptor on/off (Notificaciones). Área táctil ≥44px; pista 52x30. */
+.nrow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
+.nrow .ntxt{font-size:0.875rem;color:var(--text)}
+.nsw{position:relative;display:inline-flex;align-items:center;flex:none;min-height:44px;padding:0 1px;background:none;border:0;cursor:pointer}
+.nsw .track{width:52px;height:30px;border-radius:99px;background:var(--surface2);border:1px solid var(--line2);transition:.18s}
+.nsw .knob{position:absolute;top:50%;left:4px;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:var(--muted);transition:.18s}
+.nsw.on .track{background:var(--acc-soft);border-color:var(--acc)}
+.nsw.on .knob{left:26px;background:var(--acc)}
+.nsw:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:99px}
 .thsws{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}
 .thsw{width:24px;height:24px;border-radius:50%;border:2px solid var(--line2);transition:.14s;padding:0}
 .thsw:hover{transform:scale(1.12)}
@@ -916,7 +925,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v118</span></h1>
+      <h1>Hábitos <span class="ver">v119</span></h1>
     </div>
     <div class="hdrright">
       <span class="date" id="todayLabel"></span>
@@ -998,6 +1007,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v119</b> — Notificaciones que te llegan <b>aunque tengas la app cerrada</b>: en Ajustes ⚙ hay un apartado nuevo, «Notificaciones», con un <b>interruptor</b> para activarlas. Necesitas haber iniciado sesión en la nube (la misma cuenta del sync). Al activarlo, este dispositivo queda suscrito y podrás apagarlas cuando quieras. Es el primer paso: de momento sirve para la prueba; los recordatorios reales a su hora llegan en la siguiente versión.</div>
   <div class="vrow"><b>v118</b> — Arreglos de interfaz en el <b>móvil</b>: en Metas, Tareas y Plazos los botones de cada fila (editar, borrar, añadir…) ya no se salen del recuadro ni quedan desperdigados; en pantallas pequeñas bajan a su propia línea, a la derecha, y el texto recupera su ancho. En el Diario (y en Logros y Agenda) los botones dejan de montarse sobre el texto. Y la tabla de Hábitos, al deslizarla de lado, muestra la columna del nombre fija con una separación clara respecto a los días. En el ordenador todo se ve igual que antes.</div>
   <div class="vrow"><b>v117</b> — Arreglo de despliegue: los nombres de los iconos se ajustan a como se suben a GitHub (sin guion), para que la app se pueda <b>instalar</b> de verdad en el móvil (antes Chrome solo ofrecía un acceso directo porque no encontraba el icono).</div>
   <div class="vrow"><b>v116</b> — <b>Sincronización entre dispositivos</b> (opcional): en Ajustes, abajo, aparece «Nube». Creas una cuenta con correo y contraseña y, entrando con los mismos datos en el móvil y en el PC, tus hábitos, diario y todo lo demás viajan de uno a otro. Si los dos han cambiado desde la última vez, la app te <b>pregunta</b> cuál conservar en vez de pisar nada. Sin cuenta, la app funciona igual que siempre, guardando en el propio dispositivo.</div>
@@ -1126,7 +1136,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v118';
+const APPVER='v119';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1506,6 +1516,7 @@ function renderSetPop(){
       <input type="time" value="${rem.time}" onchange="setReminderTime(this.value)" aria-label="Hora del recordatorio" ${rem.on?'':'disabled'} style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">
     </div>
     <div class="hint">Al abrir la app pasada esa hora, te recuerda tus hábitos y tareas pendientes y los eventos que tengas hoy. (No suena con la app cerrada.)</div>
+    ${pushSettingUI()}
     <div class="thlab" style="margin-top:12px">Instalar como app</div>
     <div class="thmodes">${pwaInstallUI()}</div>`;
 }
@@ -1823,6 +1834,58 @@ function pwaInstallUI(){
 function reminderCfg(){ if(!state.ui) state.ui={}; if(!state.ui.reminder) state.ui.reminder={on:false, time:'20:00'}; return state.ui.reminder; }
 function toggleReminder(){ const r=reminderCfg(); r.on=!r.on; r.lastShown=''; renderSetPop(); persist(); announce(r.on?('Recordatorio diario activado a las '+r.time+'.'):'Recordatorio desactivado.'); if(r.on) maybeRemind(); }
 function setReminderTime(v){ const r=reminderCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ r.time=v; r.lastShown=''; persist(); renderSetPop(); } }
+
+/* v119: notificaciones push (aunque la app esté cerrada) -------------------- */
+const VAPID_PUBLIC='BK-tM0X_xU8y2LTf2az0bCmsKKkS6wSVvU16dFiaPiWN87pLZU4M1eAVi6kvsMQbA19BlsnIXEN5zMC85r6q9Uk';
+function urlB64ToU8(b){ const pad='='.repeat((4-b.length%4)%4); const s=(b+pad).replace(/-/g,'+').replace(/_/g,'/'); const raw=atob(s); const a=new Uint8Array(raw.length); for(let i=0;i<raw.length;i++)a[i]=raw.charCodeAt(i); return a; }
+function pushSupported(){ return ('serviceWorker' in navigator) && (typeof PushManager!=='undefined') && (typeof Notification!=='undefined'); }
+function pushCfg(){ if(!state.ui)state.ui={}; if(!state.ui.push)state.ui.push={on:false,endpoint:''}; return state.ui.push; }
+function pushState(){
+  if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return 'nocloud';
+  if(!pushSupported()) return 'unsupported';
+  if(Notification.permission==='denied') return 'denied';
+  return pushCfg().on ? 'on' : 'off';
+}
+function pushSwitch(on, handler, aria){
+  return `<button class="nsw${on?' on':''}" role="switch" aria-checked="${on?'true':'false'}" aria-label="${aria}" onclick="${handler}"><span class="track"></span><span class="knob"></span></button>`;
+}
+function pushSettingUI(){
+  const st=pushState(); let row='', hint='';
+  if(st==='nocloud'){ hint='Para recibirlas, inicia sesión en la nube (la misma cuenta del sync, en la tarjeta ☁️).'; }
+  else if(st==='unsupported'){ hint='Este navegador no admite notificaciones push.'; }
+  else if(st==='denied'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(false,"announce('Están bloqueadas por el navegador. Permítelas en los ajustes del sitio en Chrome.')",'Notificaciones bloqueadas')}</div>`; hint='Bloqueadas por el navegador. Permítelas en los ajustes del sitio en Chrome.'; }
+  else if(st==='on'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(true,'disablePush()','Desactivar notificaciones')}</div>`; hint='Activadas en este dispositivo. Si cambias de móvil, actívalas también allí.'; }
+  else { row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(false,'enablePush()','Activar notificaciones')}</div>`; hint='Te llegan aunque la app esté cerrada, a la hora de tus recordatorios.'; }
+  return `<div class="thlab" style="margin-top:12px">Notificaciones (aunque cierres la app)</div>${row}<div class="hint">${hint}</div>`;
+}
+async function enablePush(){
+  try{
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)){ announce('Primero inicia sesión en la nube.'); return; }
+    if(!pushSupported()){ announce('Este navegador no admite notificaciones.'); return; }
+    const perm=await Notification.requestPermission();
+    if(perm!=='granted'){ announce('No se concedió el permiso de notificaciones.'); renderSetPop(); return; }
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:urlB64ToU8(VAPID_PUBLIC)});
+    const j=sub.toJSON();
+    await api('/rest/v1/push_subscriptions?on_conflict=user_id,endpoint', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{user_id:CLOUD.session.user_id, endpoint:j.endpoint, subscription:j}]});
+    const c=pushCfg(); c.on=true; c.endpoint=j.endpoint; persist(); renderSetPop();
+    announce('Notificaciones activadas en este dispositivo.');
+  }catch(e){ announce('No se pudieron activar: '+((e&&e.message)||e)); renderSetPop(); }
+}
+async function disablePush(){
+  try{
+    let endpoint=pushCfg().endpoint||'';
+    if('serviceWorker' in navigator){
+      const reg=await navigator.serviceWorker.ready;
+      const sub=await reg.pushManager.getSubscription();
+      if(sub){ endpoint=sub.endpoint; try{ await sub.unsubscribe(); }catch(e){} }
+    }
+    if(endpoint && typeof CLOUD!=='undefined' && CLOUD && CLOUD.session){ try{ await api('/rest/v1/push_subscriptions?endpoint=eq.'+encodeURIComponent(endpoint), {method:'DELETE'}); }catch(e){} }
+    const c=pushCfg(); c.on=false; c.endpoint=''; persist(); renderSetPop();
+    announce('Notificaciones desactivadas.');
+  }catch(e){ announce('No se pudieron desactivar: '+((e&&e.message)||e)); renderSetPop(); }
+}
 function eventsToday(){ const t=iso(new Date()); return state.events.filter(e=>e&&/^\d{4}-\d{2}-\d{2}$/.test(e.date)&&eventNextDate(e)===t); }
 function pendingToday(){ const today=iso(new Date());
   const habs=state.habits.filter(h=>!h.archived && habitTocaHoy(h) && !isChecked(today,h.id)).length;

@@ -123,3 +123,34 @@ self.addEventListener('fetch', function (e) {
     })
   );
 });
+
+/* v119 — Notificaciones push (aunque la app esté cerrada). No afecta a la caché
+ * ni al offline: solo reacciona a eventos 'push' y a los clics en la notificación.
+ * El payload que manda la Edge Function es JSON: { title, body, url }. */
+self.addEventListener('push', function (e) {
+  var data = {};
+  try { data = e.data ? e.data.json() : {}; }
+  catch (err) { try { data = { body: e.data ? e.data.text() : '' }; } catch (e2) { data = {}; } }
+  var title = data.title || 'Diario de Hábitos';
+  var opts = {
+    body:  data.body || '',
+    icon:  'icon192.png',
+    badge: 'favicon32.png',
+    tag:   data.tag || 'habitos',
+    data:  { url: data.url || './' }
+  };
+  e.waitUntil(self.registration.showNotification(title, opts));
+});
+
+self.addEventListener('notificationclick', function (e) {
+  e.notification.close();
+  var target = (e.notification.data && e.notification.data.url) || './';
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (cls) {
+      for (var i = 0; i < cls.length; i++) {
+        if ('focus' in cls[i]) return cls[i].focus();   // ya hay una pestaña: enfócala
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(target); // si no, abre
+    })
+  );
+});

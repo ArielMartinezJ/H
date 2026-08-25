@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v123</title>
+<title>Hábitos v131</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@ header{margin-bottom:18px;position:relative}
 .hdrtop{display:flex;align-items:flex-start;gap:8px 12px;flex-wrap:wrap}
 .hdrleft{flex:1 1 auto;min-width:0}
 .hdrright{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
-#hdrbtns{position:static;display:flex;gap:8px;align-items:center}
+#hdrbtns{position:relative;display:flex;gap:8px;align-items:center}
 /* v122: cabecera B — fecha+botones en su propia fila; frase pegada al título */
 .hdrbottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
 header>.sub{margin-top:4px}
@@ -420,7 +420,7 @@ html.hc[data-effmode="light"]{--text:#000000; --muted:#1A222E; --line:rgba(0,0,0
 html.hc[data-effmode="light"] .card{background:#FFFFFF; border-color:#000}
 html.hc[data-effmode="light"] .cell{border-color:rgba(0,0,0,.55)}
 /* #hdrbtns reposicionado en el nuevo header (static) */
-.popwrap{position:relative}
+.popwrap{position:static}
 .tbtn.on{border-color:var(--acc);background:var(--acc-soft);color:var(--text)}
 .veil{filter:blur(5px);cursor:pointer;user-select:none;border-radius:4px}
 .veil:hover{filter:blur(3px)}
@@ -685,9 +685,9 @@ mark{background:var(--acc);color:#111;border-radius:3px;padding:0 2px}
 .gsrow .tx{flex:1;font-size:0.875rem;line-height:1.4}
 .gsrow .tx mark{background:transparent;color:var(--text);font-weight:700;border-bottom:2px solid currentColor;padding:0}
 .gsrow .dt{font-size:0.6875rem;color:var(--muted);white-space:nowrap;flex:none}
-.gs-diary{color:#87CEFA} .gs-tasks{color:#6FD08C} .gs-notes{color:#FFB7C5} .gs-logs{color:#E9C55B} .gs-goals{color:#B98BE8} .gs-plazos{color:#7C86F0} .gs-habits{color:#3FD1C7} .gs-exercise{color:#FF6347}
+.gs-diary{color:#87CEFA} .gs-tasks{color:#6FD08C} .gs-notes{color:#FFB7C5} .gs-logs{color:#E9C55B} .gs-goals{color:#B98BE8} .gs-plazos{color:#7C86F0} .gs-habits{color:#3FD1C7} .gs-exercise{color:#FF6347} .gs-agenda{color:#F59FD0}
 .gsrow:focus{background:rgba(255,255,255,.07);outline:none}
-.gsrow.gs-diary .tx mark{color:#87CEFA} .gsrow.gs-tasks .tx mark{color:#6FD08C} .gsrow.gs-notes .tx mark{color:#FFB7C5} .gsrow.gs-logs .tx mark{color:#E9C55B} .gsrow.gs-goals .tx mark{color:#B98BE8} .gsrow.gs-plazos .tx mark{color:#7C86F0} .gsrow.gs-habits .tx mark{color:#3FD1C7} .gsrow.gs-exercise .tx mark{color:#FF6347}
+.gsrow.gs-diary .tx mark{color:#87CEFA} .gsrow.gs-tasks .tx mark{color:#6FD08C} .gsrow.gs-notes .tx mark{color:#FFB7C5} .gsrow.gs-logs .tx mark{color:#E9C55B} .gsrow.gs-goals .tx mark{color:#B98BE8} .gsrow.gs-plazos .tx mark{color:#7C86F0} .gsrow.gs-habits .tx mark{color:#3FD1C7} .gsrow.gs-exercise .tx mark{color:#FF6347} .gsrow.gs-agenda .tx mark{color:#F59FD0}
 /* v59: burbuja de aviso (toast) */
 .toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(8px);z-index:80;background:var(--surface2);border:1px solid var(--line2);border-radius:12px;padding:10px 16px;font-size:0.8125rem;color:var(--text);box-shadow:0 10px 30px var(--shadow);max-width:calc(100vw - 24px);text-align:center;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -919,6 +919,17 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 @media (max-width:380px){
   td.hname{width:150px;min-width:150px;max-width:150px}
 }
+#notifBtn{position:relative}
+#notifBtn .tdot{position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:#F0A84B;border:2px solid var(--bg);display:none}
+#notifBtn.warn .tdot{display:block}
+.cwarn{font-size:0.9rem;color:#F0A84B;font-weight:600}
+.untilwrap{display:inline-flex;align-items:center;gap:6px;border:1px dashed var(--line2);border-radius:8px;padding:3px 8px 3px 10px;flex:0 0 auto}
+.untilwrap .ulab{font-size:0.78rem;color:var(--muted);white-space:nowrap}
+.untilwrap input[type="date"]{border:none;background:transparent;padding:4px 2px;font-size:0.8125rem}
+.agrep.hasta{color:#E58AC9;border-color:rgba(229,138,201,.4)}
+.dndtimes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:2px 0}
+.dndtimes .seg{display:inline-flex;align-items:center;gap:7px}
+.dndtimes .seg span{font-size:0.8125rem;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -929,7 +940,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v123</span></h1>
+      <h1>Hábitos <span class="ver">v131</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -937,6 +948,10 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
     <span class="date" id="todayLabel"></span>
     <div id="hdrbtns">
     <button class="tbtn" id="searchBtn" onclick="openGlobalSearch()" title="Buscar en toda la app ( / )" aria-label="Buscar en toda la app">🔍</button>
+    <div class="popwrap">
+      <button class="tbtn" id="notifBtn" onclick="toggleNotifPop()" title="Notificaciones" aria-label="Notificaciones" aria-haspopup="true">🔔<span class="tdot" id="notifDot" aria-hidden="true"></span></button>
+      <div class="themepop hidden" id="notifPop"></div>
+    </div>
     <div class="popwrap">
       <button class="tbtn" id="setBtn" onclick="toggleSetPop()" title="Ajustes" aria-label="Ajustes" aria-haspopup="true">⚙️</button>
       <div class="themepop hidden" id="setPop"></div>
@@ -1011,6 +1026,14 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v131</b> — Nuevas <b>horas de silencio (No molestar)</b>: en la campana 🔔 puedes fijar una franja (por defecto 22:00\u201308:00). Los avisos que caigan dentro se <b>retrasan hasta el final</b> de la franja, así no te suenan de madrugada y llegan por la mañana. Los eventos con hora propia se respetan a su hora. La franja puede cruzar la medianoche. (Se calcula en la app; no toca el servidor.)</div>
+  <div class="vrow"><b>v130</b> — Los eventos que se repiten pueden tener ahora una <b>fecha de fin</b> («Repetir hasta»): un campo opcional en el alta y en la edición de la Agenda. Al llegar ese día el evento deja de repetirse (y de avisar), y pasa al bloque «Pasado». Se conserva al exportar/importar el calendario (.ics).</div>
+  <div class="vrow"><b>v129</b> — La app ahora <b>avisa si no consigue hablar con la nube</b> (por ejemplo, si tu proyecto de Supabase se pausa). Cada intento de sincronizar o de programar avisos comprueba la conexión; si falla varias veces seguidas, aparece un <b>puntito en la campana 🔔</b>, un aviso dentro de su burbuja y una línea «Nube» en 🩺 Diagnóstico. Tus datos siguen guardándose en el dispositivo. (Es una comprobación desde la app; no vigila el servidor.)</div>
+  <div class="vrow"><b>v128</b> — Los ajustes de avisos tienen ahora su propia burbuja: toca la <b>campana 🔔</b> de la cabecera (entre la lupa y el engranaje). Ahí están el recordatorio diario y todo lo de notificaciones (el interruptor de eventos y cómo agruparlos), y un botón nuevo <b>«Enviar una notificación de prueba»</b> para comprobar en un toque que tu móvil las muestra. Ajustes ⚙️ queda más despejado.</div>
+  <div class="vrow"><b>v127</b> — Ahora eliges <b>cómo se agrupan</b> los avisos de la Agenda, en Ajustes → Notificaciones: <b>Resumen</b> (un solo aviso al día con todo lo del día y lo que viene), <b>Medio</b> (lo de antes: cada evento de todo el día por separado y un «Próximos» agrupado) o <b>Individual</b> (un aviso por cada cosa). Los eventos con hora siempre suenan a su hora. Por defecto queda en Medio.</div>
+  <div class="vrow"><b>v126</b> — Los avisos «del día» de tus eventos ahora se programan hasta <b>7 días por delante</b>, no solo el de hoy. Así cada evento te avisa en su día aunque no abras la app en toda la semana (antes había que abrirla para reprogramar). Los eventos que se repiten programan cada repetición que caiga en esos 7 días. El aviso agrupado «Próximos …» sigue igual: uno al día, a la hora de tus recordatorios.</div>
+  <div class="vrow"><b>v125</b> — Los <b>eventos de tu Agenda</b> ya pueden avisarte por notificación aunque tengas la app cerrada. Actívalo en Ajustes → Notificaciones con «Avisarme de los eventos de la Agenda» (viene apagado). Cada evento de hoy te llega como aviso propio —a su hora si la tiene, o a la hora de tus recordatorios si es de todo el día— y los de los próximos días llegan juntos en un solo aviso para no abrumar. Usa la misma hora que tu recordatorio diario.</div>
+  <div class="vrow"><b>v124</b> — El buscador (la lupa 🔍) ahora también encuentra los <b>eventos de la Agenda</b>. Con eso ya busca en <b>todo</b> lo que ves en la app —incluido lo de Hoy, Panorama y Agenda—, porque el resto de esas pestañas (hábitos, tareas, plazos, logros) ya se buscaba. Al pulsar un evento, salta a la Agenda y lo resalta. (Se quitó la lista larga de ayuda: el propio «Buscar en toda la app…» ya lo dice.)</div>
   <div class="vrow"><b>v123</b> — En Panorama → Constancia ahora puedes elegir el rango: <b>esta semana, este mes, 6 meses, 1 año o todo</b> (1+ año). Y cada hábito muestra, además del %, <b>cuántas veces lo has cumplido</b> (p. ej. 5/7) en el rango elegido.</div>
   <div class="vrow"><b>v122</b> — Cabecera más limpia: la frase inspiradora ahora aparece <b>justo debajo del título</b>, y la fecha y los botones (buscar / ajustes / tema) bajan a una fila propia. Se nota sobre todo en el móvil, donde antes la fecha y los botones separaban la frase del título.</div>
   <div class="vrow"><b>v121</b> — El <b>recordatorio diario</b> ya puede llegarte como notificación <b>aunque tengas la app cerrada</b>. Cuando lo tienes activado (y con sesión en la nube), la app programa su próxima hora en el servidor; una tarea en Supabase se encarga de enviártelo. Si lo apagas, se cancela. (Requiere tener las notificaciones activadas y la tarea programada en Supabase.)</div>
@@ -1144,7 +1167,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v123';
+const APPVER='v131';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1472,12 +1495,14 @@ window.setThemeLight=function(hex){ const h=normHex(hex); if(!h) return; THEME.l
 window.toggleThemePop=function(){
   const el=document.getElementById('themePop');
   const sp=document.getElementById('setPop'); if(sp) sp.classList.add('hidden');
+  const np=document.getElementById('notifPop'); if(np) np.classList.add('hidden');
   el.classList.toggle('hidden');
   if(!el.classList.contains('hidden')) renderThemePop();
 };
 window.toggleSetPop=function(){
   const el=document.getElementById('setPop');
   const tp=document.getElementById('themePop'); if(tp) tp.classList.add('hidden');
+  const np=document.getElementById('notifPop'); if(np) np.classList.add('hidden');
   el.classList.toggle('hidden');
   if(!el.classList.contains('hidden')) renderSetPop();
 };
@@ -1486,7 +1511,6 @@ function renderSetPop(){
   if(!el || el.classList.contains('hidden')) return;
   const rowSt=(state.ui&&state.ui.rowStyle)||'band';
   const sc=THEME.scale||1;
-  const rem=reminderCfg();
   el.innerHTML = `
     <div class="thlab">Filas de hábitos</div>
     <div class="nrow"><span class="ntxt">Usar borde lateral</span>${pushSwitch(rowSt==='border', "setRowStyle('"+(rowSt==='border'?'band':'border')+"')", 'Usar borde lateral en las filas')}</div>
@@ -1507,12 +1531,40 @@ function renderSetPop(){
     <div class="nrow"><span class="ntxt">Ocultar notas</span>${pushSwitch(!!hideNotes, "togglePrivacy()", 'Ocultar notas')}</div>
     <div class="thlab" style="margin-top:12px">Entrada en cascada</div>
     <div class="nrow"><span class="ntxt">Repetir la animación cada vez</span>${pushSwitch((state.ui&&state.ui.entryMode)!=='once', "setEntryMode('"+((state.ui&&state.ui.entryMode)!=='once'?'once':'every')+"')", 'Repetir la animación de entrada cada vez')}</div>
-    <div class="thlab" style="margin-top:12px">Recordatorio diario</div>
-    <div class="nrow"><span class="ntxt">Recordatorio diario</span><span style="display:flex;align-items:center;gap:8px"><input type="time" value="${rem.time}" onchange="setReminderTime(this.value)" aria-label="Hora del recordatorio" ${rem.on?'':'disabled'} style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">${pushSwitch(rem.on, "toggleReminder()", 'Recordatorio diario')}</span></div>
-    <div class="hint">Al abrir la app pasada esa hora, te recuerda tus hábitos y tareas pendientes y los eventos que tengas hoy. (No suena con la app cerrada.)</div>
-    ${pushSettingUI()}
     <div class="thlab" style="margin-top:12px">Instalar como app</div>
     <div class="thmodes">${pwaInstallUI()}</div>`;
+}
+window.toggleNotifPop=function(){
+  const el=document.getElementById('notifPop');
+  const sp=document.getElementById('setPop'); if(sp) sp.classList.add('hidden');
+  const tp=document.getElementById('themePop'); if(tp) tp.classList.add('hidden');
+  el.classList.toggle('hidden');
+  if(!el.classList.contains('hidden')) renderNotifPop();
+};
+function renderNotifPop(){
+  const el=document.getElementById('notifPop');
+  if(!el || el.classList.contains('hidden')) return;
+  const rem=reminderCfg();
+  el.innerHTML = `
+    <div class="thlab">Recordatorio diario</div>
+    <div class="nrow"><span class="ntxt">Recordatorio diario</span><span style="display:flex;align-items:center;gap:8px"><input type="time" value="${rem.time}" onchange="setReminderTime(this.value)" aria-label="Hora del recordatorio" ${(rem.on||eventPushCfg().on)?'':'disabled'} style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">${pushSwitch(rem.on, "toggleReminder()", 'Recordatorio diario')}</span></div>
+    <div class="hint">Al abrir la app pasada esa hora, te recuerda tus hábitos y tareas pendientes y los eventos que tengas hoy. (No suena con la app cerrada.)</div>
+    ${pushSettingUI()}
+    ${dndUI()}
+    <div class="thlab" style="margin-top:12px">Probar</div>
+    <div class="thmodes"><button class="tchip" onclick="sendTestNotification()">🔔 Enviar una notificación de prueba</button></div>
+    <div class="hint">Muestra una notificación de ejemplo en este móvil para comprobar que las ves. Prueba el permiso y el aparato (no el envío desde el servidor).</div>${cloudDown()?`
+    <div class="thlab" style="margin-top:12px">Diagnóstico</div>
+    <div class="cwarn">⚠ Sin conexión con la nube</div>
+    <div class="hint">Puede que tu proyecto de Supabase esté pausado; reactívalo en su panel. Tus datos siguen guardándose en este dispositivo. Más detalles en 🩺 Diagnóstico (abajo del todo).</div>`:''}`;
+}
+function sendTestNotification(){
+  if(!('Notification' in window) || !('serviceWorker' in navigator)){ announce('Este dispositivo no admite notificaciones.'); return Promise.resolve(); }
+  const show=()=>navigator.serviceWorker.ready.then(reg=>reg.showNotification('Diario de Hábitos', { body:'✅ Las notificaciones funcionan en este dispositivo.', icon:'icon180.png', badge:'icon180.png', tag:'test-notif', renotify:true })).then(()=>announce('Notificación de prueba enviada.')).catch(()=>announce('No se pudo mostrar la notificación de prueba.'));
+  if(Notification.permission==='granted') return show();
+  if(Notification.permission!=='denied') return Notification.requestPermission().then(p=>{ if(p==='granted') return show(); announce('No se concedió el permiso de notificaciones.'); });
+  announce('Las notificaciones están bloqueadas en el navegador. Actívalas en los ajustes del navegador.');
+  return Promise.resolve();
 }
 function thSwRow(presets, cur, fn){
   return presets.map(p=>{
@@ -1700,6 +1752,9 @@ document.addEventListener('click', e=>{
   const sp=document.getElementById('setPop'), sb=document.getElementById('setBtn');
   const dentroSet = (sp && sp.contains(e.target)) || (sb && sb.contains(e.target));
   if(sp && !dentroSet) sp.classList.add('hidden');
+  const np=document.getElementById('notifPop'), nb=document.getElementById('notifBtn');
+  const dentroNotif = (np && np.contains(e.target)) || (nb && nb.contains(e.target));
+  if(np && !dentroNotif) np.classList.add('hidden');
 }, true);   /* fase de captura: e.target es el elemento real pulsado, antes de que el onclick re-renderice */
 
 /* ---------- accesibilidad: anuncios para lector de pantalla ---------- */
@@ -1826,6 +1881,22 @@ function pwaInstallUI(){
 }
 /* v78: recordatorio diario EN LA APP (no suena con la app cerrada) --------- */
 function reminderCfg(){ if(!state.ui) state.ui={}; if(!state.ui.reminder) state.ui.reminder={on:false, time:'20:00'}; return state.ui.reminder; }
+/* v131: HORAS DE SILENCIO (No molestar) — franja en la que los avisos push se retrasan
+   al final (modo fijo 'retrasar'). Puede cruzar medianoche. Los eventos con hora propia
+   (evtime-) se respetan a su hora. Todo del lado del cliente. */
+function dndCfg(){ if(!state.ui) state.ui={}; if(!state.ui.dnd) state.ui.dnd={on:false, from:'22:00', to:'08:00'}; return state.ui.dnd; }
+function dndMins(hhmm){ const m=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(hhmm||''); return m?(+m[1]*60 + +m[2]):-1; }
+function inQuietHours(dt){ const c=dndCfg(); const f=dndMins(c.from), t=dndMins(c.to); if(f<0||t<0||f===t) return false; const x=dt.getHours()*60+dt.getMinutes(); return (f<t) ? (x>=f && x<t) : (x>=f || x<t); }
+function dndShift(dt){ const c=dndCfg(); const t=dndMins(c.to), f=dndMins(c.from); const out=new Date(dt.getTime()); const cur=dt.getHours()*60+dt.getMinutes(); if(f>t && cur>=f) out.setDate(out.getDate()+1); out.setHours(Math.floor(t/60), t%60, 0, 0); return out; }
+function dndAdjust(dt){ return (dndCfg().on && inQuietHours(dt)) ? dndShift(dt) : dt; }
+function dndUI(){ const c=dndCfg();
+  return `<div class="thlab" style="margin-top:12px">🌙 Horas de silencio</div>`
+    + `<div class="nrow"><span class="ntxt">No molestar</span>${pushSwitch(c.on,'toggleDnd()','No molestar')}</div>`
+    + (c.on ? `<div class="dndtimes"><span class="seg"><span>Desde</span><input type="time" value="${c.from}" onchange="setDndFrom(this.value)" aria-label="Silencio desde"></span><span class="seg"><span>Hasta</span><input type="time" value="${c.to}" onchange="setDndTo(this.value)" aria-label="Silencio hasta"></span></div><div class="hint">Los avisos que caigan en esta franja se retrasan hasta el final (a las ${c.to}). Los eventos con hora propia se respetan a su hora.</div>`
+             : `<div class="hint">Silencia los avisos durante una franja (p. ej. de noche).</div>`); }
+function toggleDnd(){ const c=dndCfg(); c.on=!c.on; renderNotifPop(); persist(); announce(c.on?('No molestar activado ('+c.from+'\u2013'+c.to+').'):'No molestar desactivado.'); syncAllServerReminders(); }
+function setDndFrom(v){ if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ dndCfg().from=v; persist(); renderNotifPop(); syncAllServerReminders(); } }
+function setDndTo(v){ if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ dndCfg().to=v; persist(); renderNotifPop(); syncAllServerReminders(); } }
 /* v121: programa en Supabase la próxima aparición del recordatorio diario, para
    que la Edge Function 'push-reminders' (disparada por Cron) lo envíe a su hora
    aunque la app esté cerrada. Best-effort: si no hay sesión, no hace nada. */
@@ -1841,6 +1912,7 @@ async function syncServerReminder(){
     const now=new Date();
     let f=new Date(now.getFullYear(), now.getMonth(), now.getDate(), +m[1], +m[2], 0, 0);
     if(f.getTime()<=now.getTime()+30000) f=new Date(f.getTime()+86400000);   // si ya pasó (o casi), mañana
+    f=dndAdjust(f);   // v131: horas de silencio -> retrasa al final de la franja
     const ymd=''+f.getFullYear()+String(f.getMonth()+1).padStart(2,'0')+String(f.getDate()).padStart(2,'0');
     const id='daily-'+CLOUD.session.user_id+'-'+ymd;
     if(r.schedId && r.schedId!==id){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(r.schedId), {method:'DELETE'}); }catch(e){} }
@@ -1850,14 +1922,93 @@ async function syncServerReminder(){
     r.schedId=id; persist();
   }catch(e){ /* best-effort, silencioso */ }
 }
-function toggleReminder(){ const r=reminderCfg(); r.on=!r.on; r.lastShown=''; renderSetPop(); persist(); announce(r.on?('Recordatorio diario activado a las '+r.time+'.'):'Recordatorio desactivado.'); if(r.on) maybeRemind(); syncServerReminder(); }
-function setReminderTime(v){ const r=reminderCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ r.time=v; r.lastShown=''; persist(); renderSetPop(); syncServerReminder(); } }
+function toggleEventPush(){ const c=eventPushCfg(); c.on=!c.on; renderNotifPop(); persist(); announce(c.on?'Te avisaré de los eventos de la Agenda.':'Avisos de eventos desactivados.'); syncServerEventReminders(); }
+function setEventPushMode(x){ const c=eventPushCfg(); c.mode=(x==='res'||x==='ind')?x:'med'; renderNotifPop(); persist(); announce('Avisos de eventos: modo '+({res:'Resumen',med:'Medio',ind:'Individual'}[c.mode])+'.'); syncServerEventReminders(); }
+function eventModeHint(m){ return ({res:'Mínimo ruido: un solo aviso al día que junta los eventos de todo el día y lo que viene. Los que tienen hora, aparte a su hora.', med:'Por defecto. Cada evento de todo el día, su propio aviso; lo que viene, en un aviso «Próximos». Los que tienen hora, a su hora.', ind:'Máximo detalle: un aviso por cada evento y por cada antelación, sin agrupar. El más presente.'})[m]||''; }
+/* v125 (mejora B): programa en Supabase los avisos push de los EVENTOS de la Agenda.
+   Comportamiento "Medio": cada evento de hoy -> push individual (a su hora, o a la
+   hora de avisos si es de todo el día); los de días próximos -> UN push agrupado.
+   Reutiliza la hora del recordatorio diario (aunque el nag esté OFF). Best-effort:
+   si no hay sesión de nube, no hace nada. */
+function eventOccurrencesInRange(e, aIso, bIso){
+  const out=[];
+  if(!e || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) return out;
+  const rep=e.repeat||'none'; const N=(Number.isInteger(e.every)&&e.every>=1)?e.every:1;
+  const until=(rep!=='none' && e.until && /^\d{4}-\d{2}-\d{2}$/.test(e.until) && e.until>=e.date)?e.until:'';
+  const step=dt=>{ if(rep==='daily') dt.setDate(dt.getDate()+N); else if(rep==='weekly') dt.setDate(dt.getDate()+7*N); else if(rep==='monthly') dt.setMonth(dt.getMonth()+N); else dt.setFullYear(dt.getFullYear()+N); };
+  const [Y,M,D]=e.date.split('-').map(Number); let dt=new Date(Y,M-1,D);
+  if(rep==='none'){ const s=iso(dt); return (s>=aIso && s<=bIso)?[s]:[]; }
+  let g=0;
+  while(iso(dt)<aIso && g<20000){ step(dt); g++; }
+  const hi=(until && until<bIso)?until:bIso;
+  while(iso(dt)<=hi && g<20000){ out.push(iso(dt)); step(dt); g++; }
+  return out;
+}
+async function syncServerEventReminders(){
+  try{
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
+    const uid=CLOUD.session.user_id;
+    /* reconciliación: borra SIEMPRE las de evento no enviadas (ids que empiezan por 'ev'; no toca 'daily-') */
+    try{ await api('/rest/v1/reminders?user_id=eq.'+uid+'&sent=eq.false&id=like.ev*', {method:'DELETE'}); }catch(e){}
+    if(!(pushCfg().on && eventPushCfg().on)) return;   /* apagado -> solo cancela */
+    const now=new Date(); const pad=x=>String(x).padStart(2,'0');
+    const ymd=''+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate());
+    const rt=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(reminderCfg().time||'20:00');
+    const avisos = rt ? new Date(now.getFullYear(),now.getMonth(),now.getDate(),+rt[1],+rt[2],0,0) : null;
+    const avisosAhead = !!(avisos && avisos.getTime()>now.getTime());
+    const URL_='https://arielmartinezj.github.io/H/'; const rows=[];
+    /* v127: la AGRUPACIÓN depende del modo (Resumen / Medio / Individual). En los tres,
+       los eventos CON HORA suenan a su hora y el "día-de" se programa hasta EV_HORIZON
+       días; cambia cómo se juntan los de TODO EL DÍA y la antelación ("Próximos", solo hoy). */
+    const mode=eventPushCfg().mode||'med';
+    const EV_HORIZON=7;
+    const todayIso=iso(now);
+    const endIso=iso(new Date(now.getFullYear(),now.getMonth(),now.getDate()+EV_HORIZON,0,0,0,0));
+    const digest={};   /* Resumen: por día -> {f, titles:[], prox} */
+    state.events.forEach(e=>{
+      const title=(e.title||'').trim(); if(!title) return;
+      const hm=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(e.time||'');
+      eventOccurrencesInRange(e, todayIso, endIso).forEach(dIso=>{
+        const [oy,om,od]=dIso.split('-').map(Number); const ymdD=''+oy+pad(om)+pad(od);
+        if(hm){   /* con hora -> su propio aviso a su hora (todos los modos) */
+          const f=new Date(oy,om-1,od,+hm[1],+hm[2],0,0);
+          if(f.getTime()>now.getTime()) rows.push({id:'evtime-'+uid+'-'+e.id+'-'+ymdD, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:title+' · hoy '+e.time, url:URL_});
+          return;
+        }
+        if(!avisos) return;
+        const f=new Date(oy,om-1,od,avisos.getHours(),avisos.getMinutes(),0,0);
+        if(f.getTime()<=now.getTime()) return;
+        if(mode==='res'){ (digest[ymdD]=digest[ymdD]||{f:f, titles:[]}).titles.push(title); }
+        else { rows.push({id:'evday-'+uid+'-'+e.id+'-'+ymdD, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:title+' · hoy', url:URL_}); }
+      });
+    });
+    /* antelación ("Próximos"), SOLO hoy: la presentación cambia según el modo */
+    let proxParts=[];
+    if(avisosAhead){ const ahead=eventsAhead();
+      if(ahead.length){ const byDay={}; ahead.forEach(a=>{ (byDay[a.days]=byDay[a.days]||[]).push(a.title); });
+        proxParts=Object.keys(byDay).map(Number).sort((a,b)=>a-b).map(dd=>{ const when=dd===1?'Mañana':('En '+dd+' días'); const nm=byDay[dd].slice(0,3).join(', ')+(byDay[dd].length>3?'…':''); return when+': '+nm; }); } }
+    if(mode==='res'){
+      if(proxParts.length){ const dg=(digest[ymd]=digest[ymd]||{f:avisos, titles:[]}); dg.prox=proxParts.join(' · '); }
+      Object.keys(digest).forEach(k=>{ const dg=digest[k]; const hoyPart=dg.titles.length?('Hoy: '+dg.titles.slice(0,6).join(', ')+(dg.titles.length>6?'…':'')):''; const body=[hoyPart, dg.prox?('Próximos: '+dg.prox):''].filter(Boolean).join(' · '); if(body) rows.push({id:'evsum-'+uid+'-'+k, user_id:uid, fire_at:dg.f.toISOString(), title:'Diario de Hábitos', body:body, url:URL_}); });
+    } else if(mode==='ind'){
+      if(avisosAhead) state.events.forEach(e=>{ const lead=(Number.isInteger(e.lead)&&e.lead>0)?e.lead:0; if(!lead) return; const t=(e.title||'').trim(); if(!t) return; const days=dzDays(eventNextDate(e)); if(days>=1 && days<=lead){ const body=days===1?(t+' · viene mañana'):(t+' · viene en '+days+' días'); rows.push({id:'evlead-'+uid+'-'+e.id+'-'+ymd, user_id:uid, fire_at:avisos.toISOString(), title:'Diario de Hábitos', body:body, url:URL_}); } });
+    } else {
+      if(proxParts.length) rows.push({id:'evsoon-'+uid+'-'+ymd, user_id:uid, fire_at:avisos.toISOString(), title:'Diario de Hábitos', body:'Próximos · '+proxParts.join(' · '), url:URL_});
+    }
+    if(dndCfg().on) rows.forEach(r=>{ if(/^evtime-/.test(r.id)) return; const ff=new Date(r.fire_at); if(inQuietHours(ff)) r.fire_at=dndShift(ff).toISOString(); });   // v131: horas de silencio (los de hora propia se respetan)
+    if(rows.length) await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:rows});
+  }catch(e){ /* best-effort, silencioso */ }
+}
+function syncAllServerReminders(){ try{ syncServerReminder(); }catch(e){} try{ syncServerEventReminders(); }catch(e){} }
+function toggleReminder(){ const r=reminderCfg(); r.on=!r.on; r.lastShown=''; renderNotifPop(); persist(); announce(r.on?('Recordatorio diario activado a las '+r.time+'.'):'Recordatorio desactivado.'); if(r.on) maybeRemind(); syncAllServerReminders(); }
+function setReminderTime(v){ const r=reminderCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ r.time=v; r.lastShown=''; persist(); renderNotifPop(); syncAllServerReminders(); } }
 
 /* v119: notificaciones push (aunque la app esté cerrada) -------------------- */
 const VAPID_PUBLIC='BK-tM0X_xU8y2LTf2az0bCmsKKkS6wSVvU16dFiaPiWN87pLZU4M1eAVi6kvsMQbA19BlsnIXEN5zMC85r6q9Uk';
 function urlB64ToU8(b){ const pad='='.repeat((4-b.length%4)%4); const s=(b+pad).replace(/-/g,'+').replace(/_/g,'/'); const raw=atob(s); const a=new Uint8Array(raw.length); for(let i=0;i<raw.length;i++)a[i]=raw.charCodeAt(i); return a; }
 function pushSupported(){ return ('serviceWorker' in navigator) && (typeof PushManager!=='undefined') && (typeof Notification!=='undefined'); }
 function pushCfg(){ if(!state.ui)state.ui={}; if(!state.ui.push)state.ui.push={on:false,endpoint:''}; return state.ui.push; }
+function eventPushCfg(){ if(!state.ui)state.ui={}; if(!state.ui.eventPush)state.ui.eventPush={on:false,mode:'med'}; if(!state.ui.eventPush.mode)state.ui.eventPush.mode='med'; return state.ui.eventPush; }
 function pushState(){
   if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return 'nocloud';
   if(!pushSupported()) return 'unsupported';
@@ -1872,7 +2023,7 @@ function pushSettingUI(){
   if(st==='nocloud'){ hint='Para recibirlas, inicia sesión en la nube (la misma cuenta del sync, en la tarjeta ☁️).'; }
   else if(st==='unsupported'){ hint='Este navegador no admite notificaciones push.'; }
   else if(st==='denied'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(false,"announce('Están bloqueadas por el navegador. Permítelas en los ajustes del sitio en Chrome.')",'Notificaciones bloqueadas')}</div>`; hint='Bloqueadas por el navegador. Permítelas en los ajustes del sitio en Chrome.'; }
-  else if(st==='on'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(true,'disablePush()','Desactivar notificaciones')}</div>`; hint='Activadas en este dispositivo. Si cambias de móvil, actívalas también allí.'; }
+  else if(st==='on'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(true,'disablePush()','Desactivar notificaciones')}</div><div class="nrow"><span class="ntxt"><span style="color:#E58AC9">📅</span> Avisarme de los eventos de la Agenda</span>${pushSwitch(eventPushCfg().on,'toggleEventPush()','Avisar de los eventos de la Agenda')}</div>${eventPushCfg().on?('<div class="thlab" style="margin-top:10px">Cómo agrupar los avisos</div><div class="thmodes"><button class="tchip'+((eventPushCfg().mode||'med')==='res'?' on':'')+'" onclick="setEventPushMode(\'res\')">Resumen</button><button class="tchip'+((eventPushCfg().mode||'med')==='med'?' on':'')+'" onclick="setEventPushMode(\'med\')">Medio</button><button class="tchip'+((eventPushCfg().mode||'med')==='ind'?' on':'')+'" onclick="setEventPushMode(\'ind\')">Individual</button></div><div class="hint">'+eventModeHint(eventPushCfg().mode||'med')+'</div>'):''}`; hint='Activadas en este dispositivo. Si cambias de móvil, actívalas también allí.'; }
   else { row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(false,'enablePush()','Activar notificaciones')}</div>`; hint='Te llegan aunque la app esté cerrada, a la hora de tus recordatorios.'; }
   return `<div class="thlab" style="margin-top:12px">Notificaciones (aunque cierres la app)</div>${row}<div class="hint">${hint}</div>`;
 }
@@ -1881,15 +2032,15 @@ async function enablePush(){
     if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)){ announce('Primero inicia sesión en la nube.'); return; }
     if(!pushSupported()){ announce('Este navegador no admite notificaciones.'); return; }
     const perm=await Notification.requestPermission();
-    if(perm!=='granted'){ announce('No se concedió el permiso de notificaciones.'); renderSetPop(); return; }
+    if(perm!=='granted'){ announce('No se concedió el permiso de notificaciones.'); renderNotifPop(); return; }
     const reg=await navigator.serviceWorker.ready;
     let sub=await reg.pushManager.getSubscription();
     if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:urlB64ToU8(VAPID_PUBLIC)});
     const j=sub.toJSON();
     await api('/rest/v1/push_subscriptions?on_conflict=user_id,endpoint', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{user_id:CLOUD.session.user_id, endpoint:j.endpoint, subscription:j}]});
-    const c=pushCfg(); c.on=true; c.endpoint=j.endpoint; persist(); renderSetPop();
+    const c=pushCfg(); c.on=true; c.endpoint=j.endpoint; persist(); renderNotifPop();
     announce('Notificaciones activadas en este dispositivo.');
-  }catch(e){ announce('No se pudieron activar: '+((e&&e.message)||e)); renderSetPop(); }
+  }catch(e){ announce('No se pudieron activar: '+((e&&e.message)||e)); renderNotifPop(); }
 }
 async function disablePush(){
   try{
@@ -1900,9 +2051,9 @@ async function disablePush(){
       if(sub){ endpoint=sub.endpoint; try{ await sub.unsubscribe(); }catch(e){} }
     }
     if(endpoint && typeof CLOUD!=='undefined' && CLOUD && CLOUD.session){ try{ await api('/rest/v1/push_subscriptions?endpoint=eq.'+encodeURIComponent(endpoint), {method:'DELETE'}); }catch(e){} }
-    const c=pushCfg(); c.on=false; c.endpoint=''; persist(); renderSetPop();
+    const c=pushCfg(); c.on=false; c.endpoint=''; persist(); renderNotifPop();
     announce('Notificaciones desactivadas.');
-  }catch(e){ announce('No se pudieron desactivar: '+((e&&e.message)||e)); renderSetPop(); }
+  }catch(e){ announce('No se pudieron desactivar: '+((e&&e.message)||e)); renderNotifPop(); }
 }
 function eventsToday(){ const t=iso(new Date()); return state.events.filter(e=>e&&/^\d{4}-\d{2}-\d{2}$/.test(e.date)&&eventNextDate(e)===t); }
 function pendingToday(){ const today=iso(new Date());
@@ -1915,6 +2066,7 @@ function maybeRemind(){ try{
     const r=state.ui && state.ui.reminder; if(!r || !r.on) return;
     const now=new Date(); const hhmm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
     if(hhmm < (r.time||'20:00')) return;
+    if(dndCfg().on && inQuietHours(now)) return;   // v131: en horas de silencio no molesta dentro de la app
     const today=iso(now); if(r.lastShown===today) return;
     const p=pendingToday(); if(p.habs+p.tsk+(p.evs||0)+(p.ahead||0)===0) return;
     r.lastShown=today; persist();
@@ -1950,7 +2102,7 @@ const CLOUD_CFG = {
   anonKey: 'sb_publishable_ZnVZTzFrOf7q72AAWSqdNw_AbUa5wze',
   appId:   'habitos'
 };
-const CLOUD = { session:null, meta:{lastLocalChange:0, lastSyncedAt:0, lastRemoteUpdatedAt:0}, busy:false, status:'off' };
+const CLOUD = { session:null, meta:{lastLocalChange:0, lastSyncedAt:0, lastRemoteUpdatedAt:0}, busy:false, status:'off', lastOkAt:0, lastFailAt:0, fails:0, lastNetError:'' };
 const SESS_KEY = CLOUD_CFG.appId + '-cloud-session';
 function cloudConfigured(){ return !!(CLOUD_CFG.url && CLOUD_CFG.anonKey); }
 
@@ -1966,15 +2118,29 @@ function decideSync(meta, remote){
   return 'none';
 }
 
+const CLOUD_DOWN_FAILS = 2;   /* 2+ fallos seguidos = "caída" (un blip no cuenta) */
+function cloudNetOk(){ CLOUD.fails=0; CLOUD.lastOkAt=Date.now(); cloudHealthChanged(); }
+function cloudNetFail(e){ CLOUD.fails=(CLOUD.fails||0)+1; CLOUD.lastFailAt=Date.now(); CLOUD.lastNetError=(e&&e.message)||String(e); cloudHealthChanged(); }
+function cloudDown(){ return (CLOUD.fails||0) >= CLOUD_DOWN_FAILS; }
+function updateNotifDot(){ const b=document.getElementById('notifBtn'); if(!b) return; const down=cloudDown(); b.classList.toggle('warn', down); const t=down?'Notificaciones — sin conexión con la nube':'Notificaciones'; b.setAttribute('title', t); b.setAttribute('aria-label', t); }
+function cloudHealthChanged(){
+  try{ updateNotifDot(); }catch(e){}
+  try{ const np=document.getElementById('notifPop'); if(np && !np.classList.contains('hidden')) renderNotifPop(); }catch(e){}
+  try{ renderDiag(); }catch(e){}
+}
 async function api(path, opts){
   const o = opts || {};
   const headers = Object.assign({'apikey':CLOUD_CFG.anonKey,'Content-Type':'application/json'}, o.headers||{});
   if(CLOUD.session && CLOUD.session.access_token && !o.noAuth) headers['Authorization']='Bearer '+CLOUD.session.access_token;
-  const res = await fetch(CLOUD_CFG.url.replace(/\/+$/,'') + path, {method:o.method||'GET', headers, body:o.body?JSON.stringify(o.body):undefined});
+  let res;
+  try{
+    res = await fetch(CLOUD_CFG.url.replace(/\/+$/,'') + path, {method:o.method||'GET', headers, body:o.body?JSON.stringify(o.body):undefined});
+  }catch(e){ cloudNetFail(e); throw e; }
   if(res.status===401 && !o.retried && CLOUD.session && CLOUD.session.refresh_token){
     const ok = await refreshSession();
     if(ok) return api(path, Object.assign({}, o, {retried:true}));
   }
+  if(res.status>=500) cloudNetFail(new Error('HTTP '+res.status)); else cloudNetOk();
   const txt = await res.text();
   let data=null; try{ data = txt?JSON.parse(txt):null; }catch(e){ data = txt; }
   if(!res.ok) throw new Error((data && (data.msg||data.message||data.error_description)) || ('HTTP '+res.status));
@@ -2158,7 +2324,7 @@ async function uiResolve(btnOrWhich){
       if(remote){ await cloudPull(remote); renderAll(); }
     }
     const slot=$('#conflictSlot'); if(slot) slot.innerHTML='';
-    CLOUD.status='ok'; try{ syncServerReminder(); }catch(e){} renderCloud();
+    CLOUD.status='ok'; try{ syncAllServerReminders(); }catch(e){} renderCloud();
   }catch(e){
     CLOUD.meta.lastRemoteUpdatedAt = previo;
     CLOUD.status='error'; CLOUD.lastError=(e&&e.message)||String(e);
@@ -2405,10 +2571,12 @@ function renderDiag(){
   else if(!SW_CACHE || !SW_CACHE.length){ cacheTxt='ninguna todavía'; }
   else if(SW_CACHE.length===1 && SW_CACHE[0]===expectCache){ cacheTxt=SW_CACHE[0]; }
   else { cacheTxt = SW_CACHE.join(', ') + (SW_CACHE.indexOf(expectCache)===-1 ? ' ⚠ desajuste (esperada '+expectCache+')' : ' ⚠ hay cachés viejas'); }
+  const cloudTxt = !cloudConfigured() ? 'sin configurar' : (!CLOUD.lastOkAt && !CLOUD.lastFailAt) ? 'sin actividad aún' : cloudDown() ? ('⚠ sin conexión'+(CLOUD.lastOkAt?' · última respuesta '+fmtWhen(CLOUD.lastOkAt):'')) : ('conectada'+(CLOUD.lastOkAt?' · '+fmtWhen(CLOUD.lastOkAt):''));
   const rows=[
     ['Versión', APPVER],
     ['Service worker', swTxt],
     ['Caché', cacheTxt],
+    ['Nube', cloudTxt],
     ['Guardando en', tierTxt],
     ['Lectura inicial', READ_OK?'correcta':'⚠ falló'],
     ['Guardados esta sesión', String(saveCount)],
@@ -5112,7 +5280,7 @@ function gsFlatTasks(){ const out=[]; (function walk(arr){ for(const t of arr){ 
 function renderGlobalSearch(){
   const res=document.getElementById('gsRes'); if(!res) return;
   const inp=document.getElementById('gsInput'); const q=(inp?inp.value:'').trim();
-  if(!q){ res.innerHTML=`<div class="gshint">Escribe para buscar en Hábitos, Ejercicio, Notas, Diario, Tareas, Logros, Metas y Plazos.</div>`; return; }
+  if(!q){ res.innerHTML=`<div class="gshint">Escribe para buscar…</div>`; return; }
   const SRC=[
     {cls:'gs-diary', name:'Diario', icon:'📓', rows:state.diary.filter(x=>matchText(x.text,q)).map(x=>({t:x.text, dt:fmtDMY(x.date), go:`gsGoDiary('${x.id}')`}))},
     {cls:'gs-tasks', name:'Tareas', icon:'✅', rows:gsFlatTasks().filter(x=>matchText(x.text,q)).map(x=>({t:x.text, dt:'', go:`gsGoTask('${x.id}')`}))},
@@ -5120,6 +5288,7 @@ function renderGlobalSearch(){
     {cls:'gs-logs', name:'Logros', icon:'🏆', rows:state.logs.filter(x=>matchText(x.text,q)).map(x=>({t:x.text, dt:fmtDMY(x.date), go:`gsGoLog('${x.id}')`}))},
     {cls:'gs-goals', name:'Metas', icon:'🎯', rows:state.goals.filter(x=>matchText(x.text,q)).map(x=>({t:x.text, dt:'', go:`gsGoGoal('${x.id}')`}))},
     {cls:'gs-plazos', name:'Plazos', icon:'📅', rows:state.deadlines.filter(x=>matchText((x.title||'')+' '+(x.note||''),q)).map(x=>({t:x.title, dt:dzFmt(x.due), go:`gsGoDeadline('${x.id}')`}))},
+    {cls:'gs-agenda', name:'Agenda', icon:'🗓️', rows:(state.events||[]).filter(e=>e&&matchText((e.title||'')+' '+(e.note||''),q)).map(e=>({t:e.title||'(sin título)', dt:agFmt(e.date), go:`gsGoEvent('${e.id}')`}))},
     {cls:'gs-habits', name:'Hábitos', icon:'📊', rows:state.habits.filter(h=>!h.archived && matchText((h.name||'')+' '+(h.core||''),q)).map(h=>({t:h.name, dt:'', go:`gsGoHabit('${h.id}')`}))},
     {cls:'gs-exercise', name:'Ejercicio', icon:'💪', rows:state.workouts.filter(w=>matchSession(w,normQ(q))).map(w=>({t:muscle(w.muscle).name+': '+w.exercises.map(e=>e.name).join(', '), dt:fmtDMY(w.date), go:`gsGoExercise('${w.id}')`}))},
   ];
@@ -5140,6 +5309,7 @@ function gsGoDiary(id){ closeGlobalSearch(); if(diarySearch) setDiarySearch('');
 function gsGoLog(id){ closeGlobalSearch(); logFilter='all'; switchTab('logs'); renderLogs(); flashRow(`.tknode[data-anim="lrow:${id}"]`); }
 function gsGoDeadline(id){ closeGlobalSearch(); const z=state.deadlines.find(x=>x.id===id); if(z&&dlDone(z)) state.ui.plzDoneOpen=true; switchTab('plazos'); renderPlazos(); flashRow(`.dzrow[data-anim="dzrow:${id}"]`); }
 function gsGoHabit(id){ closeGlobalSearch(); switchTab('habits'); renderHabits(); flashRow(`[data-anim="hrow:${id}"]`); }
+function gsGoEvent(id){ closeGlobalSearch(); agFilter='all'; switchTab('agenda'); renderAgenda(); flashRow(`.agnode[data-anim="agrow:${id}"]`); }
 function gsGoExercise(id){ closeGlobalSearch();
   try{ exSub='sessions'; sessQuery=''; if(openSessions) openSessions[id]=true;
     const sorted=[...state.workouts].sort((a,b)=> b.date.localeCompare(a.date) || (b.id>a.id?1:-1));
@@ -5252,6 +5422,7 @@ function renderPlazos(){
    en una línea de tiempo vertical: pasado (plegado) -> hoy -> futuro
 ========================================================== */
 function agFmt(s){ const [y,m,d]=s.split('-').map(Number); const dt=new Date(y,m-1,d); const wd=DAYFULL[(dt.getDay()+6)%7].slice(0,3); return `${wd} ${d} ${MONTHS[m-1].slice(0,3)}`; }
+function agHasta(s){ if(!/^\d{4}-\d{2}-\d{2}$/.test(s)) return ''; const [y,m,d]=s.split('-').map(Number); const ty=new Date().getFullYear(); return d+' '+MONTHS[m-1].slice(0,3)+(y!==ty?(' '+y):''); }
 const AGKIND={ event:{c:'var(--acc)', lbl:'Evento'}, plazo:{c:'#7C86F0', lbl:'Plazo'}, logro:{c:'#E9C55B', lbl:'Logro'} };
 function agWhen(it){ const base=agFmt(it.date); if(it.kind==='event') return it.time ? `${base} · ${it.time}` : `${base} · todo el día`; return base; }
 function agSortKey(it){ return it.date+'T'+(it.time||'00:00'); }
@@ -5259,16 +5430,24 @@ function repLabel(u,n){ n=(Number.isInteger(n)&&n>=1)?n:1; const S={daily:['día
 function eventNextDate(e){
   if(!e || !e.repeat || e.repeat==='none') return e.date;
   const N=(Number.isInteger(e.every)&&e.every>=1)?e.every:1;
+  const until=(e.until && /^\d{4}-\d{2}-\d{2}$/.test(e.until) && e.until>=e.date)?e.until:'';
   const today=iso(new Date());
+  const stepD=dt=>{ if(e.repeat==='daily') dt.setDate(dt.getDate()+N); else if(e.repeat==='weekly') dt.setDate(dt.getDate()+7*N); else if(e.repeat==='monthly') dt.setMonth(dt.getMonth()+N); else dt.setFullYear(dt.getFullYear()+N); };
   const [Y,M,D]=e.date.split('-').map(Number); let dt=new Date(Y,M-1,D); let g=0;
-  while(iso(dt)<today && g<20000){ if(e.repeat==='daily') dt.setDate(dt.getDate()+N); else if(e.repeat==='weekly') dt.setDate(dt.getDate()+7*N); else if(e.repeat==='monthly') dt.setMonth(dt.getMonth()+N); else dt.setFullYear(dt.getFullYear()+N); g++; }
-  return iso(dt);
+  while(iso(dt)<today && g<20000){ stepD(dt); g++; }
+  const nd=iso(dt);
+  if(until && nd>until){ /* repetición terminada: última ocurrencia <= tope */
+    let last=new Date(Y,M-1,D); if(iso(last)>until) return e.date; let h=0;
+    while(h<20000){ const nx=new Date(last); if(e.repeat==='daily') nx.setDate(nx.getDate()+N); else if(e.repeat==='weekly') nx.setDate(nx.getDate()+7*N); else if(e.repeat==='monthly') nx.setMonth(nx.getMonth()+N); else nx.setFullYear(nx.getFullYear()+N); if(iso(nx)>until) break; last=nx; h++; }
+    return iso(last);
+  }
+  return nd;
 }
 function leadOptions(sel){ const opts=[[0,'Avisar: el día'],[1,'1 día antes'],[2,'2 días antes'],[3,'3 días antes'],[7,'1 semana antes']]; const cur=(Number.isInteger(sel)&&sel>=0)?sel:0; return opts.map(o=>`<option value="${o[0]}" ${cur===o[0]?'selected':''}>${o[1]}</option>`).join(''); }
 function eventsAhead(){ const out=[]; state.events.forEach(e=>{ if(!e||!/^\d{4}-\d{2}-\d{2}$/.test(e.date)) return; const lead=(Number.isInteger(e.lead)&&e.lead>0)?e.lead:0; if(!lead) return; const days=dzDays(eventNextDate(e)); const t=(e.title||'').trim(); if(days>=1 && days<=lead && t) out.push({title:t, days}); }); return out; }
 function agItems(){
   const out=[]; const f=agFilter;
-  if(f==='all'||f==='events') state.events.forEach(e=>out.push({kind:'event', id:e.id, date:eventNextDate(e), time:e.time||'', title:e.title, note:e.note||'', repeat:e.repeat||'none', every:e.every||1, lead:e.lead||0}));
+  if(f==='all'||f==='events') state.events.forEach(e=>out.push({kind:'event', id:e.id, date:eventNextDate(e), time:e.time||'', title:e.title, note:e.note||'', repeat:e.repeat||'none', every:e.every||1, lead:e.lead||0, until:e.until||''}));
   if(f==='all'||f==='plazos') state.deadlines.forEach(z=>out.push({kind:'plazo', id:z.id, date:z.due, time:'', title:z.title, note:z.note||''}));
   if(f==='all'||f==='logros') state.logs.forEach(l=>out.push({kind:'logro', id:l.id, date:l.date, time:'', title:l.text, note:''}));
   return out.filter(it=>/^\d{4}-\d{2}-\d{2}$/.test(it.date));
@@ -5291,6 +5470,7 @@ function agNode(it){
           <option value="yearly" ${rp==='yearly'?'selected':''}>Cada año</option>
         </select>
         <input type="number" id="eve_every_${it.id}" min="1" max="99" value="${ev.every||1}" title="Cada cuántos" aria-label="Cada cuántos">
+        <span class="untilwrap"><span class="ulab">hasta</span><input type="date" id="eve_until_${it.id}" value="${ev.until||''}" title="Repetir hasta (opcional)" aria-label="Repetir hasta"></span>
         <input type="text" id="eve_note_${it.id}" value="${esc(ev.note||'')}" maxlength="120" placeholder="Nota (opcional)">
         <select id="eve_lead_${it.id}" title="Avisar con antelación" aria-label="Avisar con antelación">${leadOptions(ev.lead)}</select>
         <button class="mini" onclick="saveAgEdit('${it.id}')">Guardar</button>
@@ -5309,7 +5489,7 @@ function agNode(it){
     <span class="agdot"></span>
     <div class="agrow">
       ${btns}
-      <div class="agtop"><span class="agwhen">${agWhen(it)}</span><span class="agkind">${k.lbl}</span>${(it.kind==='event'&&it.repeat&&it.repeat!=='none')?`<span class="agrep">${repLabel(it.repeat,it.every)}</span>`:''}${(it.kind==='event'&&it.lead>0)?`<span class="agrep" title="Aviso anticipado">🔔 ${it.lead} ${it.lead===1?'día':'días'} antes</span>`:''}</div>
+      <div class="agtop"><span class="agwhen">${agWhen(it)}</span><span class="agkind">${k.lbl}</span>${(it.kind==='event'&&it.repeat&&it.repeat!=='none')?`<span class="agrep">${repLabel(it.repeat,it.every)}</span>`:''}${(it.kind==='event'&&it.until&&it.repeat&&it.repeat!=='none')?`<span class="agrep hasta" title="Deja de repetirse el ${it.until}">hasta ${agHasta(it.until)}</span>`:''}${(it.kind==='event'&&it.lead>0)?`<span class="agrep" title="Aviso anticipado">🔔 ${it.lead} ${it.lead===1?'día':'días'} antes</span>`:''}</div>
       <div class="agtitle">${esc(it.title)}</div>
       ${sub}
     </div>
@@ -5330,7 +5510,7 @@ function icsStamp(){ const n=new Date(); return `${n.getUTCFullYear()}${icsPad(n
 function icsNextDay(d){ const [Y,M,D]=d.split('-').map(Number); const dt=new Date(Y,M-1,D+1); return `${dt.getFullYear()}${icsPad(dt.getMonth()+1)}${icsPad(dt.getDate())}`; }
 function icsItems(){
   const out=[];
-  state.events.forEach(e=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(e.date)) out.push({uid:e.id, title:e.title||'(sin título)', date:e.date, time:e.time||'', note:e.note||'', repeat:e.repeat||'none', every:e.every||1}); });
+  state.events.forEach(e=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(e.date)) out.push({uid:e.id, title:e.title||'(sin título)', date:e.date, time:e.time||'', note:e.note||'', repeat:e.repeat||'none', every:e.every||1, until:e.until||''}); });
   state.deadlines.forEach(z=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(z.due)) out.push({uid:z.id, title:'Plazo: '+(z.title||'(sin título)'), date:z.due, time:'', note:z.note||''}); });
   return out;
 }
@@ -5346,7 +5526,7 @@ function icsBuild(){
       if(h+1<24) L.push('DTEND:'+ymd+'T'+icsPad(h+1)+icsPad(mi)+'00'); }
     else { L.push('DTSTART;VALUE=DATE:'+ymd); L.push('DTEND;VALUE=DATE:'+icsNextDay(it.date)); }
     const FR={daily:'DAILY',weekly:'WEEKLY',monthly:'MONTHLY',yearly:'YEARLY'};
-    if(it.repeat && FR[it.repeat]){ const NN=(Number.isInteger(it.every)&&it.every>=1)?it.every:1; L.push('RRULE:FREQ='+FR[it.repeat]+(NN>1?';INTERVAL='+NN:'')); }
+    if(it.repeat && FR[it.repeat]){ const NN=(Number.isInteger(it.every)&&it.every>=1)?it.every:1; let rr='RRULE:FREQ='+FR[it.repeat]+(NN>1?';INTERVAL='+NN:''); if(it.until && /^\d{4}-\d{2}-\d{2}$/.test(it.until) && it.until>=it.date) rr+=';UNTIL='+it.until.replace(/-/g,'')+(it.time?'T235959Z':''); L.push(rr); }
     L.push('SUMMARY:'+icsEsc(it.title));
     if(it.note) L.push('DESCRIPTION:'+icsEsc(it.note));
     L.push('END:VEVENT');
@@ -5379,7 +5559,7 @@ function icsParseDate(val){
 function icsParse(text){
   const lines=icsUnfold(text).split(/\r\n|\n|\r/); const out=[]; let cur=null;
   for(const line of lines){
-    if(/^BEGIN:VEVENT/i.test(line)){ cur={title:'',date:'',time:'',note:'',repeat:'none',every:1}; continue; }
+    if(/^BEGIN:VEVENT/i.test(line)){ cur={title:'',date:'',time:'',note:'',repeat:'none',every:1,until:''}; continue; }
     if(/^END:VEVENT/i.test(line)){ if(cur){ if(cur.title && cur.date) out.push(cur); cur=null; } if(out.length>=1000) break; continue; }
     if(!cur) continue;
     const ci=line.indexOf(':'); if(ci<0) continue;
@@ -5387,7 +5567,7 @@ function icsParse(text){
     if(name==='SUMMARY') cur.title=icsClean(icsUnesc(val));
     else if(name==='DESCRIPTION') cur.note=icsClean(icsUnesc(val));
     else if(name==='DTSTART'){ const p=icsParseDate(val); if(p){ cur.date=p.date; cur.time=p.time; } }
-    else if(name==='RRULE'){ const fr=(val.match(/FREQ=([A-Z]+)/i)||[])[1], iv=parseInt((val.match(/INTERVAL=(\d+)/i)||[])[1]||'1'); const map={DAILY:'daily',WEEKLY:'weekly',MONTHLY:'monthly',YEARLY:'yearly'}; if(fr && map[fr.toUpperCase()]){ cur.repeat=map[fr.toUpperCase()]; cur.every=Math.max(1,Math.min(99,iv||1)); } }
+    else if(name==='RRULE'){ const fr=(val.match(/FREQ=([A-Z]+)/i)||[])[1], iv=parseInt((val.match(/INTERVAL=(\d+)/i)||[])[1]||'1'); const map={DAILY:'daily',WEEKLY:'weekly',MONTHLY:'monthly',YEARLY:'yearly'}; if(fr && map[fr.toUpperCase()]){ cur.repeat=map[fr.toUpperCase()]; cur.every=Math.max(1,Math.min(99,iv||1)); const um=(val.match(/UNTIL=(\d{4})(\d{2})(\d{2})/i)); if(um) cur.until=um[1]+'-'+um[2]+'-'+um[3]; } }
   }
   return out;
 }
@@ -5397,9 +5577,9 @@ function icsImport(text){
   const seen=new Set(state.events.map(e=>(e.title||'')+'|'+e.date+'|'+(e.time||'')));
   const before=snapshot(); let added=0, dup=0;
   parsed.forEach(p=>{ const key=p.title+'|'+p.date+'|'+(p.time||''); if(seen.has(key)){ dup++; return; } seen.add(key);
-    state.events.push({id:'ev_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), title:p.title, date:p.date, time:p.time||'', note:p.note||'', repeat:p.repeat||'none', every:p.every||1, lead:0}); added++; });
+    state.events.push({id:'ev_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), title:p.title, date:p.date, time:p.time||'', note:p.note||'', repeat:p.repeat||'none', every:p.every||1, lead:0, until:p.until||''}); added++; });
   if(!added){ icsMsg(dup+' evento'+(dup===1?'':'s')+' ya estaba'+(dup===1?'':'n')+' — nada nuevo', false); return; }
-  renderAgenda(); persist();
+  renderAgenda(); persist(); syncServerEventReminders();
   icsMsg(added+' importado'+(added===1?'':'s')+(dup?(' · '+dup+' ya estaba'+(dup===1?'':'n')):''), true);
   announce(added+' evento'+(added===1?'':'s')+' importado'+(added===1?'':'s')+' del .ics.');
   offerUndo('Importación de .ics', before);
@@ -5454,6 +5634,7 @@ function renderAgenda(){
           <option value="yearly">Cada año</option>
         </select>
         <input type="number" id="ev_every" min="1" max="99" value="1" title="Cada cuántos (p. ej. 2 = cada 2 semanas)" aria-label="Cada cuántos">
+        <span class="untilwrap"><span class="ulab">hasta</span><input type="date" id="ev_until" title="Repetir hasta (opcional)" aria-label="Repetir hasta"></span>
         <input type="text" id="ev_note" placeholder="Nota (opcional)" maxlength="120" onkeydown="if(event.key==='Enter')addEvent()">
         <select id="ev_lead" title="Avisar con antelación" aria-label="Avisar con antelación">${leadOptions(0)}</select>
         <button class="btn" onclick="addEvent()">Añadir evento</button>
@@ -5470,11 +5651,12 @@ function addEvent(){
   const rEl=document.getElementById('ev_repeat'); const repeat=(rEl&&rEl.value)?rEl.value:'none';
   const evN=document.getElementById('ev_every'); const every=Math.max(1,Math.min(99,parseInt(evN&&evN.value)||1));
   const lEl=document.getElementById('ev_lead'); const lead=Math.max(0,Math.min(30,parseInt(lEl&&lEl.value)||0));
+  const uEl=document.getElementById('ev_until'); let until=(uEl&&uEl.value)?uEl.value:''; if(repeat==='none' || (until && until<date)) until='';
   const nid='ev_'+Date.now();
-  state.events.push({id:nid, title, date, time, note, repeat, every, lead});
+  state.events.push({id:nid, title, date, time, note, repeat, every, lead, until});
   animarProxima('agrow:'+nid,'an-in');
-  renderAgenda(); aplicarAnimHint(); persist();
-  const t2=document.getElementById('ev_title'); if(t2){ t2.value=''; if(hEl) hEl.value=''; if(nEl) nEl.value=''; t2.focus(); }
+  renderAgenda(); aplicarAnimHint(); persist(); syncServerEventReminders();
+  const t2=document.getElementById('ev_title'); if(t2){ t2.value=''; if(hEl) hEl.value=''; if(nEl) nEl.value=''; const uE2=document.getElementById('ev_until'); if(uE2) uE2.value=''; t2.focus(); }
   announce('Evento añadido.');
 }
 function startAgEdit(id){ agEditFor=id; renderAgenda(); const i=document.getElementById('eve_title_'+id); if(i){ i.focus(); i.select(); } }
@@ -5492,9 +5674,10 @@ function saveAgEdit(id){
   const rp=(document.getElementById('eve_repeat_'+id)||{}).value; if(rp) e.repeat=rp;
   const evN=document.getElementById('eve_every_'+id); if(evN) e.every=Math.max(1,Math.min(99,parseInt(evN.value)||1));
   const lE=document.getElementById('eve_lead_'+id); if(lE) e.lead=Math.max(0,Math.min(30,parseInt(lE.value)||0));
-  agEditFor=null; renderAgenda(); persist(); announce('Evento actualizado.');
+  const uE=document.getElementById('eve_until_'+id); let uv=uE?(uE.value||''):''; if(e.repeat==='none' || (uv && uv<e.date)) uv=''; e.until=uv;
+  agEditFor=null; renderAgenda(); persist(); syncServerEventReminders(); announce('Evento actualizado.');
 }
-function delEvent(id){ const before=snapshot(); state.events=state.events.filter(e=>e.id!==id); renderAgenda(); persist(); offerUndo('Evento eliminado', before); }
+function delEvent(id){ const before=snapshot(); state.events=state.events.filter(e=>e.id!==id); renderAgenda(); persist(); syncServerEventReminders(); offerUndo('Evento eliminado', before); }
 function setAgFilter(f){ agFilter=f; renderAgenda(); }
 function agPastToggle(open){ if(!state.ui) state.ui={}; state.ui.agendaPastOpen=!!open; persist(); }
 
@@ -5548,7 +5731,7 @@ function hoyQuickAdd(){
   if(hoyQuickKind==='task'){ const nid='t_'+Date.now(); state.tasks.push({id:nid,text,done:false,subs:[]}); refresh('tasks'); persist(); announce('Tarea añadida: '+text); }
   else if(hoyQuickKind==='note'){ const nid='n_'+Date.now(); state.notes.unshift({id:nid,text,updated:Date.now(),done:false}); refresh('notes'); persist(); announce('Nota añadida.'); }
   else if(hoyQuickKind==='plazo'){ const dEl=document.getElementById('hqa_date'); const due=(dEl&&dEl.value)?dEl.value:iso(new Date()); const nid='dz_'+Date.now(); state.deadlines.push({id:nid,title:text,due,note:'',done:false}); refresh('plazos'); renderDueWarn(); persist(); announce('Plazo añadido: '+text+' · '+dzFmt(due)); }
-  else if(hoyQuickKind==='event'){ const dEl=document.getElementById('hqa_date'), hEl=document.getElementById('hqa_time'); const date=(dEl&&dEl.value)?dEl.value:iso(new Date()); const time=(hEl&&hEl.value)?hEl.value:''; const nid='ev_'+Date.now(); state.events.push({id:nid,title:text,date,time,note:''}); refresh('agenda'); persist(); announce('Evento añadido: '+text+' · '+agFmt(date)+(time?' '+time:'')); }
+  else if(hoyQuickKind==='event'){ const dEl=document.getElementById('hqa_date'), hEl=document.getElementById('hqa_time'); const date=(dEl&&dEl.value)?dEl.value:iso(new Date()); const time=(hEl&&hEl.value)?hEl.value:''; const nid='ev_'+Date.now(); state.events.push({id:nid,title:text,date,time,note:''}); refresh('agenda'); persist(); syncServerEventReminders(); announce('Evento añadido: '+text+' · '+agFmt(date)+(time?' '+time:'')); }
   else { const nid='d_'+Date.now(); state.diary.unshift({id:nid,date:iso(new Date()),text}); refresh('diary'); persist(); announce('Apuntado en el Diario: '+text); }
   renderHoy();
   const i2=document.getElementById('hqa_text'); if(i2){ i2.value=''; i2.focus(); }

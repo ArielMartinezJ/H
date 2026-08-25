@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v131</title>
+<title>Hábitos v132</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -72,7 +72,7 @@ header{margin-bottom:18px;position:relative}
 .hdrtop{display:flex;align-items:flex-start;gap:8px 12px;flex-wrap:wrap}
 .hdrleft{flex:1 1 auto;min-width:0}
 .hdrright{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-left:auto}
-#hdrbtns{position:relative;display:flex;gap:8px;align-items:center}
+#hdrbtns{position:relative;display:flex;gap:8px;align-items:center;margin-left:auto}
 /* v122: cabecera B — fecha+botones en su propia fila; frase pegada al título */
 .hdrbottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
 header>.sub{margin-top:4px}
@@ -940,7 +940,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v131</span></h1>
+      <h1>Hábitos <span class="ver">v132</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1026,6 +1026,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v132</b> — Arreglo: en pantallas estrechas las <b>burbujas</b> de la barra (🔔 ⚙️ 🌓) se abrían cortadas por la izquierda, porque el grupo de botones se bajaba a otra línea y quedaba a la izquierda. Ahora el grupo se mantiene <b>a la derecha</b> y las burbujas caben en la pantalla.</div>
   <div class="vrow"><b>v131</b> — Nuevas <b>horas de silencio (No molestar)</b>: en la campana 🔔 puedes fijar una franja (por defecto 22:00\u201308:00). Los avisos que caigan dentro se <b>retrasan hasta el final</b> de la franja, así no te suenan de madrugada y llegan por la mañana. Los eventos con hora propia se respetan a su hora. La franja puede cruzar la medianoche. (Se calcula en la app; no toca el servidor.)</div>
   <div class="vrow"><b>v130</b> — Los eventos que se repiten pueden tener ahora una <b>fecha de fin</b> («Repetir hasta»): un campo opcional en el alta y en la edición de la Agenda. Al llegar ese día el evento deja de repetirse (y de avisar), y pasa al bloque «Pasado». Se conserva al exportar/importar el calendario (.ics).</div>
   <div class="vrow"><b>v129</b> — La app ahora <b>avisa si no consigue hablar con la nube</b> (por ejemplo, si tu proyecto de Supabase se pausa). Cada intento de sincronizar o de programar avisos comprueba la conexión; si falla varias veces seguidas, aparece un <b>puntito en la campana 🔔</b>, un aviso dentro de su burbuja y una línea «Nube» en 🩺 Diagnóstico. Tus datos siguen guardándose en el dispositivo. (Es una comprobación desde la app; no vigila el servidor.)</div>
@@ -1167,7 +1168,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v131';
+const APPVER='v132';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 

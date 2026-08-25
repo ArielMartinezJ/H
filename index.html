@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v132</title>
+<title>Hábitos v133</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -215,6 +215,7 @@ body.tdragging{cursor:grabbing;user-select:none}
 .navbtn:hover{border-color:var(--line2);transform:translateY(-1px)}
 .todaybtn{font-family:'Inter',system-ui,sans-serif;font-size:0.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);border:1px solid var(--acc-soft);border-radius:10px;padding:6px 10px;background:var(--acc-soft)}
 .gridwrap{overflow-x:auto}
+.gridscroll{overflow-x:auto}
 table.habits{border-collapse:separate;border-spacing:0 8px;width:100%;min-width:620px}
 table.habits th{font-family:'Inter',system-ui,sans-serif;font-size:0.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:4px 6px;text-align:center}
 table.habits th.today{color:var(--acc)}
@@ -772,11 +773,13 @@ tr.hband.dragend td{box-shadow:inset 0 -2px 0 var(--acc)}
   .hchip, .mode, .scope, .subtab{min-height:38px;display:inline-flex;align-items:center}
 
   /* Rejilla: la columna del nombre se queda fija mientras deslizas los días */
-  table.habits{min-width:520px}
-  td.hname{min-width:150px;position:sticky;left:0;z-index:5;background:var(--surface)}
+  table.habits{min-width:max-content}
+  td.hname{width:calc(100vw - 140px);min-width:calc(100vw - 140px);max-width:calc(100vw - 140px);position:sticky;left:0;z-index:5;background:var(--surface)}
   tr.hband td.hname{background:var(--surface2)}
   .hname .n{font-size:0.84375rem}
-  .gridwrap{margin:0 -6px;padding:0 6px;-webkit-overflow-scrolling:touch}
+  .gridwrap{margin:0 -6px;padding:0 6px}
+  .gridscroll{-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scroll-padding-left:calc(100vw - 140px)}
+  table.habits thead th,table.habits tbody td:not(.hname){scroll-snap-align:start}
 
   /* Selector de color: centrado, no colgando de la celda */
   .cpop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:280px}
@@ -809,8 +812,8 @@ tr.hband.dragend td{box-shadow:inset 0 -2px 0 var(--acc)}
 }
 @media (max-width:380px){
   .cell{width:40px;height:40px}
-  td.hname{min-width:130px}
-  table.habits{min-width:470px}
+  td.hname{width:calc(100vw - 140px);min-width:calc(100vw - 140px);max-width:calc(100vw - 140px)}
+  table.habits{min-width:max-content}
 }
 /* En pantallas sin ratón, el asa de arrastre no sirve: mandan los ↑ ↓ */
 @media (hover:none){
@@ -910,14 +913,14 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   .tkbtns,.agbtns{position:static;order:9;align-self:flex-end;margin-top:6px}
   .tktop,.agtop{padding-right:0}
   /* 5 — tabla de hábitos: columna de nombre fija, con costura y contenido acotado. */
-  td.hname{width:168px;min-width:168px;max-width:168px}
+  td.hname{width:calc(100vw - 140px);min-width:calc(100vw - 140px);max-width:calc(100vw - 140px)}
   td.hname::after{content:'';position:absolute;top:0;right:-12px;bottom:0;width:12px;
                   pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.42),transparent);
                   border-left:1px solid var(--line2)}
   td.hname .hmain,td.hname .hbar,td.hname .coreline{max-width:100%}
 }
 @media (max-width:380px){
-  td.hname{width:150px;min-width:150px;max-width:150px}
+  td.hname{width:calc(100vw - 140px);min-width:calc(100vw - 140px);max-width:calc(100vw - 140px)}
 }
 #notifBtn{position:relative}
 #notifBtn .tdot{position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:#F0A84B;border:2px solid var(--bg);display:none}
@@ -940,7 +943,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v132</span></h1>
+      <h1>Hábitos <span class="ver">v133</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1026,6 +1029,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v133</b> — En el móvil, la rejilla de <b>Hábitos</b> muestra ahora <b>~2 días a la vez</b> (deslizas para ver el resto) con las casillas al mismo tamaño y la <b>columna del título más ancha</b>, para editar sin agobios. Al abrir Hábitos se centra en <b>hoy</b>, y marcar una casilla ya no reinicia el desplazamiento. En pantalla grande no cambia nada.</div>
   <div class="vrow"><b>v132</b> — Arreglo: en pantallas estrechas las <b>burbujas</b> de la barra (🔔 ⚙️ 🌓) se abrían cortadas por la izquierda, porque el grupo de botones se bajaba a otra línea y quedaba a la izquierda. Ahora el grupo se mantiene <b>a la derecha</b> y las burbujas caben en la pantalla.</div>
   <div class="vrow"><b>v131</b> — Nuevas <b>horas de silencio (No molestar)</b>: en la campana 🔔 puedes fijar una franja (por defecto 22:00\u201308:00). Los avisos que caigan dentro se <b>retrasan hasta el final</b> de la franja, así no te suenan de madrugada y llegan por la mañana. Los eventos con hora propia se respetan a su hora. La franja puede cruzar la medianoche. (Se calcula en la app; no toca el servidor.)</div>
   <div class="vrow"><b>v130</b> — Los eventos que se repiten pueden tener ahora una <b>fecha de fin</b> («Repetir hasta»): un campo opcional en el alta y en la edición de la Agenda. Al llegar ese día el evento deja de repetirse (y de avisar), y pasa al bloque «Pasado». Se conserva al exportar/importar el calendario (.ics).</div>
@@ -1168,7 +1172,7 @@ details.dmonth[open]>summary .dmonthchev{transform:rotate(90deg)}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v132';
+const APPVER='v133';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -2960,6 +2964,7 @@ function stepPointerUp(e){
    PESTAÑA HÁBITOS
 ========================================================== */
 function renderHabits(){
+  const _prevScroll = (function(){ const w=document.querySelector('#viewHabits .gridscroll'); return w?w.scrollLeft:null; })();
   const dates = weekDates(weekOffset);
   const todayIso = iso(new Date());
   const label = `${fmtShort(dates[0])} – ${fmtShort(dates[6])}`;
@@ -3081,10 +3086,12 @@ function renderHabits(){
       </div>
     </div>
     <div class="card gridwrap">
+      <div class="gridscroll">
       <table class="habits">
         <thead><tr><th></th>${dates.map(d=>`<th class="${iso(d)===todayIso?'today':''}">${DAYS[(d.getDay()+6)%7]}<br>${d.getDate()}</th>`).join('')}</tr></thead>
         <tbody>${rows}</tbody>
       </table>
+      </div>
       <div class="addrow">
         <input id="newHabit" placeholder="Nuevo hábito (ej: 🧘 Estirar 5 min)" maxlength="60"
           onkeydown="if(event.key==='Enter')addHabit()">
@@ -3098,6 +3105,8 @@ function renderHabits(){
     if(el && !el.disabled) el.focus();
     focusCell=null;
   }
+  const _sc=document.querySelector('#viewHabits .gridscroll');
+  if(_sc && _prevScroll!=null) _sc.scrollLeft=_prevScroll;
 }
 
 /* --- navegación por teclado en la rejilla --- */
@@ -3221,7 +3230,18 @@ function moveHabitBy(hid, dir){
   refresh('habits','pano','logs'); renderGoals(); renderTodayBar(); persist();
   announce(`${h.name} ${dir<0?'subido':'bajado'} a la posición ${j+1}.`);
 }
-function moveWeek(dir, reset){ weekOffset = reset?0:weekOffset+dir; colorPopFor=null; editHabitFor=null; renderHabits(); }
+function centerHabitsToday(){
+  try{
+    const wrap=document.querySelector('#viewHabits .gridscroll'); if(!wrap) return;
+    if(wrap.scrollWidth<=wrap.clientWidth+2){ wrap.scrollLeft=0; return; }   /* cabe (escritorio): nada que centrar */
+    const th=wrap.querySelector('table.habits thead th.today'); if(!th){ wrap.scrollLeft=0; return; }
+    const name=wrap.querySelector('td.hname'); const nameW=name?name.getBoundingClientRect().width:0;
+    const wr=wrap.getBoundingClientRect(), tr=th.getBoundingClientRect();
+    const target=wrap.scrollLeft + (tr.left - wr.left) - nameW;   /* hoy justo tras el título fijo */
+    wrap.scrollLeft = target>0?target:0;
+  }catch(e){}
+}
+function moveWeek(dir, reset){ weekOffset = reset?0:weekOffset+dir; colorPopFor=null; editHabitFor=null; renderHabits(); requestAnimationFrame(centerHabitsToday); }
 function toggleCheck(dIso, hid){
   const before=snapshot();
   if(!state.checks[dIso]) state.checks[dIso]={};
@@ -6003,6 +6023,7 @@ function switchTab(t){
   if(t==='plazos') renderPlazos();
   if(t==='hoy') renderHoy();
   maybeCascadeHabits();          /* cascada solo en Hábitos (una vez/cada vez) */
+  if(t==='habits') requestAnimationFrame(centerHabitsToday);
 }
 function renderAll(){
   initTabColors(); setViewHead(activeTab);

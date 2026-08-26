@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v135</title>
+<title>Hábitos v137</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -96,6 +96,17 @@ header>.sub{margin-top:4px}
 .thpeek{display:block;width:100%;text-align:left;font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:0.78125rem;color:var(--acc);background:none;border:none;padding:6px 2px;cursor:pointer;margin-top:4px}
 .tchip.on{color:var(--acc);border-color:var(--acc);background:var(--acc-soft)}
 .thlab{font-family:'Inter',system-ui,sans-serif;font-weight:600;font-size:0.6875rem;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+/* v137: bloque «Estado del push» (semáforo) en la burbuja 🔔 */
+.pstat{border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:var(--surface2);margin-bottom:6px}
+.psline{display:flex;align-items:center;gap:9px;font-weight:600;font-size:0.875rem;color:var(--text)}
+.psdot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 0 4px rgba(255,255,255,.04)}
+.psdot.g{background:#5BD6A0}.psdot.a{background:#F0A84B}.psdot.r{background:#FF6B6B}
+.pssub{color:var(--muted);font-size:0.78125rem;margin-top:7px;padding-left:20px;line-height:1.45}
+.psnext{font-size:0.78125rem;margin-top:9px;padding-left:20px;color:var(--text)}
+.psnext b{color:var(--acc);font-weight:600}.psnext .mut{color:var(--muted)}
+.psbtn{margin:12px 0 0 20px;display:inline-flex;align-items:center;gap:7px;border:0;border-radius:10px;padding:10px 14px;min-height:44px;font-size:0.84rem;font-weight:600;font-family:inherit;cursor:pointer;background:var(--acc);color:#20160a}
+.pslink{margin:10px 0 0 20px;display:inline-block;background:none;border:0;color:var(--muted);font-size:0.78125rem;text-decoration:underline;text-underline-offset:2px;cursor:pointer;font-family:inherit;padding:6px 0;min-height:32px}
+.psbtn:focus-visible,.pslink:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:8px}
 /* v119: interruptor on/off (Notificaciones). Área táctil ≥44px; pista 52x30. */
 .nrow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
 .nrow .ntxt{font-size:0.875rem;color:var(--text)}
@@ -955,7 +966,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v135</span></h1>
+      <h1>Hábitos <span class="ver">v137</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1041,6 +1052,8 @@ td.hname.editcell::after{display:none}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v137</b> — Nuevo <b>«Estado del push»</b> en la campana 🔔: un semáforo que te dice de un vistazo si los avisos con la app cerrada están <b>listos</b> (verde), <b>sin activar</b> (ámbar) o <b>bloqueados</b> por el navegador (rojo), con la hora del <b>próximo recordatorio</b> y un botón para <b>activar o volver a registrar</b> este dispositivo. Autodiagnóstico sin salir de la app. (Solo lectura del estado local; no cambia el servidor ni el Service Worker.)</div>
+  <div class="vrow"><b>v136</b> — <b>Los avisos ya no se pierden al abrir la app cerca de su hora.</b> Antes, cada vez que abrías la app se borraban y reprogramaban los recordatorios pendientes; uno recién vencido (o a punto) podía desaparecer antes de que el servidor llegara a enviarlo — por eso a veces llegaban «solo unos cuantos, no todos». Ahora se <b>congelan</b> los recordatorios que vencen dentro de los próximos 15 min o que ya vencieron, para que el envío del servidor los alcance. (Solo cliente; no cambia el servidor ni el Service Worker.)</div>
   <div class="vrow"><b>v135</b> — Los <b>avisos de eventos</b> ahora se eligen por <b>unidad</b>: minutos, horas, días o semanas antes (p. ej. <b>30 minutos antes</b>). Es una <b>pre-alarma</b> a la hora del evento menos ese tiempo (para eventos de todo el día se cuenta desde las 00:00). Cada aviso es su propia alarma; el «Próximos…» agrupado se retira. (El servidor revisa cada ~15 min, así que un «30 min antes» puede llegar entre ~30 y ~15 min antes.)</div>
   <div class="vrow"><b>v134</b> — Arreglos en la Agenda y en editar hábitos (móvil): al <b>editar un hábito</b> el formulario ocupa todo el ancho y ya no se solapan las casillas; los botones de calendario (<b>.ics</b>) se recogen en un botón 📅 a la derecha del título «Añadir a la agenda»; y los campos <b>«cada cuántos»</b> y <b>«hasta»</b> solo aparecen cuando el evento se repite (con «No se repite» ya no sale la casilla vacía).</div>
   <div class="vrow"><b>v133</b> — En el móvil, la rejilla de <b>Hábitos</b> muestra ahora <b>~2 días a la vez</b> (deslizas para ver el resto) con las casillas al mismo tamaño y la <b>columna del título más ancha</b>, para editar sin agobios. Al abrir Hábitos se centra en <b>hoy</b>, y marcar una casilla ya no reinicia el desplazamiento. En pantalla grande no cambia nada.</div>
@@ -1186,7 +1199,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v135';
+const APPVER='v137';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1919,6 +1932,10 @@ function setDndTo(v){ if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ dndCfg().to=v; pe
 /* v121: programa en Supabase la próxima aparición del recordatorio diario, para
    que la Edge Function 'push-reminders' (disparada por Cron) lo envíe a su hora
    aunque la app esté cerrada. Best-effort: si no hay sesión, no hace nada. */
+/* v136: colchón cliente↔cron. Un recordatorio que vence dentro de este margen
+   (o ya venció) es «intocable»: no se borra al reconciliar, para que el cron lo
+   envíe aunque abras la app justo a esa hora. 15 min = 3 veces el intervalo del cron (cada 5 min). */
+const REM_GUARD_MS=15*60000;
 async function syncServerReminder(){
   try{
     if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
@@ -1934,7 +1951,7 @@ async function syncServerReminder(){
     f=dndAdjust(f);   // v131: horas de silencio -> retrasa al final de la franja
     const ymd=''+f.getFullYear()+String(f.getMonth()+1).padStart(2,'0')+String(f.getDate()).padStart(2,'0');
     const id='daily-'+CLOUD.session.user_id+'-'+ymd;
-    if(r.schedId && r.schedId!==id){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(r.schedId), {method:'DELETE'}); }catch(e){} }
+    if(r.schedId && r.schedId!==id){ const _oy=String(r.schedId).slice(-8); let _safe=true; if(/^\d{8}$/.test(_oy)){ const _of=new Date(+_oy.slice(0,4), +_oy.slice(4,6)-1, +_oy.slice(6,8), +m[1], +m[2], 0, 0); _safe=_of.getTime()<=now.getTime()-REM_GUARD_MS; } if(_safe){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(r.schedId), {method:'DELETE'}); }catch(e){} } }
     // UPSERT sin 'sent' (no reabrir uno ya enviado). merge-duplicates por id (PK).
     await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'},
       body:[{id:id, user_id:CLOUD.session.user_id, fire_at:f.toISOString(), title:'Diario de Hábitos', body:'¿Ya hiciste tus hábitos de hoy? \u270D\uFE0F', url:'https://arielmartinezj.github.io/H/'}]});
@@ -1967,8 +1984,10 @@ async function syncServerEventReminders(){
   try{
     if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
     const uid=CLOUD.session.user_id;
-    /* reconciliación: borra SIEMPRE las de evento no enviadas (ids que empiezan por 'ev'; no toca 'daily-') */
-    try{ await api('/rest/v1/reminders?user_id=eq.'+uid+'&sent=eq.false&id=like.ev*', {method:'DELETE'}); }catch(e){}
+    /* v136: reconciliación de eventos SOLO de filas que vencen más allá del colchón
+       (now+15min). Las 'ev*' no enviadas que ya vencieron o suenan dentro de 15 min
+       quedan intocables para que el cron las envíe (no toca 'daily-'). */
+    try{ const _guardIso=new Date(Date.now()+REM_GUARD_MS).toISOString(); await api('/rest/v1/reminders?user_id=eq.'+uid+'&sent=eq.false&id=like.ev*&fire_at=gte.'+encodeURIComponent(_guardIso), {method:'DELETE'}); }catch(e){}
     if(!(pushCfg().on && eventPushCfg().on)) return;   /* apagado -> solo cancela */
     const now=new Date(); const pad=x=>String(x).padStart(2,'0');
     const ymd=''+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate());
@@ -2033,6 +2052,31 @@ function pushState(){
 function pushSwitch(on, handler, aria){
   return `<button class="nsw${on?' on':''}" role="switch" aria-checked="${on?'true':'false'}" aria-label="${aria}" onclick="${handler}"><span class="track"></span><span class="knob"></span></button>`;
 }
+function nextReminderInfo(){
+  const r=reminderCfg(); const m=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(r.time||'20:00');
+  if(!r.on || !m) return {off:true};
+  const now=new Date(); let f=new Date(now.getFullYear(),now.getMonth(),now.getDate(),+m[1],+m[2],0,0);
+  if(f.getTime()<=now.getTime()+30000) f=new Date(f.getTime()+86400000);
+  try{ f=dndAdjust(f); }catch(e){}
+  const p=x=>String(x).padStart(2,'0'); const hhmm=p(f.getHours())+':'+p(f.getMinutes());
+  const fIso=iso(f), tIso=iso(now), mIso=iso(new Date(now.getFullYear(),now.getMonth(),now.getDate()+1));
+  const when=(fIso===tIso)?'hoy':((fIso===mIso)?'mañana':(p(f.getDate())+'/'+p(f.getMonth()+1)));
+  return {off:false, when:when, hhmm:hhmm};
+}
+function pushStatusUI(){
+  const st=pushState(); let cls='a', head='', sub='', act='', showNext=true;
+  if(st==='on'){ cls='g'; head='Todo listo'; sub='Recibirás los avisos aunque cierres la app, en este dispositivo.'; act='<button class="pslink" onclick="enablePush()">Volver a registrar este dispositivo</button>'; }
+  else if(st==='off'){ cls='a'; head='Avisos sin activar aquí'; sub='Este dispositivo aún no recibe avisos con la app cerrada.'; act='<button class="psbtn" onclick="enablePush()">🔔 Activar avisos</button>'; }
+  else if(st==='denied'){ cls='r'; head='Bloqueado por el navegador'; sub='Chrome tiene bloqueadas las notificaciones de este sitio. Permítelas en Ajustes del sitio › Notificaciones › Permitir.'; act='<button class="pslink" onclick="announce(\'Toca el candado de la barra de direcciones y entra en Ajustes del sitio → Notificaciones → Permitir. Luego vuelve a activar los avisos aquí.\')">Cómo desbloquearlas</button>'; }
+  else if(st==='nocloud'){ cls='a'; head='Sin sesión en la nube'; sub='Los avisos con la app cerrada necesitan tu cuenta. Inicia sesión en la tarjeta ☁️ (la misma del sync).'; showNext=false; }
+  else { cls='r'; head='No disponible aquí'; sub='Este navegador no admite notificaciones push.'; showNext=false; }
+  let next='';
+  if(showNext){ const ni=nextReminderInfo();
+    if(ni.off){ next='<div class="psnext"><span class="mut">Recordatorio diario desactivado.</span> <button class="pslink" style="margin:0;padding:0;display:inline;min-height:0" onclick="if(!reminderCfg().on){toggleReminder();}">Activarlo</button></div>'; }
+    else { next='<div class="psnext">Próximo recordatorio: <b>'+ni.when+' '+ni.hhmm+'</b>'+((st==='denied')?' <span class="mut">(no llegará hasta desbloquear)</span>':'')+'</div>'; }
+  }
+  return '<div class="thlab">Estado del push</div><div class="pstat"><div class="psline"><span class="psdot '+cls+'"></span>'+head+'</div><div class="pssub">'+sub+'</div>'+next+act+'</div>';
+}
 function pushSettingUI(){
   const st=pushState(); let row='', hint='';
   if(st==='nocloud'){ hint='Para recibirlas, inicia sesión en la nube (la misma cuenta del sync, en la tarjeta ☁️).'; }
@@ -2040,7 +2084,7 @@ function pushSettingUI(){
   else if(st==='denied'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(false,"announce('Están bloqueadas por el navegador. Permítelas en los ajustes del sitio en Chrome.')",'Notificaciones bloqueadas')}</div>`; hint='Bloqueadas por el navegador. Permítelas en los ajustes del sitio en Chrome.'; }
   else if(st==='on'){ row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(true,'disablePush()','Desactivar notificaciones')}</div><div class="nrow"><span class="ntxt"><span style="color:#E58AC9">📅</span> Avisarme de los eventos de la Agenda</span>${pushSwitch(eventPushCfg().on,'toggleEventPush()','Avisar de los eventos de la Agenda')}</div>${eventPushCfg().on?('<div class="thlab" style="margin-top:10px">Cómo agrupar los avisos</div><div class="thmodes"><button class="tchip'+((eventPushCfg().mode||'med')==='res'?' on':'')+'" onclick="setEventPushMode(\'res\')">Resumen</button><button class="tchip'+((eventPushCfg().mode||'med')==='med'?' on':'')+'" onclick="setEventPushMode(\'med\')">Medio</button><button class="tchip'+((eventPushCfg().mode||'med')==='ind'?' on':'')+'" onclick="setEventPushMode(\'ind\')">Individual</button></div><div class="hint">'+eventModeHint(eventPushCfg().mode||'med')+'</div>'):''}`; hint='Activadas en este dispositivo. Si cambias de móvil, actívalas también allí.'; }
   else { row=`<div class="nrow"><span class="ntxt">Recibir aunque cierre la app</span>${pushSwitch(false,'enablePush()','Activar notificaciones')}</div>`; hint='Te llegan aunque la app esté cerrada, a la hora de tus recordatorios.'; }
-  return `<div class="thlab" style="margin-top:12px">Notificaciones (aunque cierres la app)</div>${row}<div class="hint">${hint}</div>`;
+  return `${pushStatusUI()}<div class="thlab" style="margin-top:12px">Notificaciones (aunque cierres la app)</div>${row}<div class="hint">${hint}</div>`;
 }
 async function enablePush(){
   try{

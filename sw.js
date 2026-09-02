@@ -124,6 +124,72 @@ self.addEventListener('fetch', function (e) {
   );
 });
 
+/* v138 — Re-registro automático de la suscripción push -----------------------
+ * Chrome/FCM caduca o rota la suscripción cada cierto tiempo; el endpoint viejo
+ * muere (410) y deja de llegar cualquier aviso. El navegador avisa con el evento
+ * 'pushsubscriptionchange': aquí re-subscribimos y re-subimos la fila a Supabase
+ * NOSOTROS SOLOS, sin abrir la app. Para poder escribir con RLS necesitamos un
+ * access_token: lo minteamos con el refresh_token que la app nos pasó por
+ * postMessage y guardamos en un caché aparte ('push-creds', no se borra al
+ * cambiar de versión). La VAPID pública va aquí embebida (no es secreta). */
+var VAPID_PUBLIC = 'BK-tM0X_xU8y2LTf2az0bCmsKKkS6wSVvU16dFiaPiWN87pLZU4M1eAVi6kvsMQbA19BlsnIXEN5zMC85r6q9Uk';
+function u8(b) {
+  var pad = '='.repeat((4 - b.length % 4) % 4);
+  var s = (b + pad).replace(/-/g, '+').replace(/_/g, '/');
+  var raw = atob(s); var a = new Uint8Array(raw.length);
+  for (var i = 0; i < raw.length; i++) a[i] = raw.charCodeAt(i);
+  return a;
+}
+var CREDS_URL = 'https://push-creds.local/creds';   // clave interna del caché
+function saveCreds(o) {
+  return caches.open('push-creds').then(function (c) {
+    return c.put(new Request(CREDS_URL), new Response(JSON.stringify(o), { headers: { 'Content-Type': 'application/json' } }));
+  }).catch(function () {});
+}
+function loadCreds() {
+  return caches.open('push-creds').then(function (c) {
+    return c.match(new Request(CREDS_URL)).then(function (r) { return r ? r.json() : null; });
+  }).catch(function () { return null; });
+}
+self.addEventListener('message', function (e) {
+  var d = e.data || {};
+  if (d.type === 'push-creds' && d.url && d.refreshToken) {
+    saveCreds({ url: d.url, anonKey: d.anonKey, userId: d.userId, refreshToken: d.refreshToken });
+  }
+});
+async function resubscribePush() {
+  var creds = await loadCreds();
+  if (!creds || !creds.url || !creds.refreshToken) return;   // sin credenciales no podemos re-subir
+  var sub = null;
+  try { sub = await self.registration.pushManager.getSubscription(); } catch (e) {}
+  if (!sub) {
+    try { sub = await self.registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: u8(VAPID_PUBLIC) }); }
+    catch (e) { return; }
+  }
+  var base = creds.url.replace(/\/+$/, '');
+  var tok = '';
+  try {
+    var r = await fetch(base + '/auth/v1/token?grant_type=refresh_token', {
+      method: 'POST', headers: { 'apikey': creds.anonKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: creds.refreshToken })
+    });
+    var d = await r.json();
+    if (d && d.access_token) { tok = d.access_token; if (d.refresh_token) { creds.refreshToken = d.refresh_token; await saveCreds(creds); } }
+  } catch (e) {}
+  if (!tok) return;
+  var j = sub.toJSON();
+  try {
+    await fetch(base + '/rest/v1/push_subscriptions?on_conflict=user_id,endpoint', {
+      method: 'POST',
+      headers: { 'apikey': creds.anonKey, 'Authorization': 'Bearer ' + tok, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify([{ user_id: creds.userId, endpoint: j.endpoint, subscription: j }])
+    });
+  } catch (e) {}
+}
+self.addEventListener('pushsubscriptionchange', function (e) {
+  e.waitUntil(resubscribePush());
+});
+
 /* v119 — Notificaciones push (aunque la app esté cerrada). No afecta a la caché
  * ni al offline: solo reacciona a eventos 'push' y a los clics en la notificación.
  * El payload que manda la Edge Function es JSON: { title, body, url }. */

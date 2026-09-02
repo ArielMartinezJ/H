@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v137</title>
+<title>Hábitos v140</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -966,7 +966,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v137</span></h1>
+      <h1>Hábitos <span class="ver">v140</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1047,11 +1047,14 @@ td.hname.editcell::after{display:none}
 <span class="eyebrow">Nube — sincronizar entre dispositivos</span>
 <div id="cloudCard"></div>
 <details class="verbox" id="diagBox">
-  <summary onclick="setTimeout(renderDiag,0)">🩺 Diagnóstico</summary>
+  <summary onclick="setTimeout(renderDiag,0);setTimeout(cronHealthCheck,0)">🩺 Diagnóstico</summary>
   <div class="diagbody" id="diagBody"></div>
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v140</b> — La fila <b>«Cron de avisos»</b> ahora lee el <b>registro real del cron</b>: muestra <b>«última señal hace X · N enviados (24 h)»</b> y avisa si el envío automático lleva demasiado tiempo <b>sin dar señales</b>. Si aún no está el registro, sigue usando la comprobación de la v139. (Solo lectura; no cambia el servidor ni el Service Worker.)</div>
+  <div class="vrow"><b>v139</b> — Nueva fila <b>«Cron de avisos»</b> en 🩺 Diagnóstico: al abrirlo comprueba si hay recordatorios <b>vencidos hace más de 15 min todavía sin enviar</b> y avisa si el <b>envío automático podría estar parado</b> (como el aviso de «nube caída»). Autodiagnóstico sin abrir Supabase. (Solo lectura; no cambia el servidor ni el Service Worker.)</div>
+  <div class="vrow"><b>v138</b> — Arreglo de que los avisos <b>«funcionaban a veces»</b> y había que <b>«Volver a registrar»</b> a mano. Ahora la app <b>revalida y vuelve a registrar la suscripción sola</b> cada vez que la abres o sincronizas, <b>re-programa el recordatorio diario en cada apertura</b> (antes se agendaba una sola vez), el <b>semáforo verde comprueba de verdad</b> que la suscripción sigue viva («Comprobado al abrir») y el <b>Service Worker vuelve a registrarse solo</b> aunque no abras la app, cuando el navegador rota la suscripción. (Toca el servidor solo para re-registrar; hay que re-subir sw.js.)</div>
   <div class="vrow"><b>v137</b> — Nuevo <b>«Estado del push»</b> en la campana 🔔: un semáforo que te dice de un vistazo si los avisos con la app cerrada están <b>listos</b> (verde), <b>sin activar</b> (ámbar) o <b>bloqueados</b> por el navegador (rojo), con la hora del <b>próximo recordatorio</b> y un botón para <b>activar o volver a registrar</b> este dispositivo. Autodiagnóstico sin salir de la app. (Solo lectura del estado local; no cambia el servidor ni el Service Worker.)</div>
   <div class="vrow"><b>v136</b> — <b>Los avisos ya no se pierden al abrir la app cerca de su hora.</b> Antes, cada vez que abrías la app se borraban y reprogramaban los recordatorios pendientes; uno recién vencido (o a punto) podía desaparecer antes de que el servidor llegara a enviarlo — por eso a veces llegaban «solo unos cuantos, no todos». Ahora se <b>congelan</b> los recordatorios que vencen dentro de los próximos 15 min o que ya vencieron, para que el envío del servidor los alcance. (Solo cliente; no cambia el servidor ni el Service Worker.)</div>
   <div class="vrow"><b>v135</b> — Los <b>avisos de eventos</b> ahora se eligen por <b>unidad</b>: minutos, horas, días o semanas antes (p. ej. <b>30 minutos antes</b>). Es una <b>pre-alarma</b> a la hora del evento menos ese tiempo (para eventos de todo el día se cuenta desde las 00:00). Cada aviso es su propia alarma; el «Próximos…» agrupado se retira. (El servidor revisa cada ~15 min, así que un «30 min antes» puede llegar entre ~30 y ~15 min antes.)</div>
@@ -1199,7 +1202,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v137';
+const APPVER='v140';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -2065,7 +2068,7 @@ function nextReminderInfo(){
 }
 function pushStatusUI(){
   const st=pushState(); let cls='a', head='', sub='', act='', showNext=true;
-  if(st==='on'){ cls='g'; head='Todo listo'; sub='Recibirás los avisos aunque cierres la app, en este dispositivo.'; act='<button class="pslink" onclick="enablePush()">Volver a registrar este dispositivo</button>'; }
+  if(st==='on'){ cls='g'; head='Todo listo'; sub='Recibirás los avisos aunque cierres la app, en este dispositivo.'+(pushCfg().checkedAt?' <span class="mut">Comprobado al abrir.</span>':''); act='<button class="pslink" onclick="enablePush()">Volver a registrar este dispositivo</button>'; }
   else if(st==='off'){ cls='a'; head='Avisos sin activar aquí'; sub='Este dispositivo aún no recibe avisos con la app cerrada.'; act='<button class="psbtn" onclick="enablePush()">🔔 Activar avisos</button>'; }
   else if(st==='denied'){ cls='r'; head='Bloqueado por el navegador'; sub='Chrome tiene bloqueadas las notificaciones de este sitio. Permítelas en Ajustes del sitio › Notificaciones › Permitir.'; act='<button class="pslink" onclick="announce(\'Toca el candado de la barra de direcciones y entra en Ajustes del sitio → Notificaciones → Permitir. Luego vuelve a activar los avisos aquí.\')">Cómo desbloquearlas</button>'; }
   else if(st==='nocloud'){ cls='a'; head='Sin sesión en la nube'; sub='Los avisos con la app cerrada necesitan tu cuenta. Inicia sesión en la tarjeta ☁️ (la misma del sync).'; showNext=false; }
@@ -2113,6 +2116,37 @@ async function disablePush(){
     const c=pushCfg(); c.on=false; c.endpoint=''; persist(); renderNotifPop();
     announce('Notificaciones desactivadas.');
   }catch(e){ announce('No se pudieron desactivar: '+((e&&e.message)||e)); renderNotifPop(); }
+}
+/* v138: DURABILIDAD DEL PUSH -------------------------------------------------
+   primeSW() pasa al Service Worker lo justo para que pueda re-registrar la
+   suscripción él solo cuando el navegador la rote (evento pushsubscriptionchange
+   en sw.js). refreshPushSubscription() revalida la suscripción en cada arranque
+   y sync: si Chrome/FCM la caducó, la vuelve a crear y la re-sube; si el permiso
+   ya no está, apaga el flag para que el semáforo no mienta. Best-effort. */
+function primeSW(){ try{
+    if(typeof navigator==='undefined' || !('serviceWorker' in navigator)) return;
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
+    const s=CLOUD.session; if(!s.refresh_token) return;
+    navigator.serviceWorker.ready.then(function(reg){
+      const t=(reg && reg.active) || navigator.serviceWorker.controller;
+      if(t) t.postMessage({type:'push-creds', url:CLOUD_CFG.url, anonKey:CLOUD_CFG.anonKey, userId:s.user_id, refreshToken:s.refresh_token});
+    }).catch(function(){});
+  }catch(e){} }
+async function refreshPushSubscription(){
+  try{
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
+    primeSW();                              // mantiene frescas las credenciales del SW
+    const c=pushCfg();
+    if(!c.on) return;                       // solo si el usuario activó los avisos aquí
+    if(!pushSupported()) return;
+    if(Notification.permission!=='granted'){ c.on=false; c.endpoint=''; c.checkedAt=0; persist(); try{renderNotifPop();}catch(e){} return; }
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub){ try{ sub=await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:urlB64ToU8(VAPID_PUBLIC)}); }catch(e){ return; } }
+    const j=sub.toJSON();
+    await api('/rest/v1/push_subscriptions?on_conflict=user_id,endpoint', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{user_id:CLOUD.session.user_id, endpoint:j.endpoint, subscription:j}]});
+    c.endpoint=j.endpoint; c.checkedAt=Date.now(); persist(); try{renderNotifPop();}catch(e){}
+  }catch(e){ /* best-effort, silencioso */ }
 }
 function eventsToday(){ const t=iso(new Date()); return state.events.filter(e=>e&&/^\d{4}-\d{2}-\d{2}$/.test(e.date)&&eventNextDate(e)===t); }
 function pendingToday(){ const today=iso(new Date());
@@ -2277,6 +2311,8 @@ async function cloudSync(opts){
     if(action==='push') await cloudPush();
     else if(action==='pull'){ await cloudPull(remote); renderAll(); }
     CLOUD.status='ok';
+    try{ syncAllServerReminders(); }catch(e){}   /* v138: re-agenda diario/eventos en cada sync (antes solo al tocar ajustes o resolver conflicto) */
+    try{ refreshPushSubscription(); }catch(e){}  /* v138: revalida y re-sube la suscripcion push (autocura la rotacion) */
   }catch(e){
     CLOUD.status='error'; CLOUD.lastError=e.message||String(e);
   }
@@ -2615,6 +2651,47 @@ function daysSince(dIso){
   const now=new Date(); now.setHours(0,0,0,0);
   return Math.round((now-then)/86400000);
 }
+/* v139: OBSERVABILIDAD DEL CRON (Fase 1, solo cliente) -----------------------
+   CRON_STALE_MIN = 3 ciclos del cron (que va cada 5 min). Un recordatorio
+   vencido hace mas de eso y todavia sent=false = el cron podria estar parado.
+   Subir este numero si algun dia cambias el intervalo del cron (D5). */
+const CRON_STALE_MIN = 15;
+let CRONHEALTH = { state:'?', checkedAt:0, overdue:0, oldestMin:0 };
+async function cronHealthCheck(){
+  try{
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)){ CRONHEALTH={state:'nocloud',checkedAt:Date.now()}; try{renderDiag();}catch(e){} return; }
+    /* v140: primero el log del cron (Fase 2). Si la tabla no existe o está vacía, caemos a la heurística de la v139. */
+    let log=null;
+    try{ log=await api('/rest/v1/cron_health?select=ran_at,sent&order=ran_at.desc&limit=300'); }catch(e){ log=null; }
+    if(Array.isArray(log) && log.length){
+      const lastMs=Date.parse(log[0].ran_at)||0;
+      const sinceMin=lastMs?Math.max(0,Math.round((Date.now()-lastMs)/60000)):999999;
+      const cut=Date.now()-86400000; let sent24=0;
+      log.forEach(r=>{ const t=Date.parse(r.ran_at)||0; if(t>=cut) sent24+=(+r.sent||0); });
+      CRONHEALTH={state:(sinceMin>CRON_STALE_MIN?'stopped':'live'), checkedAt:Date.now(), sinceMin:sinceMin, sent24:sent24, lastMs:lastMs};
+      try{renderDiag();}catch(e){} return;
+    }
+    const cutIso=new Date(Date.now()-CRON_STALE_MIN*60000).toISOString();
+    const rows=await api('/rest/v1/reminders?select=id,fire_at&sent=eq.false&fire_at=lt.'+encodeURIComponent(cutIso)+'&order=fire_at.asc&limit=50');
+    const arr=Array.isArray(rows)?rows:[];
+    let oldestMin=0;
+    if(arr.length){ const t=Date.parse(arr[0].fire_at)||0; if(t) oldestMin=Math.max(0, Math.round((Date.now()-t)/60000)); }
+    CRONHEALTH={state:arr.length?'warn':'ok', checkedAt:Date.now(), overdue:arr.length, oldestMin:oldestMin, nolog:true};
+    try{renderDiag();}catch(e){}
+  }catch(e){ CRONHEALTH={state:'err',checkedAt:Date.now()}; try{renderDiag();}catch(e){} }
+}
+function humanAgo(min){ if(min>=1440) return Math.round(min/1440)+' d'; if(min>=90) return Math.round(min/60)+' h'; return min+' min'; }
+function cronHealthText(){
+  const h=CRONHEALTH||{state:'?'};
+  const when=h.checkedAt?(' <span class="mut" style="font-weight:400">· comprobado '+fmtWhen(h.checkedAt)+'</span>'):'';
+  if(h.state==='nocloud') return '<span class="mut" style="font-weight:400">inicia sesión en la nube para comprobarlo</span>';
+  if(h.state==='live') return 'última señal hace '+humanAgo(h.sinceMin)+' ✓ <span class="mut" style="font-weight:400">· '+(h.sent24||0)+' enviados (24 h)</span>'+when;
+  if(h.state==='stopped') return '⚠ el cron no da señales desde hace '+humanAgo(h.sinceMin)+' — podría estar parado'+when;
+  if(h.state==='ok') return 'al día ✓ <span class="mut" style="font-weight:400">(sin log del cron aún)</span>'+when;
+  if(h.state==='warn') return '⚠ '+h.overdue+' '+(h.overdue===1?'recordatorio vencido':'recordatorios vencidos')+' hace &gt;'+CRON_STALE_MIN+' min sin enviarse — el cron podría estar parado'+when;
+  if(h.state==='err') return '<span class="mut" style="font-weight:400">no se pudo comprobar (¿sin conexión?)</span>';
+  return '<span class="mut" style="font-weight:400">— (abre el Diagnóstico para comprobar)</span>';
+}
 function renderDiag(){
   const el=document.getElementById('diagBody'); if(!el) return;
   const tier = (typeof STORE_TIER!=='undefined') ? STORE_TIER : '—';
@@ -2636,6 +2713,7 @@ function renderDiag(){
     ['Service worker', swTxt],
     ['Caché', cacheTxt],
     ['Nube', cloudTxt],
+    ['Cron de avisos', cronHealthText()],
     ['Guardando en', tierTxt],
     ['Lectura inicial', READ_OK?'correcta':'⚠ falló'],
     ['Guardados esta sesión', String(saveCount)],

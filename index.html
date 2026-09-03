@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v150</title>
+<title>Hábitos v153</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -200,6 +200,12 @@ header>.sub{margin-top:4px}
 .smdet{color:var(--muted);font-size:0.8rem;margin-top:3px;line-height:1.45}
 .smfoot{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .smchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:0.76rem;color:var(--text);background:var(--surface2);white-space:nowrap}
+.smbars{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.smhb{display:flex;align-items:center;gap:9px;font-size:0.8rem}
+.smnm{width:120px;flex:none;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.smtr{flex:1;height:8px;background:var(--surface2);border-radius:5px;overflow:hidden}
+.smtr i{display:block;height:100%;border-radius:5px}
+.smct{width:20px;text-align:right;flex:none;color:var(--muted)}
 .subadd{color:var(--muted);font-size:1rem;line-height:1;padding:1px 6px;border-radius:8px;transition:.15s;flex:none}
 .subadd:hover{color:var(--ok);background:var(--ok-soft)}
 .subprog{flex:none;font-size:0.6875rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 8px;line-height:1.6}
@@ -1004,7 +1010,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v150</span></h1>
+      <h1>Hábitos <span class="ver">v153</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1092,6 +1098,9 @@ td.hname.editcell::after{display:none}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v153</b> — Preparada para el cron de avisos cada <b>1 minuto</b> (antes 5): los avisos llegan más puntuales, y el <b>Diagnóstico</b> cuenta bien las últimas 24 h a esa cadencia (deja de fiarse del nº de filas). Detección de «cron parado» más rápida (~5 min). (Solo cliente.)</div>
+  <div class="vrow"><b>v152</b> — El <b>aviso del domingo</b> ya no lleva cifras (podían quedar viejas si no abrías la app): ahora es una <b>invitación a entrar</b> a ver tu semana. Los números están en la pestaña <b>Semana</b>, que siempre está al día. (Solo cliente.)</div>
+  <div class="vrow"><b>v151</b> — En la pestaña <b>«Semana»</b>, la fila de <b>Hábitos</b> muestra ahora una <b>barra de color por hábito</b> (con su color y su nº), llena respecto a tu objetivo semanal. (Solo cliente.)</div>
   <div class="vrow"><b>v150</b> — La pestaña <b>«Semana»</b> ahora casa con la maqueta: tarjeta con borde del color de la pestaña, epígrafe <b>«🗓️ Tu semana»</b>, título con día (Lun … – Dom …) y filas con icono. Se corrige un <b>choque de estilos</b> que rompía las barras de hábitos (la clase se compartía con el gráfico de Panorama). (Solo cliente.)</div>
   <div class="vrow"><b>v149</b> — Nuevo <b>aviso por hábito a su hora</b>: cada hábito puede llevar su propia hora (en su editor ✎), y a esa hora te llega un push los <b>días que toca</b>, si aún no lo has marcado. Respeta <b>No molestar</b> y necesita los avisos 🔔 activados. En reposo, el hábito muestra un distintivo 🔔. (Solo cliente.)</div>
   <div class="vrow"><b>v148</b> — La pestaña <b>«Semana»</b> pasa junto a «Hoy». Nuevo <b>aviso del domingo</b> (push) con el resumen de tu semana, con <b>interruptor propio</b> en la campana 🔔 y <b>hora a tu gusto</b> (por defecto 10:00). Y se retira la vieja «notificación de prueba» local, que ya sustituye <b>«Probar el aviso del servidor»</b>. (Solo cliente.)</div>
@@ -1252,7 +1261,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v150';
+const APPVER='v153';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -2796,11 +2805,11 @@ function daysSince(dIso){
   const now=new Date(); now.setHours(0,0,0,0);
   return Math.round((now-then)/86400000);
 }
-/* v139: OBSERVABILIDAD DEL CRON (Fase 1, solo cliente) -----------------------
-   CRON_STALE_MIN = 3 ciclos del cron (que va cada 5 min). Un recordatorio
-   vencido hace mas de eso y todavia sent=false = el cron podria estar parado.
-   Subir este numero si algun dia cambias el intervalo del cron (D5). */
-const CRON_STALE_MIN = 15;
+/* v139 / v153: OBSERVABILIDAD DEL CRON (Fase 1, solo cliente) ----------------
+   CRON_STALE_MIN = minutos sin señal del cron para darlo por "parado". Con el
+   cron cada 1 min (v153), 5 = 5 ciclos: detecta un parón en ~5 min. Si algún día
+   cambias el intervalo del cron, ajusta este número (D5): ~3-5 ciclos del cron. */
+const CRON_STALE_MIN = 5;
 let CRONHEALTH = { state:'?', checkedAt:0, overdue:0, oldestMin:0 };
 /* v142: prueba del aviso REAL (servidor). Crea un recordatorio ya vencido; el
    cron lo recoge en su próxima pasada y lo envía como push, probando la cadena
@@ -2822,7 +2831,9 @@ async function cronHealthCheck(){
     if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)){ CRONHEALTH={state:'nocloud',checkedAt:Date.now()}; try{renderDiag();}catch(e){} return; }
     /* v140: primero el log del cron (Fase 2). Si la tabla no existe o está vacía, caemos a la heurística de la v139. */
     let log=null;
-    try{ log=await api('/rest/v1/cron_health?select=ran_at,sent,failed&order=ran_at.desc&limit=300'); }catch(e){ log=null; }
+    /* v153: filtra por las últimas 24 h (no por nº de filas): a 1 min el cron
+       genera ~1.440 filas/día y un `limit=300` solo cubriría ~5 h. */
+    try{ const _cut24=new Date(Date.now()-86400000).toISOString(); log=await api('/rest/v1/cron_health?select=ran_at,sent,failed&ran_at=gte.'+encodeURIComponent(_cut24)+'&order=ran_at.desc&limit=1500'); }catch(e){ log=null; }
     if(Array.isArray(log) && log.length){
       const lastMs=Date.parse(log[0].ran_at)||0;
       const sinceMin=lastMs?Math.max(0,Math.round((Date.now()-lastMs)/60000)):999999;
@@ -6361,20 +6372,14 @@ function semanaStatsFrom(wb){ const inWk=function(d){ return d && d>=wb.from && 
   return {wb:wb, perHab:perHab, marcas:marcas, tocados:tocados, totalHab:habs.length, wDays:wDays, diario:diario, tareas:tareas, metas:metas, logros:logros};
 }
 function weeklyCfg(){ if(!state.ui)state.ui={}; if(!state.ui.weekly)state.ui.weekly={on:false, time:'10:00'}; if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(state.ui.weekly.time)) state.ui.weekly.time='10:00'; return state.ui.weekly; }
-function weeklySummaryText(wb){ const S=semanaStatsFrom(wb); const parts=[];
-  if(S.marcas>0) parts.push(S.marcas+' '+(S.marcas===1?'marca':'marcas'));
-  if(S.wDays.length>0) parts.push(S.wDays.length+' '+(S.wDays.length===1?'sesión':'sesiones'));
-  if(S.diario>0) parts.push(S.diario+' '+(S.diario===1?'apunte':'apuntes'));
-  if(S.tareas>0) parts.push(S.tareas+' '+(S.tareas===1?'tarea':'tareas'));
-  if(S.metas>0) parts.push(S.metas+' '+(S.metas===1?'meta':'metas'));
-  if(S.logros>0) parts.push(S.logros+' '+(S.logros===1?'logro':'logros'));
-  return parts.length ? ('Tu semana: '+parts.join(' · ')+' 🎉') : 'Tu semana te espera — entra a ver lo que hiciste 👀'; }
+function weeklySummaryText(wb){ /* v152 (opción A): el aviso del domingo NO lleva cifras — se quedaban viejas si no abrías la app días antes. Es una invitación a entrar; los números están en la pestaña Semana, siempre al día. El parámetro wb se conserva por compatibilidad de llamada, ya no se usa. */
+  return 'Tu semana te espera — entra a ver lo que hiciste 👀'; }
 function weeklyUI(){ const w=weeklyCfg();
   return '<div class="thlab" style="margin-top:12px">Resumen de la semana</div>'
     +'<div class="nrow"><span class="ntxt">Aviso del domingo</span><span style="display:flex;align-items:center;gap:8px">'
     +(w.on?'<input type="time" value="'+w.time+'" onchange="setWeeklyTime(this.value)" aria-label="Hora del resumen semanal" style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">':'')
     +pushSwitch(w.on,'toggleWeekly()','Resumen semanal del domingo')+'</span></div>'
-    +'<div class="hint">Los domingos a las '+w.time+' te llega un resumen de lo que hiciste esa semana. Necesita los avisos activados arriba.</div>'; }
+    +'<div class="hint">Los domingos a las '+w.time+' te llega un aviso para entrar a ver tu semana (los números están en la pestaña Semana, siempre al día). Necesita los avisos activados arriba.</div>'; }
 function toggleWeekly(){ const w=weeklyCfg(); w.on=!w.on; renderNotifPop(); persist(); announce(w.on?('Resumen semanal activado (domingos a las '+w.time+').'):'Resumen semanal desactivado.'); try{ syncServerWeekly(); }catch(e){} }
 function setWeeklyTime(v){ const w=weeklyCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ w.time=v; persist(); renderNotifPop(); try{ syncServerWeekly(); }catch(e){} } }
 async function syncServerWeekly(){
@@ -6416,8 +6421,8 @@ function renderSemana(){
   const total=S.marcas+S.wDays.length+S.diario+S.tareas+S.metas+S.logros;
   if(total===0){ el.innerHTML='<div class="card smcard">'+head+'<div class="smintro">'+rel+'</div><div class="empty">Aún no hay nada registrado esta semana. En cuanto marques un hábito, entrenes o apuntes algo, aparecerá aquí. 🌱</div></div>'; return; }
   let rows='';
-  if(S.marcas>0){ const det=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ return esc(x.name)+' <b>'+x.count+'</b>'; }).join(' · ');
-    rows+='<div class="smrow"><div class="smic">✅</div><div style="flex:1"><div class="smlab">Hábitos</div><div class="smval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div><div class="smdet">'+det+'</div></div></div>'; }
+  if(S.marcas>0){ const bars=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ const pct=Math.max(6,Math.min(100, Math.round(x.count/(x.target||7)*100))); return '<div class="smhb"><span class="smnm">'+esc(x.name)+'</span><span class="smtr"><i style="width:'+pct+'%;background:'+x.color+'"></i></span><span class="smct">'+x.count+'</span></div>'; }).join('');
+    rows+='<div class="smrow"><div class="smic">✅</div><div style="flex:1"><div class="smlab">Hábitos</div><div class="smval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div><div class="smbars">'+bars+'</div></div></div>'; }
   if(S.wDays.length>0){ const dn=S.wDays.slice().sort().map(wkDayName).join(', '); rows+='<div class="smrow"><div class="smic">🏋️</div><div><div class="smlab">Ejercicio</div><div class="smval"><b>'+S.wDays.length+'</b> '+(S.wDays.length===1?'sesión':'sesiones')+' · '+dn+'</div></div></div>'; }
   if(S.diario>0){ rows+='<div class="smrow"><div class="smic">📓</div><div><div class="smlab">Diario</div><div class="smval"><b>'+S.diario+'</b> '+(S.diario===1?'apunte':'apuntes')+' de lo que hiciste</div></div></div>'; }
   if(S.tareas>0){ rows+='<div class="smrow"><div class="smic">✔️</div><div><div class="smlab">Tareas</div><div class="smval"><b>'+S.tareas+'</b> '+(S.tareas===1?'completada':'completadas')+'</div></div></div>'; }

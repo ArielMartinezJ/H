@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v149</title>
+<title>Hábitos v150</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -180,27 +180,26 @@ header>.sub{margin-top:4px}
 .donesubrow{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:0.8125rem;padding:1px 0}
 .donesubrow .dsck{color:var(--muted)}
 .donesubrow .dsck.on{color:var(--ok)}
-/* v147: vista Semana */
-.wknav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
-.wkbtn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:9px;min-width:44px;min-height:44px;font-size:1.1rem;cursor:pointer}
-.wkbtn.off,.wkbtn:disabled{opacity:.35;cursor:default}
-.wkrange{text-align:center;flex:1}
-.wkr1{font-family:'Space Grotesk',Inter,sans-serif;font-weight:700;font-size:1.05rem;color:var(--text)}
-.wkr2{color:var(--muted);font-size:0.78125rem}
-.wkintro{color:var(--muted);font-size:0.84rem;margin:0 2px 10px}
-.wkrow{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-top:1px solid var(--line)}
-.wkrow:first-of-type{border-top:none}
-.wkic{width:24px;text-align:center;font-size:1.05rem;flex:none;line-height:1.4}
-.wklab{font-weight:600;font-size:0.9rem;color:var(--text)}
-.wkval{color:var(--muted);font-size:0.84rem;margin-top:1px}
-.wkval b{color:var(--text);font-weight:600}
-.wkbars{margin-top:7px;display:flex;flex-direction:column;gap:5px}
-.wkhb{display:flex;align-items:center;gap:8px;font-size:0.8rem}
-.wknm{width:96px;flex:none;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.wktr{flex:1;height:8px;background:var(--surface2);border-radius:5px;overflow:hidden}
-.wktr i{display:block;height:100%;border-radius:5px}
-.wkct{width:22px;text-align:right;flex:none;color:var(--muted)}
-.wkfoot{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:0.8rem}
+/* v147: vista Semana · v150 rediseñada para casar con la maqueta (tarjeta con
+   borde del color de la pestaña, epígrafe «Tu semana», filas con icono). Prefijo
+   sm* propio: antes reusaba .wkbars y colisionaba con el gráfico de Panorama. */
+.smcard{border-left:3px solid var(--tab)}
+.smeyebrow{font-family:'Space Grotesk',Inter,sans-serif;font-size:0.7rem;letter-spacing:.7px;text-transform:uppercase;color:var(--tab);font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.smhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.smtitle{font-family:'Space Grotesk',Inter,sans-serif;font-weight:700;font-size:1.12rem;color:var(--text);margin:0}
+.smnav{display:flex;gap:6px;flex:none}
+.smbtn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:9px;min-width:40px;min-height:40px;font-size:1.05rem;cursor:pointer}
+.smbtn.off,.smbtn:disabled{opacity:.35;cursor:default}
+.smintro{color:var(--muted);font-size:0.84rem;margin:6px 2px 4px}
+.smrow{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-top:1px solid var(--line)}
+.smrow:first-of-type{border-top:none}
+.smic{width:26px;text-align:center;font-size:1.05rem;flex:none;line-height:1.4}
+.smlab{font-weight:600;font-size:0.9rem;color:var(--text)}
+.smval{color:var(--muted);font-size:0.84rem;margin-top:1px}
+.smval b{color:var(--text);font-weight:600}
+.smdet{color:var(--muted);font-size:0.8rem;margin-top:3px;line-height:1.45}
+.smfoot{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.smchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:0.76rem;color:var(--text);background:var(--surface2);white-space:nowrap}
 .subadd{color:var(--muted);font-size:1rem;line-height:1;padding:1px 6px;border-radius:8px;transition:.15s;flex:none}
 .subadd:hover{color:var(--ok);background:var(--ok-soft)}
 .subprog{flex:none;font-size:0.6875rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 8px;line-height:1.6}
@@ -1005,7 +1004,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v149</span></h1>
+      <h1>Hábitos <span class="ver">v150</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1093,6 +1092,7 @@ td.hname.editcell::after{display:none}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v150</b> — La pestaña <b>«Semana»</b> ahora casa con la maqueta: tarjeta con borde del color de la pestaña, epígrafe <b>«🗓️ Tu semana»</b>, título con día (Lun … – Dom …) y filas con icono. Se corrige un <b>choque de estilos</b> que rompía las barras de hábitos (la clase se compartía con el gráfico de Panorama). (Solo cliente.)</div>
   <div class="vrow"><b>v149</b> — Nuevo <b>aviso por hábito a su hora</b>: cada hábito puede llevar su propia hora (en su editor ✎), y a esa hora te llega un push los <b>días que toca</b>, si aún no lo has marcado. Respeta <b>No molestar</b> y necesita los avisos 🔔 activados. En reposo, el hábito muestra un distintivo 🔔. (Solo cliente.)</div>
   <div class="vrow"><b>v148</b> — La pestaña <b>«Semana»</b> pasa junto a «Hoy». Nuevo <b>aviso del domingo</b> (push) con el resumen de tu semana, con <b>interruptor propio</b> en la campana 🔔 y <b>hora a tu gusto</b> (por defecto 10:00). Y se retira la vieja «notificación de prueba» local, que ya sustituye <b>«Probar el aviso del servidor»</b>. (Solo cliente.)</div>
   <div class="vrow"><b>v147</b> — Nueva pestaña <b>«Semana»</b>: un resumen amable de <b>lo que sí hiciste</b> esta semana (hábitos con sus barras, ejercicio, diario, tareas completadas, metas y logros), que se actualiza según vas marcando cosas, con ‹ › para mirar semanas anteriores. Sin rachas ni notas. (Lunes a domingo; solo cliente.)</div>
@@ -1252,7 +1252,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v149';
+const APPVER='v150';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -6401,20 +6401,30 @@ function semanaNext(){ if(semanaOffset<0){ semanaOffset++; renderSemana(); } }
 function fmtWkRange(wb){ const s=new Date(wb.mon); s.setDate(wb.mon.getDate()+6); const a=wb.mon.getDate()+' '+MONTHS[wb.mon.getMonth()].slice(0,3); const b=s.getDate()+' '+MONTHS[s.getMonth()].slice(0,3); return a+' – '+b; }
 function semanaRel(offset){ return offset===0?'Esta semana':(offset===-1?'Semana pasada':((-offset)+' semanas atrás')); }
 function wkDayName(dIso){ const p=dIso.split('-').map(Number); const dow=(new Date(p[0],p[1]-1,p[2]).getDay()+6)%7; return DAYFULL[dow].slice(0,3); }
+function fmtWkRangeLong(wb){ const s=new Date(wb.mon); s.setDate(wb.mon.getDate()+6);
+  const dA=DAYFULL[0].charAt(0).toUpperCase()+DAYFULL[0].slice(1,3);   // "Lun"
+  const dB=DAYFULL[6].charAt(0).toUpperCase()+DAYFULL[6].slice(1,3);   // "Dom"
+  const mA=MONTHS[wb.mon.getMonth()].slice(0,3), mB=MONTHS[s.getMonth()].slice(0,3);
+  const sameM=(wb.mon.getMonth()===s.getMonth());
+  return dA+' '+wb.mon.getDate()+(sameM?'':' '+mA)+' – '+dB+' '+s.getDate()+' '+mB; }
 function renderSemana(){
   const el=document.getElementById('viewSemana'); if(!el) return;
   const S=semanaStats(semanaOffset);
-  const nav='<div class="wknav"><button class="wkbtn" onclick="semanaPrev()" aria-label="Semana anterior">‹</button><div class="wkrange"><div class="wkr1">'+fmtWkRange(S.wb)+'</div><div class="wkr2">'+semanaRel(semanaOffset)+'</div></div><button class="wkbtn'+(semanaOffset>=0?' off':'')+'" '+(semanaOffset>=0?'disabled':'')+' onclick="semanaNext()" aria-label="Semana siguiente">›</button></div>';
+  const rel=semanaRel(semanaOffset);
+  const nav='<div class="smnav"><button class="smbtn" onclick="semanaPrev()" aria-label="Semana anterior">‹</button><button class="smbtn'+(semanaOffset>=0?' off':'')+'" '+(semanaOffset>=0?'disabled':'')+' onclick="semanaNext()" aria-label="Semana siguiente">›</button></div>';
+  const head='<div class="smeyebrow">🗓️ Tu semana</div><div class="smhead"><h1 class="smtitle">'+fmtWkRangeLong(S.wb)+'</h1>'+nav+'</div>';
   const total=S.marcas+S.wDays.length+S.diario+S.tareas+S.metas+S.logros;
-  if(total===0){ el.innerHTML='<div class="card">'+nav+'<div class="empty">Aún no hay nada registrado esta semana. En cuanto marques un hábito, entrenes o apuntes algo, aparecerá aquí. 🌱</div></div>'; return; }
+  if(total===0){ el.innerHTML='<div class="card smcard">'+head+'<div class="smintro">'+rel+'</div><div class="empty">Aún no hay nada registrado esta semana. En cuanto marques un hábito, entrenes o apuntes algo, aparecerá aquí. 🌱</div></div>'; return; }
   let rows='';
-  if(S.marcas>0){ const bars=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ const pct=Math.min(100, Math.round(x.count/(x.target||7)*100)); return '<div class="wkhb"><span class="wknm">'+esc(x.name)+'</span><span class="wktr"><i style="width:'+pct+'%;background:'+x.color+'"></i></span><span class="wkct">'+x.count+'</span></div>'; }).join('');
-    rows+='<div class="wkrow"><div class="wkic">✅</div><div style="flex:1"><div class="wklab">Hábitos</div><div class="wkval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div><div class="wkbars">'+bars+'</div></div></div>'; }
-  if(S.wDays.length>0){ const dn=S.wDays.slice().sort().map(wkDayName).join(', '); rows+='<div class="wkrow"><div class="wkic">🏋️</div><div><div class="wklab">Ejercicio</div><div class="wkval"><b>'+S.wDays.length+'</b> '+(S.wDays.length===1?'sesión':'sesiones')+' · '+dn+'</div></div></div>'; }
-  if(S.diario>0){ rows+='<div class="wkrow"><div class="wkic">📓</div><div><div class="wklab">Diario</div><div class="wkval"><b>'+S.diario+'</b> '+(S.diario===1?'apunte':'apuntes')+' de lo que hiciste</div></div></div>'; }
-  if(S.tareas>0){ rows+='<div class="wkrow"><div class="wkic">✔️</div><div><div class="wklab">Tareas</div><div class="wkval"><b>'+S.tareas+'</b> '+(S.tareas===1?'completada':'completadas')+'</div></div></div>'; }
-  if(S.metas>0||S.logros>0){ const parts=[]; if(S.metas>0) parts.push('<b>'+S.metas+'</b> '+(S.metas===1?'meta alcanzada':'metas alcanzadas')); if(S.logros>0) parts.push('<b>'+S.logros+'</b> '+(S.logros===1?'logro nuevo':'logros nuevos')); rows+='<div class="wkrow"><div class="wkic">🎯</div><div><div class="wklab">Metas y logros</div><div class="wkval">'+parts.join(' · ')+'</div></div></div>'; }
-  el.innerHTML='<div class="card">'+nav+'<div class="wkintro">Esto es lo que hiciste.</div>'+rows+'<div class="wkfoot">Una mirada a lo que sí hiciste — sin rachas ni notas.</div></div>';
+  if(S.marcas>0){ const det=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ return esc(x.name)+' <b>'+x.count+'</b>'; }).join(' · ');
+    rows+='<div class="smrow"><div class="smic">✅</div><div style="flex:1"><div class="smlab">Hábitos</div><div class="smval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div><div class="smdet">'+det+'</div></div></div>'; }
+  if(S.wDays.length>0){ const dn=S.wDays.slice().sort().map(wkDayName).join(', '); rows+='<div class="smrow"><div class="smic">🏋️</div><div><div class="smlab">Ejercicio</div><div class="smval"><b>'+S.wDays.length+'</b> '+(S.wDays.length===1?'sesión':'sesiones')+' · '+dn+'</div></div></div>'; }
+  if(S.diario>0){ rows+='<div class="smrow"><div class="smic">📓</div><div><div class="smlab">Diario</div><div class="smval"><b>'+S.diario+'</b> '+(S.diario===1?'apunte':'apuntes')+' de lo que hiciste</div></div></div>'; }
+  if(S.tareas>0){ rows+='<div class="smrow"><div class="smic">✔️</div><div><div class="smlab">Tareas</div><div class="smval"><b>'+S.tareas+'</b> '+(S.tareas===1?'completada':'completadas')+'</div></div></div>'; }
+  if(S.metas>0||S.logros>0){ const parts=[]; if(S.metas>0) parts.push('<b>'+S.metas+'</b> '+(S.metas===1?'meta alcanzada':'metas alcanzadas')); if(S.logros>0) parts.push('<b>'+S.logros+'</b> '+(S.logros===1?'logro nuevo':'logros nuevos')); rows+='<div class="smrow"><div class="smic">🎯</div><div><div class="smlab">Metas y logros</div><div class="smval">'+parts.join(' · ')+'</div></div></div>'; }
+  const wkc=(typeof weeklyCfg==='function')?weeklyCfg():{on:false,time:'10:00'};
+  const chip=wkc.on?'<span class="smchip">🔔 Resumen los domingos · '+wkc.time+'</span>':'';
+  el.innerHTML='<div class="card smcard">'+head+'<div class="smintro">Esto es lo que hiciste.</div>'+rows+'<div class="smfoot"><span>Una mirada a lo que sí hiciste — sin rachas ni notas.</span>'+chip+'</div>';
 }
 function switchTab(t){
   const tabs={hoy:'viewHoy', habits:'viewHabits', goals:'viewGoals', exercise:'viewExercise', pano:'viewPano', logs:'viewLogs', diary:'viewDiary', tasks:'viewTasks', notes:'viewNotes', plazos:'viewPlazos', agenda:'viewAgenda', semana:'viewSemana'};

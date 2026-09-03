@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v145</title>
+<title>Hábitos v148</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -176,6 +176,31 @@ header>.sub{margin-top:4px}
 .gstep.sdrop-after{box-shadow:inset 0 -2px 0 var(--tab)}
 .tasknode{--sub-line:var(--tab-line,var(--line))}
 .subs{margin:2px 0 2px 11px;border-left:1px solid var(--sub-line);padding-left:9px}
+.donesubs{margin-top:1px}
+.donesubrow{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:0.8125rem;padding:1px 0}
+.donesubrow .dsck{color:var(--muted)}
+.donesubrow .dsck.on{color:var(--ok)}
+/* v147: vista Semana */
+.wknav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.wkbtn{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:9px;min-width:44px;min-height:44px;font-size:1.1rem;cursor:pointer}
+.wkbtn.off,.wkbtn:disabled{opacity:.35;cursor:default}
+.wkrange{text-align:center;flex:1}
+.wkr1{font-family:'Space Grotesk',Inter,sans-serif;font-weight:700;font-size:1.05rem;color:var(--text)}
+.wkr2{color:var(--muted);font-size:0.78125rem}
+.wkintro{color:var(--muted);font-size:0.84rem;margin:0 2px 10px}
+.wkrow{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-top:1px solid var(--line)}
+.wkrow:first-of-type{border-top:none}
+.wkic{width:24px;text-align:center;font-size:1.05rem;flex:none;line-height:1.4}
+.wklab{font-weight:600;font-size:0.9rem;color:var(--text)}
+.wkval{color:var(--muted);font-size:0.84rem;margin-top:1px}
+.wkval b{color:var(--text);font-weight:600}
+.wkbars{margin-top:7px;display:flex;flex-direction:column;gap:5px}
+.wkhb{display:flex;align-items:center;gap:8px;font-size:0.8rem}
+.wknm{width:96px;flex:none;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wktr{flex:1;height:8px;background:var(--surface2);border-radius:5px;overflow:hidden}
+.wktr i{display:block;height:100%;border-radius:5px}
+.wkct{width:22px;text-align:right;flex:none;color:var(--muted)}
+.wkfoot{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);color:var(--muted);font-size:0.8rem}
 .subadd{color:var(--muted);font-size:1rem;line-height:1;padding:1px 6px;border-radius:8px;transition:.15s;flex:none}
 .subadd:hover{color:var(--ok);background:var(--ok-soft)}
 .subprog{flex:none;font-size:0.6875rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:1px 8px;line-height:1.6}
@@ -851,6 +876,9 @@ tr.hband.dragend td{box-shadow:inset 0 -2px 0 var(--acc)}
 .agsub{font-size:0.78rem;color:var(--muted);margin-top:2px}
 .agbtns{position:absolute;top:9px;right:9px;display:flex;gap:2px}
 .agnow{position:relative;display:flex;align-items:center;gap:11px;margin:2px 0 14px}
+.agnow.agfut{margin-top:8px}
+.agnow.agfut .aglbl{color:var(--muted)}
+.agnow.agfut .agdot{background:var(--muted)}
 .agnow>.agdot{position:absolute;left:-26px;top:2px;width:14px;height:14px;border-radius:50%;background:var(--acc);border:2px solid var(--bg);transform:translateX(1px);box-shadow:0 0 0 1px var(--acc),0 0 0 5px var(--tab-soft)}
 .aglbl{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.8rem;color:var(--acc);letter-spacing:.05em;text-transform:uppercase}
 .agrule{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--tab-line),transparent)}
@@ -969,7 +997,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v145</span></h1>
+      <h1>Hábitos <span class="ver">v148</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -999,6 +1027,7 @@ td.hname.editcell::after{display:none}
 <nav aria-label="Secciones de la app">
 <div class="tabs" role="tablist">
   <button class="tab active" id="tab_hoy" role="tab" aria-selected="true" aria-controls="viewHoy" tabindex="0" title="Atajo: 1" onclick="switchTab('hoy')">Hoy</button>
+  <button class="tab" id="tab_semana" role="tab" aria-selected="false" aria-controls="viewSemana" tabindex="-1" title="Semana (← →)" onclick="switchTab('semana')">Semana</button>
   <button class="tab" id="tab_habits" role="tab" aria-selected="false" aria-controls="viewHabits" tabindex="-1" title="Atajo: 2" onclick="switchTab('habits')">Hábitos</button>
   <button class="tab" id="tab_exercise" role="tab" aria-selected="false" aria-controls="viewExercise" tabindex="-1" title="Atajo: 3" onclick="switchTab('exercise')">Ejercicio</button>
   <button class="tab" id="tab_diary" role="tab" aria-selected="false" aria-controls="viewDiary" tabindex="-1" title="Atajo: 4" onclick="switchTab('diary')">Diario</button>
@@ -1025,6 +1054,7 @@ td.hname.editcell::after{display:none}
 <div id="viewTasks" role="tabpanel" aria-labelledby="tab_tasks" style="display:none"></div>
 <div id="viewNotes" role="tabpanel" aria-labelledby="tab_notes" style="display:none"></div>
 <div id="viewPlazos" role="tabpanel" aria-labelledby="tab_plazos" style="display:none"></div>
+<div id="viewSemana" role="tabpanel" aria-labelledby="tab_semana" style="display:none"></div>
 </main>
 
 <datalist id="exNames"></datalist>
@@ -1055,6 +1085,9 @@ td.hname.editcell::after{display:none}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v148</b> — La pestaña <b>«Semana»</b> pasa junto a «Hoy». Nuevo <b>aviso del domingo</b> (push) con el resumen de tu semana, con <b>interruptor propio</b> en la campana 🔔 y <b>hora a tu gusto</b> (por defecto 10:00). Y se retira la vieja «notificación de prueba» local, que ya sustituye <b>«Probar el aviso del servidor»</b>. (Solo cliente.)</div>
+  <div class="vrow"><b>v147</b> — Nueva pestaña <b>«Semana»</b>: un resumen amable de <b>lo que sí hiciste</b> esta semana (hábitos con sus barras, ejercicio, diario, tareas completadas, metas y logros), que se actualiza según vas marcando cosas, con ‹ › para mirar semanas anteriores. Sin rachas ni notas. (Lunes a domingo; solo cliente.)</div>
+  <div class="vrow"><b>v146</b> — Varios arreglos: las <b>tareas completadas conservan y muestran sus subtareas</b> (para ver los pasos que seguiste) y les <b>aparece la fecha</b> aunque estuvieran ya completadas; en la <b>Agenda</b> hay un divisor <b>«Futuro»</b> para que los eventos de hoy no se mezclen con los de más adelante, el campo de <b>hora arranca con la hora actual</b>, y se corrige un textito («U0001F501») que debía ser el emoji <b>🔁</b>. (Solo cliente.)</div>
   <div class="vrow"><b>v145</b> — <b>Varios avisos por evento</b>: ahora un mismo evento puede llevar <b>hasta 3 avisos anticipados</b> (p. ej. «1 día antes» y «1 hora antes» a la vez), cada uno con su propio push. En alta y edición aparecen tres selectores de antelación, cada uno opcional. Tus eventos actuales conservan su aviso. (Solo cliente.)</div>
   <div class="vrow"><b>v144</b> — <b>Aviso por defecto en eventos nuevos</b>: en la campana 🔔 puedes fijar una antelación (p. ej. «1 día antes») y cada evento que crees vendrá ya con ese aviso puesto, sin tener que ponerlo a mano cada vez. Se puede cambiar o quitar en cada evento. (No toca los eventos que ya tienes; solo cliente.)</div>
   <div class="vrow"><b>v143</b> — <b>Avisos «cada N horas» en eventos</b>: al crear o editar un evento puedes decir <b>«🔁 avisar cada 2 h de 09:00 a 21:00»</b> y te llegarán avisos repetidos dentro de esa franja, cada día que el evento toque. Ideal para «beber agua», «estirar», tomas, etc. (El evento sigue siendo una tarjeta al día; la franja no se exporta al .ics; solo cliente.)</div>
@@ -1210,7 +1243,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v145';
+const APPVER='v148';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1594,21 +1627,12 @@ function renderNotifPop(){
     <div class="hint">Al abrir la app pasada esa hora, te recuerda tus hábitos y tareas pendientes y los eventos que tengas hoy. (No suena con la app cerrada.)</div>
     ${pushSettingUI()}
     ${dndUI()}
-    <div class="thlab" style="margin-top:12px">Probar</div>
-    <div class="thmodes"><button class="tchip" onclick="sendTestNotification()">🔔 Enviar una notificación de prueba</button></div>
-    <div class="hint">Muestra una notificación de ejemplo en este móvil para comprobar que las ves. Prueba el permiso y el aparato (no el envío desde el servidor).</div>${cloudDown()?`
+    ${weeklyUI()}${cloudDown()?`
     <div class="thlab" style="margin-top:12px">Diagnóstico</div>
     <div class="cwarn">⚠ Sin conexión con la nube</div>
     <div class="hint">Puede que tu proyecto de Supabase esté pausado; reactívalo en su panel. Tus datos siguen guardándose en este dispositivo. Más detalles en 🩺 Diagnóstico (abajo del todo).</div>`:''}`;
 }
-function sendTestNotification(){
-  if(!('Notification' in window) || !('serviceWorker' in navigator)){ announce('Este dispositivo no admite notificaciones.'); return Promise.resolve(); }
-  const show=()=>navigator.serviceWorker.ready.then(reg=>reg.showNotification('Diario de Hábitos', { body:'✅ Las notificaciones funcionan en este dispositivo.', icon:'icon180.png', badge:'icon180.png', tag:'test-notif', renotify:true })).then(()=>announce('Notificación de prueba enviada.')).catch(()=>announce('No se pudo mostrar la notificación de prueba.'));
-  if(Notification.permission==='granted') return show();
-  if(Notification.permission!=='denied') return Notification.requestPermission().then(p=>{ if(p==='granted') return show(); announce('No se concedió el permiso de notificaciones.'); });
-  announce('Las notificaciones están bloqueadas en el navegador. Actívalas en los ajustes del navegador.');
-  return Promise.resolve();
-}
+/* v148: prueba de notificación LOCAL retirada — la sustituye «Probar el aviso del servidor» (Estado del push), que prueba la cadena real cron→servidor→push. */
 function thSwRow(presets, cur, fn){
   return presets.map(p=>{
     const on = cur===p.hex.toUpperCase();
@@ -2021,7 +2045,7 @@ function hourlyControls(prefix,hr){
   const opts=[{v:0,l:'—'}].concat(HR_OPTS.map(function(x){return {v:x,l:x+' h'};}));
   const sel='<select id="'+prefix+'_hrevery" aria-label="Avisar cada cuántas horas" title="Avisar cada N horas dentro de una franja" onchange="hrChanged(\''+prefix+'\')">'+opts.map(function(o){return '<option value="'+o.v+'"'+(o.v===h.every?' selected':'')+'>'+o.l+'</option>';}).join('')+'</select>';
   const times='<span class="hrwrap" id="'+prefix+'_hrwrap" style="display:'+(h.every>0?'':'none')+'"><span class="ulab">de</span><input type="time" id="'+prefix+'_hrfrom" value="'+h.from+'" aria-label="Desde"><span class="ulab">a</span><input type="time" id="'+prefix+'_hrto" value="'+h.to+'" aria-label="Hasta"></span>';
-  return '<span class="hrctl"><span class="ulab">\U0001F501 avisar cada</span>'+sel+times+'</span>';
+  return '<span class="hrctl"><span class="ulab">🔁 avisar cada</span>'+sel+times+'</span>';
 }
 async function syncServerEventReminders(){
   try{
@@ -2078,7 +2102,7 @@ async function syncServerEventReminders(){
     if(rows.length) await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:rows});
   }catch(e){ /* best-effort, silencioso */ }
 }
-function syncAllServerReminders(){ try{ syncServerReminder(); }catch(e){} try{ syncServerEventReminders(); }catch(e){} }
+function syncAllServerReminders(){ try{ syncServerReminder(); }catch(e){} try{ syncServerEventReminders(); }catch(e){} try{ syncServerWeekly(); }catch(e){} }
 function toggleReminder(){ const r=reminderCfg(); r.on=!r.on; r.lastShown=''; renderNotifPop(); persist(); announce(r.on?('Recordatorio diario activado a las '+r.time+'.'):'Recordatorio desactivado.'); if(r.on) maybeRemind(); syncAllServerReminders(); }
 function setReminderTime(v){ const r=reminderCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ r.time=v; r.lastShown=''; persist(); renderNotifPop(); syncAllServerReminders(); } }
 
@@ -3342,7 +3366,7 @@ document.addEventListener('keydown', e=>{
 document.addEventListener('keydown', e=>{
   const t=e.target;
   if(!t || !t.classList || !t.classList.contains('tab')) return;
-  const order=['hoy','habits','exercise','diary','notes','tasks','plazos','goals','logs','pano','agenda'];
+  const order=['hoy','semana','habits','exercise','diary','notes','tasks','plazos','goals','logs','pano','agenda'];
   const cur=order.findIndex(x=>'tab_'+x===t.id);
   if(cur<0) return;
   let nx=null;
@@ -5075,11 +5099,13 @@ function renderTaskNode(t, i, siblings){
     </div>${subsHtml}</div>`;
 }
 function doneDateLabel(isoStr){ if(!isoStr) return ''; const p=isoStr.split('-').map(Number); return '✓ '+p[2]+' '+MONTHS[p[1]-1].slice(0,3); }
+function doneSubList(subs){ if(!subs||!subs.length) return ''; return '<div class="subs donesubs">'+subs.map(function(s){ const dn=taskDone(s); return '<div class="donesubrow"><span class="dsck'+(dn?' on':'')+'">'+(dn?'✓':'·')+'</span> '+esc(s.text)+'</div>'+doneSubList(s.subs); }).join('')+'</div>'; }
 function toggleTaskCollapse(id){ const t=findTaskById(id); if(!t) return; t.collapsed=!t.collapsed; refresh('tasks'); persist(); }
 function tasksDoneToggle(open){ state.ui.tasksDoneOpen=!!open; persist(); }
 function clearCompletedTasks(){ const before=snapshot(); const n=state.tasks.filter(t=>!t.repeat && taskDone(t)).length; state.tasks=state.tasks.filter(t=> t.repeat || !taskDone(t)); refresh('tasks'); persist(); offerUndo((n===1?'1 tarea completada eliminada':n+' tareas completadas eliminadas'), before); }
 function renderTasks(){
   if(applyRepeatResets()) persist();
+  let _bf=false; state.tasks.forEach(function(t){ if(!t.repeat && taskDone(t) && !t.doneAt){ t.doneAt=iso(new Date()); _bf=true; } }); if(_bf) persist();   /* v146: fecha a tareas ya completadas sin ella */
   const active = state.tasks.filter(t=> t.repeat || !taskDone(t));      /* v85: recurrentes y no-hechas arriba */
   const doneTops = state.tasks.filter(t=> !t.repeat && taskDone(t));     /* v85: totalmente hechas → «Completadas» */
   const list = active.map((t,i)=>renderTaskNode(t,i,state.tasks)).join('');
@@ -5091,7 +5117,7 @@ function renderTasks(){
       <span class="gt" style="color:var(--muted);text-decoration:line-through">${esc(t.text)}</span>
       ${t.doneAt?`<span class="tdate">${doneDateLabel(t.doneAt)}</span>`:''}
       <button class="delh" title="Eliminar tarea" onclick="delTask('${t.id}')">✕</button>
-    </div>`).join('');
+    </div>${(t.subs&&t.subs.length)?doneSubList(t.subs):''}`).join('');
   const doneCard = doneTops.length ? `<details class="donegroup" ${state.ui.tasksDoneOpen?'open':''} ontoggle="tasksDoneToggle(this.open)">
       <summary class="donesum">Completadas <span class="donecount">· ${doneTops.length}</span></summary>
       ${doneRows}
@@ -5826,7 +5852,8 @@ function renderAgenda(){
   const todayIso=iso(new Date());
   const items=agItems().sort((a,b)=>agSortKey(a).localeCompare(agSortKey(b)));
   const past=items.filter(it=>it.date<todayIso);
-  const upc =items.filter(it=>it.date>=todayIso);
+  const todayItems=items.filter(it=>it.date===todayIso);
+  const futureItems=items.filter(it=>it.date>todayIso);
   const nE=state.events.length, nP=state.deadlines.length, nL=state.logs.length;
   const fopts=[{k:'all',name:'Todo',color:TABMETA.agenda.c,n:nE+nP+nL},{k:'events',name:'Eventos',color:TABMETA.agenda.c,n:nE},{k:'plazos',name:'Plazos',color:'#7C86F0',n:nP},{k:'logros',name:'Logros',color:'#E9C55B',n:nL}];
   const chips=fopts.map(o=>{ const on=agFilter===o.k; const st=on?`style="color:${ink(o.color)};border-color:${ink(o.color)};background:${hexRgba(o.color,.12)}"`:''; return `<button class="hchip" aria-pressed="${on}" ${st} onclick="setAgFilter('${o.k}')">${o.name} · ${o.n}</button>`; }).join('');
@@ -5835,9 +5862,12 @@ function renderAgenda(){
       ${agListWithSeps(past, null)}
     </details>` : '';
   const nowRow = `<div class="agnow"><span class="agdot"></span><span class="aglbl">Hoy · ${agFmt(todayIso)}</span><span class="agrule"></span></div>`;
-  const upcHtml = upc.length ? agListWithSeps(upc, todayIso.slice(0,7)) : '<div class="agsoon">No tienes nada apuntado por delante. Añade un evento arriba.</div>';
-  const tl = (past.length||upc.length)
-    ? `<div class="agtl">${pastCard}${nowRow}${upcHtml}</div>`
+  const futRow = futureItems.length ? `<div class="agnow agfut"><span class="agdot"></span><span class="aglbl">Futuro</span><span class="agrule"></span></div>` : '';
+  const todayHtml = todayItems.length ? agListWithSeps(todayItems, todayIso.slice(0,7)) : '';
+  const futHtml = futureItems.length ? agListWithSeps(futureItems, todayIso.slice(0,7)) : '';
+  const nadaAhead = (!todayItems.length && !futureItems.length) ? '<div class="agsoon">No tienes nada apuntado por delante. Añade un evento arriba.</div>' : '';
+  const tl = (past.length||todayItems.length||futureItems.length)
+    ? `<div class="agtl">${pastCard}${nowRow}${todayHtml}${nadaAhead}${futRow}${futHtml}</div>`
     : '<div class="empty">Tu agenda está vacía. Apunta tu primer evento —una cita, un cumpleaños— y aparecerá aquí junto a tus plazos y logros.</div>';
   el.innerHTML = `
     <div class="hchips">${chips}</div>
@@ -5858,7 +5888,7 @@ function renderAgenda(){
       <div class="agadd">
         <input type="text" id="ev_title" placeholder="Qué pasa (ej: Cita con el dentista)" maxlength="120" onkeydown="if(event.key==='Enter')addEvent()">
         <input type="date" id="ev_date" value="${todayIso}" title="Fecha">
-        <input type="time" id="ev_time" title="Hora (opcional)">
+        <input type="time" id="ev_time" title="Hora (opcional)" value="${(function(){const _n=new Date();const _p=x=>String(x).padStart(2,'0');return _p(_n.getHours())+':'+_p(_n.getMinutes());})()}">
         <select id="ev_repeat" title="¿Se repite?" aria-label="Repetición" onchange="agAddRepeatChanged()">
           <option value="none">No se repite</option>
           <option value="daily">Cada día</option>
@@ -6214,6 +6244,7 @@ const TABMETA={
   notes:{name:'Notas', icon:'🗒️', c:'#FFB7C5'},
   plazos:{name:'Plazos', icon:'📅', c:'#7C86F0'},
   agenda:{name:'Agenda', icon:'🗒️', c:'#E58AC9'},
+  semana:{name:'Semana', icon:'🗓️', c:'#7ED0B4'},
 };
 function tabSoft(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`; }
 function initTabColors(){ Object.keys(TABMETA).forEach(k=>{ const b=document.getElementById('tab_'+k); if(b) b.style.setProperty('--c', TABMETA[k].c); }); }
@@ -6223,8 +6254,90 @@ function setViewHead(t){
   const el=document.getElementById('viewHead');
   if(el) el.innerHTML=`<span class="vh-ic">${m.icon}</span><span class="vh-name">${m.name}</span>`;
 }
+/* v147: RESUMEN SEMANAL «Semana» -------------------------------------------
+   Semana lunes→domingo. semanaOffset: 0 = esta semana, -1 = la anterior, etc.
+   Cuenta lo HECHO (sin rachas ni notas): marcas de hábitos, sesiones de ejercicio,
+   apuntes del diario, tareas completadas, metas alcanzadas y logros. */
+let semanaOffset=0;
+function weekBounds(offset){
+  const now=new Date(); now.setHours(0,0,0,0);
+  const dow=(now.getDay()+6)%7;
+  const mon=new Date(now); mon.setDate(now.getDate()-dow+offset*7);
+  const days=[]; for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(mon.getDate()+i); days.push(iso(d)); }
+  return {mon:mon, days:days, from:days[0], to:days[6]};
+}
+function weekBoundsForDate(dt){ const x=new Date(dt); x.setHours(0,0,0,0); const dow=(x.getDay()+6)%7; const mon=new Date(x); mon.setDate(x.getDate()-dow); const days=[]; for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(mon.getDate()+i); days.push(iso(d)); } return {mon:mon, days:days, from:days[0], to:days[6]}; }
+function semanaStats(offset){ return semanaStatsFrom(weekBounds(offset)); }
+function semanaStatsFrom(wb){ const inWk=function(d){ return d && d>=wb.from && d<=wb.to; };
+  const habs=state.habits.filter(function(h){ return !h.archived; });
+  const perHab=habs.map(function(h){ let c=0; wb.days.forEach(function(ds){ if(isChecked(ds,h.id)) c++; }); return {name:h.name, color:h.color||'var(--acc)', count:c, target:(h.target||7)}; });
+  const marcas=perHab.reduce(function(s,x){ return s+x.count; },0);
+  const tocados=perHab.filter(function(x){ return x.count>0; }).length;
+  const wDays=[]; state.workouts.forEach(function(w){ if(inWk(w.date) && wDays.indexOf(w.date)<0) wDays.push(w.date); });
+  const diario=state.diary.filter(function(d){ return inWk(d.date); }).length;
+  let tareas=0; state.tasks.forEach(function(t){ if(t.repeat){ if(Array.isArray(t.hist)) tareas+=t.hist.filter(inWk).length; } else if(t.doneAt && inWk(t.doneAt)) tareas++; });
+  const metas=state.goals.filter(function(g){ return g.doneAt && inWk(g.doneAt); }).length;
+  const logros=state.logs.filter(function(l){ return inWk(l.date); }).length;
+  return {wb:wb, perHab:perHab, marcas:marcas, tocados:tocados, totalHab:habs.length, wDays:wDays, diario:diario, tareas:tareas, metas:metas, logros:logros};
+}
+function weeklyCfg(){ if(!state.ui)state.ui={}; if(!state.ui.weekly)state.ui.weekly={on:false, time:'10:00'}; if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(state.ui.weekly.time)) state.ui.weekly.time='10:00'; return state.ui.weekly; }
+function weeklySummaryText(wb){ const S=semanaStatsFrom(wb); const parts=[];
+  if(S.marcas>0) parts.push(S.marcas+' '+(S.marcas===1?'marca':'marcas'));
+  if(S.wDays.length>0) parts.push(S.wDays.length+' '+(S.wDays.length===1?'sesión':'sesiones'));
+  if(S.diario>0) parts.push(S.diario+' '+(S.diario===1?'apunte':'apuntes'));
+  if(S.tareas>0) parts.push(S.tareas+' '+(S.tareas===1?'tarea':'tareas'));
+  if(S.metas>0) parts.push(S.metas+' '+(S.metas===1?'meta':'metas'));
+  if(S.logros>0) parts.push(S.logros+' '+(S.logros===1?'logro':'logros'));
+  return parts.length ? ('Tu semana: '+parts.join(' · ')+' 🎉') : 'Tu semana te espera — entra a ver lo que hiciste 👀'; }
+function weeklyUI(){ const w=weeklyCfg();
+  return '<div class="thlab" style="margin-top:12px">Resumen de la semana</div>'
+    +'<div class="nrow"><span class="ntxt">Aviso del domingo</span><span style="display:flex;align-items:center;gap:8px">'
+    +(w.on?'<input type="time" value="'+w.time+'" onchange="setWeeklyTime(this.value)" aria-label="Hora del resumen semanal" style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">':'')
+    +pushSwitch(w.on,'toggleWeekly()','Resumen semanal del domingo')+'</span></div>'
+    +'<div class="hint">Los domingos a las '+w.time+' te llega un resumen de lo que hiciste esa semana. Necesita los avisos activados arriba.</div>'; }
+function toggleWeekly(){ const w=weeklyCfg(); w.on=!w.on; renderNotifPop(); persist(); announce(w.on?('Resumen semanal activado (domingos a las '+w.time+').'):'Resumen semanal desactivado.'); try{ syncServerWeekly(); }catch(e){} }
+function setWeeklyTime(v){ const w=weeklyCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ w.time=v; persist(); renderNotifPop(); try{ syncServerWeekly(); }catch(e){} } }
+async function syncServerWeekly(){
+  try{
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
+    const w=weeklyCfg();
+    if(!w.on){ if(w.schedId){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(w.schedId), {method:'DELETE'}); }catch(e){} w.schedId=''; persist(); } return; }
+    const m=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(w.time||'10:00'); if(!m) return;
+    const now=new Date();
+    let f=new Date(now.getFullYear(),now.getMonth(),now.getDate(),+m[1],+m[2],0,0);
+    let dd=(7 - f.getDay())%7;                 // domingo=0: días hasta el próximo domingo
+    f.setDate(f.getDate()+dd);
+    if(f.getTime()<=now.getTime()+30000) f.setDate(f.getDate()+7);   // si el de hoy ya pasó, el siguiente
+    const ymd=''+f.getFullYear()+String(f.getMonth()+1).padStart(2,'0')+String(f.getDate()).padStart(2,'0');
+    const id='weekly-'+CLOUD.session.user_id+'-'+ymd;
+    if(w.schedId && w.schedId!==id){ const _oy=String(w.schedId).slice(-8); let _safe=true; if(/^\d{8}$/.test(_oy)){ const _of=new Date(+_oy.slice(0,4),+_oy.slice(4,6)-1,+_oy.slice(6,8),+m[1],+m[2],0,0); _safe=_of.getTime()<=now.getTime()-REM_GUARD_MS; } if(_safe){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(w.schedId), {method:'DELETE'}); }catch(e){} } }
+    const body=weeklySummaryText(weekBoundsForDate(f));
+    await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{id:id, user_id:CLOUD.session.user_id, fire_at:f.toISOString(), title:'Diario de Hábitos', body:body, url:'https://arielmartinezj.github.io/H/'}]});
+    w.schedId=id; persist();
+  }catch(e){ /* best-effort, silencioso */ }
+}
+function semanaPrev(){ semanaOffset--; renderSemana(); }
+function semanaNext(){ if(semanaOffset<0){ semanaOffset++; renderSemana(); } }
+function fmtWkRange(wb){ const s=new Date(wb.mon); s.setDate(wb.mon.getDate()+6); const a=wb.mon.getDate()+' '+MONTHS[wb.mon.getMonth()].slice(0,3); const b=s.getDate()+' '+MONTHS[s.getMonth()].slice(0,3); return a+' – '+b; }
+function semanaRel(offset){ return offset===0?'Esta semana':(offset===-1?'Semana pasada':((-offset)+' semanas atrás')); }
+function wkDayName(dIso){ const p=dIso.split('-').map(Number); const dow=(new Date(p[0],p[1]-1,p[2]).getDay()+6)%7; return DAYFULL[dow].slice(0,3); }
+function renderSemana(){
+  const el=document.getElementById('viewSemana'); if(!el) return;
+  const S=semanaStats(semanaOffset);
+  const nav='<div class="wknav"><button class="wkbtn" onclick="semanaPrev()" aria-label="Semana anterior">‹</button><div class="wkrange"><div class="wkr1">'+fmtWkRange(S.wb)+'</div><div class="wkr2">'+semanaRel(semanaOffset)+'</div></div><button class="wkbtn'+(semanaOffset>=0?' off':'')+'" '+(semanaOffset>=0?'disabled':'')+' onclick="semanaNext()" aria-label="Semana siguiente">›</button></div>';
+  const total=S.marcas+S.wDays.length+S.diario+S.tareas+S.metas+S.logros;
+  if(total===0){ el.innerHTML='<div class="card">'+nav+'<div class="empty">Aún no hay nada registrado esta semana. En cuanto marques un hábito, entrenes o apuntes algo, aparecerá aquí. 🌱</div></div>'; return; }
+  let rows='';
+  if(S.marcas>0){ const bars=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ const pct=Math.min(100, Math.round(x.count/(x.target||7)*100)); return '<div class="wkhb"><span class="wknm">'+esc(x.name)+'</span><span class="wktr"><i style="width:'+pct+'%;background:'+x.color+'"></i></span><span class="wkct">'+x.count+'</span></div>'; }).join('');
+    rows+='<div class="wkrow"><div class="wkic">✅</div><div style="flex:1"><div class="wklab">Hábitos</div><div class="wkval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div><div class="wkbars">'+bars+'</div></div></div>'; }
+  if(S.wDays.length>0){ const dn=S.wDays.slice().sort().map(wkDayName).join(', '); rows+='<div class="wkrow"><div class="wkic">🏋️</div><div><div class="wklab">Ejercicio</div><div class="wkval"><b>'+S.wDays.length+'</b> '+(S.wDays.length===1?'sesión':'sesiones')+' · '+dn+'</div></div></div>'; }
+  if(S.diario>0){ rows+='<div class="wkrow"><div class="wkic">📓</div><div><div class="wklab">Diario</div><div class="wkval"><b>'+S.diario+'</b> '+(S.diario===1?'apunte':'apuntes')+' de lo que hiciste</div></div></div>'; }
+  if(S.tareas>0){ rows+='<div class="wkrow"><div class="wkic">✔️</div><div><div class="wklab">Tareas</div><div class="wkval"><b>'+S.tareas+'</b> '+(S.tareas===1?'completada':'completadas')+'</div></div></div>'; }
+  if(S.metas>0||S.logros>0){ const parts=[]; if(S.metas>0) parts.push('<b>'+S.metas+'</b> '+(S.metas===1?'meta alcanzada':'metas alcanzadas')); if(S.logros>0) parts.push('<b>'+S.logros+'</b> '+(S.logros===1?'logro nuevo':'logros nuevos')); rows+='<div class="wkrow"><div class="wkic">🎯</div><div><div class="wklab">Metas y logros</div><div class="wkval">'+parts.join(' · ')+'</div></div></div>'; }
+  el.innerHTML='<div class="card">'+nav+'<div class="wkintro">Esto es lo que hiciste.</div>'+rows+'<div class="wkfoot">Una mirada a lo que sí hiciste — sin rachas ni notas.</div></div>';
+}
 function switchTab(t){
-  const tabs={hoy:'viewHoy', habits:'viewHabits', goals:'viewGoals', exercise:'viewExercise', pano:'viewPano', logs:'viewLogs', diary:'viewDiary', tasks:'viewTasks', notes:'viewNotes', plazos:'viewPlazos', agenda:'viewAgenda'};
+  const tabs={hoy:'viewHoy', habits:'viewHabits', goals:'viewGoals', exercise:'viewExercise', pano:'viewPano', logs:'viewLogs', diary:'viewDiary', tasks:'viewTasks', notes:'viewNotes', plazos:'viewPlazos', agenda:'viewAgenda', semana:'viewSemana'};
   Object.keys(tabs).forEach(x=>{
     const b=document.getElementById('tab_'+x);
     b.classList.toggle('active', x===t);
@@ -6239,6 +6352,7 @@ function switchTab(t){
   if(t==='goals') renderGoals();
   if(t==='plazos') renderPlazos();
   if(t==='hoy') renderHoy();
+  if(t==='semana'){ semanaOffset=0; renderSemana(); }
   maybeCascadeHabits();          /* cascada solo en Hábitos (una vez/cada vez) */
   if(t==='habits') requestAnimationFrame(centerHabitsToday);
 }
@@ -6246,7 +6360,7 @@ function renderAll(){
   initTabColors(); setViewHead(activeTab);
   renderBackupWarn(); renderTodayBar(); renderGoals(); renderBackup(); renderUndo();
   Object.keys(dirty).forEach(k=>dirty[k]=false);
-  renderHoy(); renderHabits(); renderExercise(); renderPano(); renderLogs(); renderDiary(); renderTasks(); renderNotes(); renderPlazos(); renderAgenda();
+  renderHoy(); renderHabits(); renderExercise(); renderPano(); renderLogs(); renderDiary(); renderTasks(); renderNotes(); renderPlazos(); renderAgenda(); renderSemana();
 }
 
 load();

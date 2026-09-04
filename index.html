@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v153</title>
+<title>Hábitos v158</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -613,6 +613,11 @@ mark{background:var(--acc);color:#111;border-radius:3px;padding:0 2px}
 .tcollapse:hover{color:var(--text);background:rgba(255,255,255,.06)}
 .tdonerow{display:flex;align-items:center;gap:9px;background:var(--surface2);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:11px;padding:8px 12px;margin-bottom:8px;opacity:.8}
 .tdonerow .gt{flex:1;font-size:0.9rem}
+/* v155: tarjeta de tarea completada que CONTIENE sus subtareas (plegables) */
+.tdonecard{background:var(--surface2);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:11px;padding:8px 12px 9px;margin-bottom:8px;opacity:.85}
+.tdonehead{display:flex;align-items:center;gap:9px}
+.tdonehead .gt{flex:1;font-size:0.9rem}
+.tdonecard .donesubs{margin:8px 0 1px 30px;border-left:1px solid var(--line);padding-left:11px}
 .tdate{font-size:0.72rem;color:var(--muted);white-space:nowrap;flex:none}
 .donegroup .vaciar{margin-top:10px;text-align:right}
 .notecard.done{opacity:.62}
@@ -658,6 +663,12 @@ mark{background:var(--acc);color:#111;border-radius:3px;padding:0 2px}
 .dztag.ok{background:var(--tab-soft);color:var(--tab);border:1px solid var(--tab-line)}
 .dztag.over{background:rgba(255,122,122,.14);color:var(--danger);border:1px solid var(--danger)}
 .dztag.soon{background:var(--acc-soft);color:var(--acc);border:1px solid var(--acc)}
+/* v157: calendario de la Agenda (todo lo con fecha, color por pestaña) */
+.agcaltag{display:block;margin-top:2px;font-size:0.54rem;line-height:1.25;border:1px solid;border-radius:4px;padding:1px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agcalmore{display:block;margin-top:2px;font-size:0.52rem;color:var(--muted)}
+.agcalleg{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:0.7rem;color:var(--muted)}
+.agcaldot{display:inline-flex;align-items:center;gap:5px}
+.agcaldot::before{content:'';width:11px;height:11px;border-radius:4px;background:var(--k)}
 .dzdone{margin-top:10px}
 /* v61: pantalla Hoy */
 .hoy-summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
@@ -1010,7 +1021,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v153</span></h1>
+      <h1>Hábitos <span class="ver">v158</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1098,6 +1109,11 @@ td.hname.editcell::after{display:none}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v158</b> — El <b>.ics</b> (exportar/copiar calendario) ahora <b>sí incluye la franja «cada N h»</b>: un evento con avisos cada N horas se exporta como un hueco por cada hora de la franja (09:00, 11:00, 13:00…), respetando su repetición. Así tu calendario externo ve esos huecos, no solo la app. (Solo cliente.)</div>
+  <div class="vrow"><b>v157</b> — <b>Agenda</b> estrena un <b>calendario de mes</b> (debajo de la lista) que enseña <b>todo lo que tiene fecha</b> —eventos, plazos, tareas, metas, logros y diario— cada cosa con el <b>color de su pestaña</b>. Y en <b>Panorama</b>, los días pasan a un verde de <b>oscuro a brillante con mucho más contraste</b>, para ver de un vistazo qué tan bueno fue cada día. (Solo cliente.)</div>
+  <div class="vrow"><b>v156</b> — En <b>Tareas</b>, el campo <b>«Añadir tarea» sube arriba del todo</b>, para crear una tarea nueva sin bajar por toda la lista. (Solo cliente.)</div>
+  <div class="vrow"><b>v155</b> — En <b>Tareas</b>, las subtareas de una tarea completada ahora van <b>dentro de su tarjeta</b> (antes colgaban debajo, sueltas) y se pueden <b>plegar y desplegar</b> con ▾ / ▸, igual que las tareas sin terminar. (Solo cliente.)</div>
+  <div class="vrow"><b>v154</b> — Al tocar un aviso, la app te lleva <b>directo a la pestaña que toca</b> (diario y hábito → Hoy, eventos → Agenda, resumen → Semana), y la notificación trae un botón <b>«Abrir»</b>. <b>Esta versión cambia también <code>sw.js</code></b>: sube los dos archivos. (Solo cliente.)</div>
   <div class="vrow"><b>v153</b> — Preparada para el cron de avisos cada <b>1 minuto</b> (antes 5): los avisos llegan más puntuales, y el <b>Diagnóstico</b> cuenta bien las últimas 24 h a esa cadencia (deja de fiarse del nº de filas). Detección de «cron parado» más rápida (~5 min). (Solo cliente.)</div>
   <div class="vrow"><b>v152</b> — El <b>aviso del domingo</b> ya no lleva cifras (podían quedar viejas si no abrías la app): ahora es una <b>invitación a entrar</b> a ver tu semana. Los números están en la pestaña <b>Semana</b>, que siempre está al día. (Solo cliente.)</div>
   <div class="vrow"><b>v151</b> — En la pestaña <b>«Semana»</b>, la fila de <b>Hábitos</b> muestra ahora una <b>barra de color por hábito</b> (con su color y su nº), llena respecto a tu objetivo semanal. (Solo cliente.)</div>
@@ -1261,7 +1277,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v153';
+const APPVER='v158';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1376,6 +1392,7 @@ let panoHabit = null, panoMode = 'month', panoAll = true;   /* v89: panoAll = p�
 let statWin = 'month';   /* v76: ventana del panel de constancia: 'month' | '4w' */
 let panoY = new Date().getFullYear(), panoM = new Date().getMonth();
 let plzY = new Date().getFullYear(), plzM = new Date().getMonth();
+let agCalY = new Date().getFullYear(), agCalM = new Date().getMonth();   /* v157: mes del calendario de Agenda */
 let agFilter='all', agEditFor=null;   /* v88: filtro y edición en la Agenda */
 let plzEdit=null;
 
@@ -1957,6 +1974,14 @@ function registerSW(){ try{
     probeCache();
   }catch(e){ SW_STATE='no disponible'; } }
 registerSW();
+/* v154: DEEP-LINK desde las notificaciones. Cada aviso lleva un #tab en su URL.
+   Al abrir la app por ese enlace saltamos a esa pestaña; y si la app ya estaba
+   abierta, el service worker nos avisa por postMessage para cambiar de pestaña. */
+var LINK_TABS={hoy:1,semana:1,habits:1,exercise:1,diary:1,notes:1,tasks:1,plazos:1,goals:1,logs:1,pano:1,agenda:1};
+function tabFromHref(href){ try{ return ((new URL(href, location.href)).hash||'').replace('#','').toLowerCase(); }catch(e){ return ''; } }
+function applyLaunchTab(){ var t=(location.hash||'').replace('#','').toLowerCase(); if(LINK_TABS[t]){ try{ switchTab(t); }catch(e){} } }
+window.addEventListener('hashchange', applyLaunchTab);
+try{ if('serviceWorker' in navigator){ navigator.serviceWorker.addEventListener('message', function(e){ var d=e&&e.data; if(d && d.type==='navigate'){ var t=(d.tab||tabFromHref(d.url||'')); if(LINK_TABS[t]){ try{ switchTab(t); }catch(er){} } } }); } }catch(e){}
 function doInstall(){ if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.finally(()=>{ deferredInstall=null; renderSetPop(); }); } }
 function pwaInstallUI(){
   if(isStandalone()) return `<span class="hint">Ya la usas como app instalada ✓</span>`;
@@ -2007,7 +2032,7 @@ async function syncServerReminder(){
     if(r.schedId && r.schedId!==id){ const _oy=String(r.schedId).slice(-8); let _safe=true; if(/^\d{8}$/.test(_oy)){ const _of=new Date(+_oy.slice(0,4), +_oy.slice(4,6)-1, +_oy.slice(6,8), +m[1], +m[2], 0, 0); _safe=_of.getTime()<=now.getTime()-REM_GUARD_MS; } if(_safe){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(r.schedId), {method:'DELETE'}); }catch(e){} } }
     // UPSERT sin 'sent' (no reabrir uno ya enviado). merge-duplicates por id (PK).
     await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:[{id:id, user_id:CLOUD.session.user_id, fire_at:f.toISOString(), title:'Diario de Hábitos', body:'¿Ya hiciste tus hábitos de hoy? \u270D\uFE0F', url:'https://arielmartinezj.github.io/H/'}]});
+      body:[{id:id, user_id:CLOUD.session.user_id, fire_at:f.toISOString(), title:'Diario de Hábitos', body:'¿Ya hiciste tus hábitos de hoy? \u270D\uFE0F', url:'https://arielmartinezj.github.io/H/#hoy'}]});
     r.schedId=id; persist();
   }catch(e){ /* best-effort, silencioso */ }
 }
@@ -2079,7 +2104,7 @@ async function syncServerEventReminders(){
     const rt=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(reminderCfg().time||'20:00');
     const avisos = rt ? new Date(now.getFullYear(),now.getMonth(),now.getDate(),+rt[1],+rt[2],0,0) : null;
     const avisosAhead = !!(avisos && avisos.getTime()>now.getTime());
-    const URL_='https://arielmartinezj.github.io/H/'; const rows=[];
+    const URL_='https://arielmartinezj.github.io/H/#agenda'; const rows=[];
     /* v127: la AGRUPACIÓN depende del modo (Resumen / Medio / Individual). En los tres,
        los eventos CON HORA suenan a su hora y el "día-de" se programa hasta EV_HORIZON
        días; cambia cómo se juntan los de TODO EL DÍA y la antelación ("Próximos", solo hoy). */
@@ -2160,7 +2185,7 @@ async function syncServerHabitReminders(){
         h.remindSchedId=''; changed=true;
       }
       if(!f) continue;
-      await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{id:id, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:habitPushBody(h), url:'https://arielmartinezj.github.io/H/'}]});
+      await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{id:id, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:habitPushBody(h), url:'https://arielmartinezj.github.io/H/#hoy'}]});
       if(h.remindSchedId!==id){ h.remindSchedId=id; changed=true; }
     }
     if(changed) persist();
@@ -2600,6 +2625,7 @@ async function load(){
     panoHabit = state.habits.length ? state.habits[0].id : null;
     renderAll(); pintarFrase(); pintarFecha();
     maybeCascadeHabits();
+    applyLaunchTab();   /* v154: si se abrió por una notificación con #tab, salta a esa pestaña */
     if(repairs.length) showReadRepairs();
     persist();                            /* seguro: READ_OK ya es true */
     maybeAutoBackup();
@@ -4314,7 +4340,8 @@ function panoDayFrac(dt){
   for(const hb of state.habits){ if(hb.archived) continue; if(habitDueOn(hb,dt)){ den++; if(isChecked(iso(dt),hb.id)) num++; } }
   return den ? {num, den, frac:num/den} : {num:0, den:0, frac:null};
 }
-function panoHeatMonth(frac){ return (frac===null||frac===0) ? '' : `background:rgba(126,226,168,${(0.14+0.70*frac).toFixed(3)});border-color:rgba(126,226,168,${(0.28+0.60*frac).toFixed(3)});color:#EAFBF1`; }
+function panoGreen(f){ f=Math.max(0,Math.min(1,f)); const r=Math.round(30+110*f), g=Math.round(58+172*f), b=Math.round(44+121*f); return r+','+g+','+b; }
+function panoHeatMonth(frac){ if(frac===null||frac===0) return ''; const f=Math.max(0,Math.min(1,frac)); const txt=f>0.55?'#0B0E14':'#EAFBF1'; return `background:rgb(${panoGreen(f)});border-color:rgba(126,226,168,${(0.40+0.50*f).toFixed(2)});color:${txt}`; }
 function panoAllMonth(){
   const todayIso=iso(new Date());
   const today=new Date(); today.setHours(0,0,0,0);
@@ -4344,7 +4371,7 @@ function panoAllMonth(){
     </div>
     <div class="cal">${cells}</div>
     <div class="statline">${pct}% de los hábitos que tocaban, cumplidos al día (media del mes hasta hoy)</div>
-    <div class="heatleg"><span>Menos</span><span class="heatbar"><i style="background:rgba(126,226,168,.16)"></i><i style="background:rgba(126,226,168,.33)"></i><i style="background:rgba(126,226,168,.50)"></i><i style="background:rgba(126,226,168,.67)"></i><i style="background:rgba(126,226,168,.84)"></i></span><span>Todos</span></div>
+    <div class="heatleg"><span>Menos</span><span class="heatbar"><i style="background:rgb(52,92,68)"></i><i style="background:rgb(74,127,92)"></i><i style="background:rgb(96,161,117)"></i><i style="background:rgb(118,196,141)"></i><i style="background:rgb(140,230,165)"></i></span><span>Todos</span></div>
     <div class="kbdhint" style="text-align:center">Cada día se tiñe según cuántos hábitos con objetivo cumpliste. El número es cuántos. ★ = día con logro.</div>
   </div>`;
 }
@@ -4359,7 +4386,7 @@ function panoAllYear(){
       const dt=new Date(panoY,m,d); const future=dt>today;
       if(future){ cells+=`<div class="md future"></div>`; continue; }
       const f=panoDayFrac(dt); if(f.den){ yNum+=f.num; yDen+=f.den; mNum+=f.num; mDen+=f.den; }
-      const st=(f.frac===null||f.frac===0)?'background:var(--line)':`background:rgba(126,226,168,${(0.20+0.70*f.frac).toFixed(3)})`;
+      const st=(f.frac===null||f.frac===0)?'background:var(--line)':`background:rgb(${panoGreen(f.frac)})`;
       cells+=`<div class="md" style="${st}" title="${iso(dt)}${f.den?': '+f.num+'/'+f.den:''}"></div>`;
     }
     const mp=mDen?Math.round(100*mNum/mDen):0;
@@ -5203,12 +5230,21 @@ function renderTasks(){
   const emptyMsg = !state.tasks.length
     ? `<div class="empty">Sin tareas pendientes. Apunta aquí lo suelto del día para que no se escape.</div>`
     : (active.length ? '' : `<div class="empty">¡Todo hecho! Lo completado está abajo. 🎉</div>`);
-  const doneRows = doneTops.map(t=>`<div class="tdonerow" data-anim="trow:${t.id}">
-      <button class="gcheck on" aria-label="Desmarcar ${esc(t.text)}" onclick="toggleTask('${t.id}')">✓</button>
-      <span class="gt" style="color:var(--muted);text-decoration:line-through">${esc(t.text)}</span>
-      ${t.doneAt?`<span class="tdate">${doneDateLabel(t.doneAt)}</span>`:''}
-      <button class="delh" title="Eliminar tarea" onclick="delTask('${t.id}')">✕</button>
-    </div>${(t.subs&&t.subs.length)?doneSubList(t.subs):''}`).join('');
+  const doneRows = doneTops.map(function(t){
+    const hasSubs = t.subs && t.subs.length;
+    const total = hasSubs ? t.subs.length : 0;
+    const subs = (hasSubs && !t.collapsed) ? doneSubList(t.subs) : '';
+    return `<div class="tdonecard" data-anim="trow:${t.id}">
+      <div class="tdonehead">
+        <button class="gcheck on" aria-label="Desmarcar ${esc(t.text)}" onclick="toggleTask('${t.id}')">✓</button>
+        <span class="gt" style="color:var(--muted);text-decoration:line-through">${esc(t.text)}</span>
+        ${hasSubs?`<button class="tcollapse" title="${t.collapsed?'Desplegar subtareas':'Plegar subtareas'}" aria-label="${t.collapsed?'Desplegar':'Plegar'} subtareas de ${esc(t.text)}" aria-expanded="${!t.collapsed}" onclick="toggleTaskCollapse('${t.id}')">${t.collapsed?'▸':'▾'}</button>`:''}
+        ${(hasSubs&&t.collapsed)?`<span class="subprog full" title="${total} subtareas hechas">${total}/${total}</span>`:''}
+        ${t.doneAt?`<span class="tdate">${doneDateLabel(t.doneAt)}</span>`:''}
+        <button class="delh" title="Eliminar tarea" onclick="delTask('${t.id}')">✕</button>
+      </div>${subs}
+    </div>`;
+  }).join('');
   const doneCard = doneTops.length ? `<details class="donegroup" ${state.ui.tasksDoneOpen?'open':''} ontoggle="tasksDoneToggle(this.open)">
       <summary class="donesum">Completadas <span class="donecount">· ${doneTops.length}</span></summary>
       ${doneRows}
@@ -5217,14 +5253,14 @@ function renderTasks(){
   document.getElementById('viewTasks').innerHTML = `
     <div class="card">
       <div class="kicker">Tareas del día</div>
-      ${state.tasks.length?`<div class="lgexp"><button class="mini gray" onclick="tasksCopyMd()">Copiar Markdown</button><button class="mini gray" onclick="tasksDownloadMd()">Descargar .md</button><span class="bkmsg" id="tasksMdMsg"></span></div>`:''}
-      ${list?`<div class="tasklist">${list}</div>`:''}
-      ${emptyMsg}
       <div class="addrow">
         <input id="newTask" placeholder="Nueva tarea (ej: Responder al mentor)" maxlength="140"
           onkeydown="if(event.key==='Enter')addTask()">
         <button class="btn" onclick="addTask()">Añadir</button>
       </div>
+      ${state.tasks.length?`<div class="lgexp"><button class="mini gray" onclick="tasksCopyMd()">Copiar Markdown</button><button class="mini gray" onclick="tasksDownloadMd()">Descargar .md</button><span class="bkmsg" id="tasksMdMsg"></span></div>`:''}
+      ${list?`<div class="tasklist">${list}</div>`:''}
+      ${emptyMsg}
       ${doneCard}
     </div>`;
 }
@@ -5857,7 +5893,7 @@ function icsStamp(){ const n=new Date(); return `${n.getUTCFullYear()}${icsPad(n
 function icsNextDay(d){ const [Y,M,D]=d.split('-').map(Number); const dt=new Date(Y,M-1,D+1); return `${dt.getFullYear()}${icsPad(dt.getMonth()+1)}${icsPad(dt.getDate())}`; }
 function icsItems(){
   const out=[];
-  state.events.forEach(e=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(e.date)) out.push({uid:e.id, title:e.title||'(sin título)', date:e.date, time:e.time||'', note:e.note||'', repeat:e.repeat||'none', every:e.every||1, until:e.until||''}); });
+  state.events.forEach(e=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(e.date)) out.push({uid:e.id, title:e.title||'(sin título)', date:e.date, time:e.time||'', note:e.note||'', repeat:e.repeat||'none', every:e.every||1, until:e.until||'', hrEvery:e.hrEvery||0, hrFrom:e.hrFrom||'', hrTo:e.hrTo||''}); });
   state.deadlines.forEach(z=>{ if(/^\d{4}-\d{2}-\d{2}$/.test(z.due)) out.push({uid:z.id, title:'Plazo: '+(z.title||'(sin título)'), date:z.due, time:'', note:z.note||''}); });
   return out;
 }
@@ -5866,14 +5902,36 @@ function icsBuild(){
   const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Diario de Habitos//Agenda//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Agenda — Diario de Hábitos'];
   icsItems().forEach(it=>{
     const ymd=it.date.replace(/-/g,'');
+    const FR={daily:'DAILY',weekly:'WEEKLY',monthly:'MONTHLY',yearly:'YEARLY'};
+    /* v158: evento con franja «cada N h» -> un VEVENT por cada hora de la franja,
+       cada uno con la MISMA repetición de fecha (si la hay). Refleja el enfoque A
+       (un aviso por hora); compatible con cualquier calendario. */
+    const HR_OK=/^([01]\d|2[0-3]):([0-5]\d)$/;
+    const slots=(it.hrEvery>0 && HR_OK.test(it.hrFrom||'') && HR_OK.test(it.hrTo||'')) ? hourlySlots(it.hrFrom, it.hrTo, it.hrEvery) : null;
+    const timed=(slots&&slots.length)?true:!!it.time;
+    let RR='';
+    if(it.repeat && FR[it.repeat]){ const NN=(Number.isInteger(it.every)&&it.every>=1)?it.every:1; RR='RRULE:FREQ='+FR[it.repeat]+(NN>1?';INTERVAL='+NN:''); if(it.until && /^\d{4}-\d{2}-\d{2}$/.test(it.until) && it.until>=it.date) RR+=';UNTIL='+it.until.replace(/-/g,'')+(timed?'T235959Z':''); }
+    if(slots && slots.length){
+      slots.forEach(function(slot){ const p=slot.split(':'), h=Number(p[0]), mi=p[1];
+        L.push('BEGIN:VEVENT');
+        L.push('UID:'+it.uid+'-'+p[0]+mi+'@diario-habitos');
+        L.push('DTSTAMP:'+stamp);
+        L.push('DTSTART:'+ymd+'T'+icsPad(h)+icsPad(mi)+'00');
+        if(h+1<24) L.push('DTEND:'+ymd+'T'+icsPad(h+1)+icsPad(mi)+'00');
+        if(RR) L.push(RR);
+        L.push('SUMMARY:'+icsEsc(it.title));
+        if(it.note) L.push('DESCRIPTION:'+icsEsc(it.note));
+        L.push('END:VEVENT');
+      });
+      return;
+    }
     L.push('BEGIN:VEVENT');
     L.push('UID:'+it.uid+'@diario-habitos');
     L.push('DTSTAMP:'+stamp);
     if(it.time){ const p=it.time.split(':'), h=Number(p[0]), mi=p[1]; L.push('DTSTART:'+ymd+'T'+icsPad(h)+icsPad(mi)+'00');
       if(h+1<24) L.push('DTEND:'+ymd+'T'+icsPad(h+1)+icsPad(mi)+'00'); }
     else { L.push('DTSTART;VALUE=DATE:'+ymd); L.push('DTEND;VALUE=DATE:'+icsNextDay(it.date)); }
-    const FR={daily:'DAILY',weekly:'WEEKLY',monthly:'MONTHLY',yearly:'YEARLY'};
-    if(it.repeat && FR[it.repeat]){ const NN=(Number.isInteger(it.every)&&it.every>=1)?it.every:1; let rr='RRULE:FREQ='+FR[it.repeat]+(NN>1?';INTERVAL='+NN:''); if(it.until && /^\d{4}-\d{2}-\d{2}$/.test(it.until) && it.until>=it.date) rr+=';UNTIL='+it.until.replace(/-/g,'')+(it.time?'T235959Z':''); L.push(rr); }
+    if(RR) L.push(RR);
     L.push('SUMMARY:'+icsEsc(it.title));
     if(it.note) L.push('DESCRIPTION:'+icsEsc(it.note));
     L.push('END:VEVENT');
@@ -5938,6 +5996,37 @@ function icsFromFile(inp){
   const r=new FileReader(); r.onerror=()=>{ icsMsg('no se pudo leer el archivo', false); inp.value=''; };
   r.onload=()=>{ const t=String(r.result||''); inp.value=''; icsImport(t); }; r.readAsText(file);
 }
+function agCalKind(z){ if(dlLinkedTask(z)) return TABMETA.tasks.c; if(dlLinkedGoal(z)) return TABMETA.goals.c; return TABMETA.plazos.c; }
+function agCalItems(y,m){
+  const map={}; const pad=x=>String(x).padStart(2,'0');
+  const first=y+'-'+pad(m+1)+'-01'; const lastDay=daysInMonth(y,m); const last=y+'-'+pad(m+1)+'-'+pad(lastDay);
+  const push=(dIso,c,title)=>{ const dn=+dIso.slice(8,10); (map[dn]=map[dn]||[]).push({c:c, title:title}); };
+  state.events.forEach(e=>{ if(!e || !e.title) return; eventOccurrencesInRange(e, first, last).forEach(dIso=>push(dIso, TABMETA.agenda.c, e.title)); });
+  state.deadlines.forEach(z=>{ if(z && /^\d{4}-\d{2}-\d{2}$/.test(z.due) && z.due>=first && z.due<=last) push(z.due, agCalKind(z), z.title||'(sin título)'); });
+  state.logs.forEach(l=>{ if(l && /^\d{4}-\d{2}-\d{2}$/.test(l.date) && l.date>=first && l.date<=last) push(l.date, TABMETA.logs.c, l.text||'logro'); });
+  state.diary.forEach(d=>{ if(d && /^\d{4}-\d{2}-\d{2}$/.test(d.date) && d.date>=first && d.date<=last) push(d.date, TABMETA.diary.c, (d.text||'apunte').slice(0,40)); });
+  return map;
+}
+function moveAgCalMonth(delta){ agCalM+=delta; if(agCalM<0){ agCalM=11; agCalY--; } else if(agCalM>11){ agCalM=0; agCalY++; } renderAgenda(); }
+function agCalCard(){
+  const y=agCalY, m=agCalM; const todayIso=iso(new Date()); const map=agCalItems(y,m);
+  const total=daysInMonth(y,m), off=firstOffset(y,m); const pad=x=>String(x).padStart(2,'0');
+  let cells=DAYS.map(d=>'<div class="dzwd">'+d+'</div>').join('');
+  for(let i=0;i<off;i++) cells+='<div class="dzcell blank"></div>';
+  for(let d=1; d<=total; d++){
+    const dIso=y+'-'+pad(m+1)+'-'+pad(d); const its=map[d]||[];
+    const shown=its.slice(0,3).map(x=>'<span class="agcaltag" style="color:'+ink(x.c)+';border-color:'+hexRgba(x.c,.5)+';background:'+hexRgba(x.c,.14)+'" title="'+esc(x.title)+'">'+esc(x.title)+'</span>').join('');
+    const more=its.length>3?'<span class="agcalmore">+'+(its.length-3)+'</span>':'';
+    cells+='<div class="dzcell '+(dIso===todayIso?'today':'')+'">'+d+shown+more+'</div>';
+  }
+  const kinds=[['agenda','Eventos'],['plazos','Plazos'],['tasks','Tareas'],['goals','Metas'],['logs','Logros'],['diary','Diario']];
+  const leg=kinds.map(k=>'<span class="agcaldot" style="--k:'+TABMETA[k[0]].c+'">'+k[1]+'</span>').join('');
+  return '<div class="card" style="margin-top:14px">'
+    +'<div class="kicker" style="margin-bottom:8px">🗓️ Vista de mes — todo lo que tiene fecha</div>'
+    +'<div class="calhead"><button class="navbtn" onclick="moveAgCalMonth(-1)" aria-label="Mes anterior">←</button><div class="label">'+MONTHS[m]+' '+y+'</div><button class="navbtn" onclick="moveAgCalMonth(1)" aria-label="Mes siguiente">→</button></div>'
+    +'<div class="dzcal">'+cells+'</div>'
+    +'<div class="agcalleg">'+leg+'</div></div>';
+}
 function renderAgenda(){
   const el=document.getElementById('viewAgenda'); if(!el) return;
   const todayIso=iso(new Date());
@@ -5995,7 +6084,8 @@ function renderAgenda(){
         <button class="btn" onclick="addEvent()">Añadir evento</button>
       </div>
       ${tl}
-    </div>`;
+    </div>
+    ${agCalCard()}`;
 }
 function agAddRepeatChanged(){ const s=document.getElementById('ev_repeat'); const rep=!!(s&&s.value&&s.value!=='none'); const e=document.getElementById('ev_every'); const u=document.getElementById('ev_untilwrap'); if(e)e.style.display=rep?'':'none'; if(u)u.style.display=rep?'':'none'; }
 function agEditRepeatChanged(id){ const s=document.getElementById('eve_repeat_'+id); const rep=!!(s&&s.value&&s.value!=='none'); const e=document.getElementById('eve_every_'+id); const u=document.getElementById('eve_untilwrap_'+id); if(e)e.style.display=rep?'':'none'; if(u)u.style.display=rep?'':'none'; }
@@ -6397,7 +6487,7 @@ async function syncServerWeekly(){
     const id='weekly-'+CLOUD.session.user_id+'-'+ymd;
     if(w.schedId && w.schedId!==id){ const _oy=String(w.schedId).slice(-8); let _safe=true; if(/^\d{8}$/.test(_oy)){ const _of=new Date(+_oy.slice(0,4),+_oy.slice(4,6)-1,+_oy.slice(6,8),+m[1],+m[2],0,0); _safe=_of.getTime()<=now.getTime()-REM_GUARD_MS; } if(_safe){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(w.schedId), {method:'DELETE'}); }catch(e){} } }
     const body=weeklySummaryText(weekBoundsForDate(f));
-    await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{id:id, user_id:CLOUD.session.user_id, fire_at:f.toISOString(), title:'Diario de Hábitos', body:body, url:'https://arielmartinezj.github.io/H/'}]});
+    await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{id:id, user_id:CLOUD.session.user_id, fire_at:f.toISOString(), title:'Diario de Hábitos', body:body, url:'https://arielmartinezj.github.io/H/#semana'}]});
     w.schedId=id; persist();
   }catch(e){ /* best-effort, silencioso */ }
 }

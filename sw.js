@@ -203,7 +203,9 @@ self.addEventListener('push', function (e) {
     icon:  'icon192.png',
     badge: 'favicon32.png',
     tag:   data.tag || 'habitos',
-    data:  { url: data.url || './' }
+    data:  { url: data.url || './' },
+    // v154: botón de acción propio en la notificación (además de tocar el cuerpo)
+    actions: [{ action: 'open', title: 'Abrir' }]
   };
   e.waitUntil(self.registration.showNotification(title, opts));
 });
@@ -214,9 +216,15 @@ self.addEventListener('notificationclick', function (e) {
   e.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (cls) {
       for (var i = 0; i < cls.length; i++) {
-        if ('focus' in cls[i]) return cls[i].focus();   // ya hay una pestaña: enfócala
+        var c = cls[i];
+        if ('focus' in c) {
+          // v154: ya hay una pestaña abierta -> enfócala Y dile a qué pestaña ir
+          // (el #tab no cambia solo al enfocar; la app escucha este mensaje).
+          try { c.postMessage({ type: 'navigate', url: target }); } catch (er) {}
+          return c.focus();
+        }
       }
-      if (self.clients.openWindow) return self.clients.openWindow(target); // si no, abre
+      if (self.clients.openWindow) return self.clients.openWindow(target); // si no hay ninguna, abre en el destino (#tab incluido)
     })
   );
 });

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v160</title>
+<title>Hábitos v161</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1036,6 +1036,25 @@ td.hname.editcell::after{display:none}
   .agtitle{padding-right:74px}
   .tattrs{margin-left:38px}
 }
+/* v161: desglose al clicar un día (Agenda + Panorama «Todo») ---------------- */
+button.dzcell{cursor:pointer;text-align:left;transition:.14s;color:var(--muted);font-family:inherit}
+button.dzcell:hover{border-color:var(--line2)}
+button.dzcell:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.dzcell.sel,.day.dall.sel{box-shadow:inset 0 0 0 2px var(--acc)!important;border-color:var(--acc)}
+button.day.dall{cursor:pointer;font-family:inherit}
+button.day.dall:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.dbk{margin-top:12px;border-top:1px dashed var(--line2);padding-top:12px;text-align:left}
+.dbkhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.dbkttl{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.95rem}
+.dbkx{border:1px solid var(--line);border-radius:8px;width:28px;height:28px;background:var(--surface2);color:var(--muted);cursor:pointer;flex:none}
+.dbkx:hover{border-color:var(--line2);color:var(--text)}
+.dbkrow{display:flex;gap:9px;align-items:flex-start;background:var(--surface2);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:10px;padding:7px 10px;margin-bottom:6px}
+.dbklbl{font-family:'Space Grotesk',sans-serif;font-size:0.56rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:999px;padding:2px 7px;white-space:nowrap;flex:none;margin-top:1px}
+.dbkbody{flex:1;min-width:0}
+.dbktitle{font-size:0.86rem;color:var(--text)}
+.dbkcheck{color:var(--ok);font-weight:700;margin-right:4px}
+.dbkmeta{font-size:0.72rem;color:var(--muted);margin-top:1px}
+.dbkempty{color:var(--muted);font-size:0.83rem;text-align:center;padding:12px 6px;background:var(--surface2);border:1px dashed var(--line);border-radius:10px}
 </style>
 </head>
 <body>
@@ -1046,7 +1065,7 @@ td.hname.editcell::after{display:none}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v160</span></h1>
+      <h1>Hábitos <span class="ver">v161</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1134,6 +1153,7 @@ td.hname.editcell::after{display:none}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v161</b> — <b>Toca un día y ve qué hiciste</b>: en el calendario de mes de <b>Agenda</b> y en el de <b>Hábitos</b> (Panorama → «Todo»), al tocar un día se abre debajo un desglose de ese día — en Agenda, todo lo que tenía fecha (evento, plazo, tarea, meta, logro, diario) con el color de su pestaña; en Hábitos, los que cumpliste (con ✓) más el ejercicio, logro o diario de ese día. Vuelve a tocar el día o la ✕ para cerrarlo. (Solo cliente.)</div>
   <div class="vrow"><b>v160</b> — <b>Tarjetas más compactas en móvil</b>: la casilla de marcar se ve más pequeña (pero se sigue tocando igual de fácil), y en <b>Tareas</b>, <b>Plazos</b> y <b>Agenda</b> los botones dejan de ocupar una fila propia — el asa de mover baja a la izquierda y ✎/✕ quedan pequeños arriba a la derecha. Así el texto tiene más ancho y las tarjetas son más bajas. (Solo cliente.)</div>
   <div class="vrow"><b>v159</b> — En <b>Tareas completadas</b>, el <b>título va en su propia línea</b> (ya no se estruja al compartir fila con los controles); debajo, en gris, el desplegar ▾/▸ con el nº de subtareas y la fecha. (Solo cliente.)</div>
   <div class="vrow"><b>v158</b> — El <b>.ics</b> (exportar/copiar calendario) ahora <b>sí incluye la franja «cada N h»</b>: un evento con avisos cada N horas se exporta como un hueco por cada hora de la franja (09:00, 11:00, 13:00…), respetando su repetición. Así tu calendario externo ve esos huecos, no solo la app. (Solo cliente.)</div>
@@ -1304,7 +1324,7 @@ td.hname.editcell::after{display:none}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v160';
+const APPVER='v161';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1420,6 +1440,8 @@ let statWin = 'month';   /* v76: ventana del panel de constancia: 'month' | '4w'
 let panoY = new Date().getFullYear(), panoM = new Date().getMonth();
 let plzY = new Date().getFullYear(), plzM = new Date().getMonth();
 let agCalY = new Date().getFullYear(), agCalM = new Date().getMonth();   /* v157: mes del calendario de Agenda */
+let agCalSel=null;   /* v161: día seleccionado en el calendario de Agenda (ISO) */
+let panoSelDay=null; /* v161: día seleccionado en Panorama «Todo» (ISO) */
 let agFilter='all', agEditFor=null;   /* v88: filtro y edición en la Agenda */
 let plzEdit=null;
 
@@ -4369,6 +4391,16 @@ function panoDayFrac(dt){
 }
 function panoGreen(f){ f=Math.max(0,Math.min(1,f)); const r=Math.round(30+110*f), g=Math.round(58+172*f), b=Math.round(44+121*f); return r+','+g+','+b; }
 function panoHeatMonth(frac){ if(frac===null||frac===0) return ''; const f=Math.max(0,Math.min(1,frac)); const txt=f>0.55?'#0B0E14':'#EAFBF1'; return `background:rgb(${panoGreen(f)});border-color:rgba(126,226,168,${(0.40+0.50*f).toFixed(2)});color:${txt}`; }
+function panoDayItems(dIso){
+  const out=[];
+  state.habits.forEach(function(h){ if(h.archived) return; if(isChecked(dIso,h.id)) out.push({c:'#7EE2A8',kind:'Hábito',title:h.name,meta:'',done:true}); });
+  state.workouts.forEach(function(w){ if(w && w.date===dIso){ const exs=(w.exercises||[]).map(function(e){return e.name;}).join(', '); out.push({c:TABMETA.exercise.c,kind:'Ejercicio',title:muscle(w.muscle).name+(exs?': '+exs:''),meta:'',done:false}); } });
+  logsOn(dIso).forEach(function(l){ out.push({c:TABMETA.logs.c,kind:'Logro',title:l.text||'logro',meta:'',done:false}); });
+  state.diary.forEach(function(d){ if(d && d.date===dIso) out.push({c:TABMETA.diary.c,kind:'Diario',title:d.text||'apunte',meta:'',done:false}); });
+  return out;
+}
+function panoDayDesglose(dIso){ return dbkPanel(dIso, panoDayItems(dIso), "panoPick('"+dIso+"')"); }
+function panoPick(dIso){ panoSelDay = (panoSelDay===dIso) ? null : dIso; renderPano(); }
 function panoAllMonth(){
   const todayIso=iso(new Date());
   const today=new Date(); today.setHours(0,0,0,0);
@@ -4387,7 +4419,8 @@ function panoAllMonth(){
     const badge=f.den?`<span class="dfrac">${f.num}</span>`:'';
     const ttl=f.den?`${f.num}/${f.den} hábitos`:'sin objetivos ese día';
     const al=`${d} de ${MONTHS[panoM]}: ${f.den?(f.num+' de '+f.den+' hábitos cumplidos'):'sin hábitos con objetivo'}${lg.length?', con logro':''}`;
-    cells+=`<div class="day dall${it}" role="img" aria-label="${al}" style="${heat}" title="${ttl}">${d}${star}${badge}</div>`;
+    const selc=(dIso===panoSelDay)?' sel':'';
+    cells+=`<button type="button" class="day dall${it}${selc}" aria-label="${al}" style="${heat}" title="${ttl}" onclick="panoPick('${dIso}')">${d}${star}${badge}</button>`;
   }
   const pct=mDen?Math.round(100*mNum/mDen):0;
   return `<div class="card">
@@ -4400,6 +4433,7 @@ function panoAllMonth(){
     <div class="statline">${pct}% de los hábitos que tocaban, cumplidos al día (media del mes hasta hoy)</div>
     <div class="heatleg"><span>Menos</span><span class="heatbar"><i style="background:rgb(52,92,68)"></i><i style="background:rgb(74,127,92)"></i><i style="background:rgb(96,161,117)"></i><i style="background:rgb(118,196,141)"></i><i style="background:rgb(140,230,165)"></i></span><span>Todos</span></div>
     <div class="kbdhint" style="text-align:center">Cada día se tiñe según cuántos hábitos con objetivo cumpliste. El número es cuántos. ★ = día con logro.</div>
+    ${panoSelDay?panoDayDesglose(panoSelDay):''}
   </div>`;
 }
 function panoAllYear(){
@@ -4431,7 +4465,7 @@ function panoAllYear(){
     <div class="statline">${pct}% de los hábitos que tocaban, cumplidos al día (media del año hasta hoy)</div>
   </div>`;
 }
-function setPanoAll(){ panoAll=true; renderPano(); }
+function setPanoAll(){ panoAll=true; panoSelDay=null; renderPano(); }
 function renderPano(){
   const el = document.getElementById('viewPano');
   if(!state.habits.length){ el.innerHTML = `<div class="card"><div class="empty">Añade hábitos primero en la pestaña Hábitos.</div></div>`; return; }
@@ -4539,12 +4573,13 @@ function delLog(id){
   refresh('pano','logs'); persist();
   offerUndo('Logro eliminado', before);
 }
-function setPanoHabit(id){ panoAll=false; panoHabit=id; renderPano(); }
-function setPanoMode(m){ panoMode=m; renderPano(); }
+function setPanoHabit(id){ panoAll=false; panoHabit=id; panoSelDay=null; renderPano(); }
+function setPanoMode(m){ panoMode=m; panoSelDay=null; renderPano(); }
 function movePanoMonth(dir){
   panoM += dir;
   if(panoM<0){ panoM=11; panoY--; }
   if(panoM>11){ panoM=0; panoY++; }
+  panoSelDay=null;
   renderPano();
 }
 function movePanoYear(dir){ panoY += dir; renderPano(); }
@@ -6032,7 +6067,30 @@ function agCalItems(y,m){
   state.diary.forEach(d=>{ if(d && /^\d{4}-\d{2}-\d{2}$/.test(d.date) && d.date>=first && d.date<=last) push(d.date, TABMETA.diary.c, (d.text||'apunte').slice(0,40)); });
   return map;
 }
-function moveAgCalMonth(delta){ agCalM+=delta; if(agCalM<0){ agCalM=11; agCalY--; } else if(agCalM>11){ agCalM=0; agCalY++; } renderAgenda(); }
+function moveAgCalMonth(delta){ agCalM+=delta; if(agCalM<0){ agCalM=11; agCalY--; } else if(agCalM>11){ agCalM=0; agCalY++; } agCalSel=null; renderAgenda(); }
+function dbkTitle(dIso){ const p=dIso.split('-').map(Number); const dt=new Date(p[0],p[1]-1,p[2]); const wd=DAYFULL[(dt.getDay()+6)%7]; return wd.charAt(0).toUpperCase()+wd.slice(1)+' '+p[2]+' de '+MONTHS[p[1]-1]; }
+function dbkRows(items){
+  return items.map(function(x){
+    const col=ink(x.c);
+    const chk=x.done?'<span class="dbkcheck" aria-hidden="true">✓</span>':'';
+    const meta=x.meta?'<div class="dbkmeta">'+esc(x.meta)+'</div>':'';
+    return '<div class="dbkrow" style="border-left-color:'+col+'"><span class="dbklbl" style="color:'+col+';border-color:'+col+'">'+x.kind+'</span><div class="dbkbody"><div class="dbktitle">'+chk+esc(x.title)+'</div>'+meta+'</div></div>';
+  }).join('');
+}
+function dbkPanel(dIso, items, closeCall){
+  const rows = items.length ? dbkRows(items) : '<div class="dbkempty">Ese día no apuntaste nada. Todo tranquilo 🌙</div>';
+  return '<div class="dbk"><div class="dbkhead"><div class="dbkttl">'+dbkTitle(dIso)+'</div><button type="button" class="dbkx" aria-label="Cerrar el día" onclick="'+closeCall+'">✕</button></div>'+rows+'</div>';
+}
+function agDayItems(dIso){
+  const out=[];
+  state.events.forEach(function(e){ if(!e||!e.title) return; if(eventOccurrencesInRange(e,dIso,dIso).length) out.push({c:TABMETA.agenda.c,kind:'Evento',title:e.title,meta:e.time?('a las '+e.time):'todo el día',done:false}); });
+  state.deadlines.forEach(function(z){ if(z && z.due===dIso){ const k=dlLinkedTask(z)?'Tarea':(dlLinkedGoal(z)?'Meta':'Plazo'); out.push({c:agCalKind(z),kind:k,title:z.title||'(sin título)',meta:z.note||'',done:!!z.done}); } });
+  state.logs.forEach(function(l){ if(l && l.date===dIso) out.push({c:TABMETA.logs.c,kind:'Logro',title:l.text||'logro',meta:'',done:false}); });
+  state.diary.forEach(function(d){ if(d && d.date===dIso) out.push({c:TABMETA.diary.c,kind:'Diario',title:d.text||'apunte',meta:'',done:false}); });
+  return out;
+}
+function agDayDesglose(dIso){ return dbkPanel(dIso, agDayItems(dIso), "agCalPick('"+dIso+"')"); }
+function agCalPick(dIso){ agCalSel = (agCalSel===dIso) ? null : dIso; renderAgenda(); }
 function agCalCard(){
   const y=agCalY, m=agCalM; const todayIso=iso(new Date()); const map=agCalItems(y,m);
   const total=daysInMonth(y,m), off=firstOffset(y,m); const pad=x=>String(x).padStart(2,'0');
@@ -6042,7 +6100,7 @@ function agCalCard(){
     const dIso=y+'-'+pad(m+1)+'-'+pad(d); const its=map[d]||[];
     const shown=its.slice(0,3).map(x=>'<span class="agcaltag" style="color:'+ink(x.c)+';border-color:'+hexRgba(x.c,.5)+';background:'+hexRgba(x.c,.14)+'" title="'+esc(x.title)+'">'+esc(x.title)+'</span>').join('');
     const more=its.length>3?'<span class="agcalmore">+'+(its.length-3)+'</span>':'';
-    cells+='<div class="dzcell '+(dIso===todayIso?'today':'')+'">'+d+shown+more+'</div>';
+    const selc=(dIso===agCalSel)?' sel':''; cells+='<button type="button" class="dzcell'+(dIso===todayIso?' today':'')+selc+'" onclick="agCalPick(\''+dIso+'\')" aria-label="'+d+' de '+MONTHS[m]+', ver el día">'+d+shown+more+'</button>';
   }
   const kinds=[['agenda','Eventos'],['plazos','Plazos'],['tasks','Tareas'],['goals','Metas'],['logs','Logros'],['diary','Diario']];
   const leg=kinds.map(k=>'<span class="agcaldot" style="--k:'+TABMETA[k[0]].c+'">'+k[1]+'</span>').join('');
@@ -6050,7 +6108,8 @@ function agCalCard(){
     +'<div class="kicker" style="margin-bottom:8px">🗓️ Vista de mes — todo lo que tiene fecha</div>'
     +'<div class="calhead"><button class="navbtn" onclick="moveAgCalMonth(-1)" aria-label="Mes anterior">←</button><div class="label">'+MONTHS[m]+' '+y+'</div><button class="navbtn" onclick="moveAgCalMonth(1)" aria-label="Mes siguiente">→</button></div>'
     +'<div class="dzcal">'+cells+'</div>'
-    +'<div class="agcalleg">'+leg+'</div></div>';
+    +'<div class="agcalleg">'+leg+'</div>'
+    +(agCalSel?agDayDesglose(agCalSel):'')+'</div>';
 }
 function renderAgenda(){
   const el=document.getElementById('viewAgenda'); if(!el) return;

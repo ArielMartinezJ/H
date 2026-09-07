@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v161</title>
+<title>Hábitos v162</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1055,6 +1055,13 @@ button.day.dall:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .dbkcheck{color:var(--ok);font-weight:700;margin-right:4px}
 .dbkmeta{font-size:0.72rem;color:var(--muted);margin-top:1px}
 .dbkempty{color:var(--muted);font-size:0.83rem;text-align:center;padding:12px 6px;background:var(--surface2);border:1px dashed var(--line);border-radius:10px}
+/* v162: en Hoy, cada elemento (menos la casilla ✓) lleva a su pestaña ------- */
+.hoy-go{font:inherit;color:inherit;background:none;border:none;cursor:pointer;text-align:left;transition:background .12s}
+.hoy-hrow>.hoy-go,.hoy-trow>.hoy-go{flex:1;min-width:0;display:flex;align-items:center;gap:11px;padding:2px 4px;margin:-2px -4px;border-radius:8px}
+button.hoy-plz.hoy-go{width:100%;border-radius:9px}
+.hoy-go:hover{background:rgba(255,255,255,.04)}
+.hoy-go:hover .hoy-hn,.hoy-go:hover .hoy-pt,.hoy-go:hover .hoy-tn{text-decoration:underline;text-underline-offset:2px}
+.hoy-go:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
 </style>
 </head>
 <body>
@@ -1065,7 +1072,7 @@ button.day.dall:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v161</span></h1>
+      <h1>Hábitos <span class="ver">v162</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1153,6 +1160,7 @@ button.day.dall:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v162</b> — <b>Toca un elemento en Hoy y salta a su sitio</b>: en la pestaña Hoy, al tocar un hábito, una tarea, un plazo o un evento (todo menos la casilla ✓) te lleva a su pestaña y resalta esa fila donde esté (p. ej. la última tarea de Hoy → al final de Tareas). El nombre se subraya al pasar por encima para verse que es pulsable. (Solo cliente.)</div>
   <div class="vrow"><b>v161</b> — <b>Toca un día y ve qué hiciste</b>: en el calendario de mes de <b>Agenda</b> y en el de <b>Hábitos</b> (Panorama → «Todo»), al tocar un día se abre debajo un desglose de ese día — en Agenda, todo lo que tenía fecha (evento, plazo, tarea, meta, logro, diario) con el color de su pestaña; en Hábitos, los que cumpliste (con ✓) más el ejercicio, logro o diario de ese día. Vuelve a tocar el día o la ✕ para cerrarlo. (Solo cliente.)</div>
   <div class="vrow"><b>v160</b> — <b>Tarjetas más compactas en móvil</b>: la casilla de marcar se ve más pequeña (pero se sigue tocando igual de fácil), y en <b>Tareas</b>, <b>Plazos</b> y <b>Agenda</b> los botones dejan de ocupar una fila propia — el asa de mover baja a la izquierda y ✎/✕ quedan pequeños arriba a la derecha. Así el texto tiene más ancho y las tarjetas son más bajas. (Solo cliente.)</div>
   <div class="vrow"><b>v159</b> — En <b>Tareas completadas</b>, el <b>título va en su propia línea</b> (ya no se estruja al compartir fila con los controles); debajo, en gris, el desplegar ▾/▸ con el nº de subtareas y la fecha. (Solo cliente.)</div>
@@ -1324,7 +1332,7 @@ button.day.dall:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v161';
+const APPVER='v162';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -6269,6 +6277,10 @@ function hoyQuickAdd(){
   renderHoy();
   const i2=document.getElementById('hqa_text'); if(i2){ i2.value=''; i2.focus(); }
 }
+function hoyGoHabit(id){ switchTab('habits'); renderHabits(); flashRow(`[data-anim="hrow:${id}"]`); }
+function hoyGoTask(id){ switchTab('tasks'); renderTasks(); flashRow(`#viewTasks .goal[data-anim="trow:${id}"]`); }
+function hoyGoDeadline(id){ const z=state.deadlines.find(x=>x.id===id); if(z&&dlDone(z)) state.ui.plzDoneOpen=true; switchTab('plazos'); renderPlazos(); flashRow(`.dzrow[data-anim="dzrow:${id}"]`); }
+function hoyGoEvent(id){ agFilter='all'; switchTab('agenda'); renderAgenda(); flashRow(`.agnode[data-anim="agrow:${id}"]`); }
 function renderHoy(){
   const el=document.getElementById('viewHoy'); if(!el) return;
   const today=iso(new Date());
@@ -6284,32 +6296,30 @@ function renderHoy(){
     const on=isChecked(today,h.id), wc=hoyWeekCount(h.id);
     return `<div class="hoy-hrow ${on?'done':''}">
       <button class="hoy-chk ${on?'on':''}" aria-pressed="${on}" aria-label="${on?'Desmarcar':'Marcar'} ${esc(h.name)} hoy" onclick="hoyToggleHabit('${h.id}')">✓</button>
-      <span class="hoy-hn" style="color:${on?'var(--muted)':ink(h.color)}">${esc(h.name)}</span>
-      <span class="hoy-mini">${wc}/${h.target} sem</span>
+      <button class="hoy-go" onclick="hoyGoHabit('${h.id}')" aria-label="Ir a ${esc(h.name)} en Hábitos"><span class="hoy-hn" style="color:${on?'var(--muted)':ink(h.color)}">${esc(h.name)}</span><span class="hoy-mini">${wc}/${h.target} sem</span></button>
     </div>`;
   }).join('') : (active.length ? `<div class="empty">Hoy no toca ningún hábito. 🎉</div>` : `<div class="empty">Aún no tienes hábitos. Añádelos en la pestaña Hábitos.</div>`);
   const plzRows= dueSoon.length ? dueSoon.slice(0,5).map(z=>{
     const days=dzDays(z.due), cd=dzCountdown(days), _c=dzColor(days);
-    return `<div class="hoy-plz">
+    return `<button class="hoy-plz hoy-go" onclick="hoyGoDeadline('${z.id}')" aria-label="Ir a ${esc(z.title)} en Plazos">
       <span class="hoy-cd" style="background:${dzRGBA(_c,.14)};color:${dzRGB(_c)};border:1px solid ${dzRGB(_c)}">${cd.big}${cd.lbl?`<small> ${cd.lbl}</small>`:''}</span>
       <span class="hoy-pt">${esc(z.title)}</span>
       <span class="hoy-pd">${dzFmt(z.due)}</span>
-    </div>`;
+    </button>`;
   }).join('') : `<div class="empty">Nada que venza pronto. 🙌</div>`;
   const tskRows= openTasks.length ? openTasks.slice(0,6).map(t=>{
     return `<div class="hoy-trow">
       <button class="hoy-tchk" aria-label="Marcar ${esc(t.text)}" onclick="hoyToggleTask('${t.id}')">✓</button>
-      <span class="hoy-tn">${esc(t.text)}</span>
-      ${(t.subs&&t.subs.length)?`<span class="hoy-mini">${t.subs.filter(taskDone).length}/${t.subs.length}</span>`:''}
+      <button class="hoy-go" onclick="hoyGoTask('${t.id}')" aria-label="Ir a ${esc(t.text)} en Tareas"><span class="hoy-tn">${esc(t.text)}</span>${(t.subs&&t.subs.length)?`<span class="hoy-mini">${t.subs.filter(taskDone).length}/${t.subs.length}</span>`:''}</button>
     </div>`;
   }).join('') : `<div class="empty">Sin tareas abiertas. ✨</div>`;
   const evRows= upcEvents.length ? upcEvents.slice(0,5).map(e=>{
       const days=dzDays(e._d), cd=dzCountdown(days), c=TABMETA.agenda.c;
-      return `<div class="hoy-plz">
+      return `<button class="hoy-plz hoy-go" onclick="hoyGoEvent('${e.id}')" aria-label="Ir a ${esc(e.title)} en Agenda">
         <span class="hoy-cd" style="background:${hexRgba(c,.14)};color:${ink(c)};border:1px solid ${ink(c)}">${cd.big}${cd.lbl?`<small> ${cd.lbl}</small>`:''}</span>
         <span class="hoy-pt">${(e.repeat&&e.repeat!=='none')?'🔁 ':''}${esc(e.title)}</span>
         <span class="hoy-pd">${agWhen({kind:'event',date:e._d,time:e.time||''})}</span>
-      </div>`;
+      </button>`;
     }).join('') : `<div class="empty">Nada apuntado por delante. 🗓️</div>`;
   const QT=[['task','✅ Tarea'],['plazo','📅 Plazo'],['event','🗓️ Evento'],['note','🗒️ Nota'],['diary','📓 Diario']];
   const QPH={task:'Nueva tarea…', plazo:'Qué hay que entregar…', event:'Qué pasa (ej: Cita)…', note:'Nueva nota…', diary:'¿Qué has hecho hoy? (al Diario)'};

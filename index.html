@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v162</title>
+<title>Hábitos v165</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1062,6 +1062,36 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 .hoy-go:hover{background:rgba(255,255,255,.04)}
 .hoy-go:hover .hoy-hn,.hoy-go:hover .hoy-pt,.hoy-go:hover .hoy-tn{text-decoration:underline;text-underline-offset:2px}
 .hoy-go:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+/* v163: flechas de contraer/expandir más grandes (pensado móvil) ----------- */
+.hoy-chev{font-size:1.05rem;padding:6px 8px;position:relative}
+.hoy-chev::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px}
+.agchev{font-size:1.05rem}
+.dmonthchev{font-size:1.05rem}
+.donegroup>summary.donesum::before{font-size:1.05rem}
+.mgroup summary::before{font-size:1.05rem}
+.tcollapse{font-size:0.92rem;position:relative}
+.tattrs .tcollapse,.tdonemeta .tcollapse{font-size:0.92rem}
+.tcollapse::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px}
+/* v164: etiquetas personalizadas (chips + gestor) -------------------------- */
+.lblrow{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.lblcap{font-size:0.72rem;color:var(--muted)}
+.lchip{font-family:'Space Grotesk',sans-serif;font-size:0.78rem;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);color:var(--muted);cursor:pointer;transition:.12s;min-height:34px}
+.lchip:hover{border-color:var(--line2);color:var(--text)}
+.lchip.ladd{border-style:dashed}
+.newlblbox{display:none;gap:6px;width:100%;margin-top:6px}
+.newlblbox.on{display:flex}
+.newlblbox input{flex:1;min-width:140px}
+.lblmgr{margin-top:16px}
+.lmrow{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid var(--line)}
+.lmrow:last-child{border-bottom:none}
+.lmrow input{flex:1;min-width:140px}
+.lmused{font-size:0.72rem;color:var(--muted);margin-left:auto}
+.chipmini{font-family:'Space Grotesk',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid;flex:none}
+/* v165: texto siempre editable (Opción A) --------------------------------- */
+.tapedit .ed{cursor:text;border-radius:6px;transition:background .12s,box-shadow .12s}
+.tapedit .ed:hover{background:rgba(255,255,255,.045)}
+.tapedit .ed:focus{outline:none;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--acc)}
+.tapedit .edith{display:none}
 </style>
 </head>
 <body>
@@ -1072,7 +1102,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v162</span></h1>
+      <h1>Hábitos <span class="ver">v165</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1160,6 +1190,9 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v165</b> — <b>Texto editable con solo tocarlo</b> (opcional): en <b>⚙️ Ajustes</b> hay un interruptor nuevo, «Tocar el texto para editar». Con él encendido, tocas el texto de una tarea, meta, apunte, logro, plazo, evento o el nombre de un hábito y lo editas ahí mismo —se guarda solo al salir del texto o con Enter—, sin usar el lápiz (que se esconde mientras está activo). Apagado por defecto. (Solo cliente.)</div>
+  <div class="vrow"><b>v164</b> — <b>Etiquetas personalizadas</b> en <b>Metas</b> y <b>Logros</b>: al crear una meta o apuntar un logro eliges el hábito al que pertenece o una <b>etiqueta propia</b> (Trabajo, Personal…). Las etiquetas son <b>compartidas</b> entre las dos pestañas —la creas una vez y sirve en ambas—, aparecen en los filtros, y puedes <b>renombrarlas o borrarlas</b> desde «🏷️ Etiquetas personalizadas» (al borrar una, lo que la tenía vuelve a General; con Deshacer). (Solo cliente.)</div>
+  <div class="vrow"><b>v163</b> — <b>Flechas de contraer/expandir más grandes</b> en todas las pestañas (se veían diminutas, sobre todo en el móvil). Y en <b>Metas</b>: el número de metas <b>alcanzadas</b> se ve arriba del todo (como en Logros) y el «Añadir una meta» sube al principio. (Solo cliente.)</div>
   <div class="vrow"><b>v162</b> — <b>Toca un elemento en Hoy y salta a su sitio</b>: en la pestaña Hoy, al tocar un hábito, una tarea, un plazo o un evento (todo menos la casilla ✓) te lleva a su pestaña y resalta esa fila donde esté (p. ej. la última tarea de Hoy → al final de Tareas). El nombre se subraya al pasar por encima para verse que es pulsable. (Solo cliente.)</div>
   <div class="vrow"><b>v161</b> — <b>Toca un día y ve qué hiciste</b>: en el calendario de mes de <b>Agenda</b> y en el de <b>Hábitos</b> (Panorama → «Todo»), al tocar un día se abre debajo un desglose de ese día — en Agenda, todo lo que tenía fecha (evento, plazo, tarea, meta, logro, diario) con el color de su pestaña; en Hábitos, los que cumpliste (con ✓) más el ejercicio, logro o diario de ese día. Vuelve a tocar el día o la ✕ para cerrarlo. (Solo cliente.)</div>
   <div class="vrow"><b>v160</b> — <b>Tarjetas más compactas en móvil</b>: la casilla de marcar se ve más pequeña (pero se sigue tocando igual de fácil), y en <b>Tareas</b>, <b>Plazos</b> y <b>Agenda</b> los botones dejan de ocupar una fila propia — el asa de mover baja a la izquierda y ✎/✕ quedan pequeños arriba a la derecha. Así el texto tiene más ancho y las tarjetas son más bajas. (Solo cliente.)</div>
@@ -1332,7 +1365,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v162';
+const APPVER='v165';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1699,6 +1732,8 @@ function renderSetPop(){
     <div class="nrow"><span class="ntxt">Ocultar notas</span>${pushSwitch(!!hideNotes, "togglePrivacy()", 'Ocultar notas')}</div>
     <div class="thlab" style="margin-top:12px">Entrada en cascada</div>
     <div class="nrow"><span class="ntxt">Repetir la animación cada vez</span>${pushSwitch((state.ui&&state.ui.entryMode)!=='once', "setEntryMode('"+((state.ui&&state.ui.entryMode)!=='once'?'once':'every')+"')", 'Repetir la animación de entrada cada vez')}</div>
+    <div class="thlab" style="margin-top:12px">Edición</div>
+    <div class="nrow"><span class="ntxt">Tocar el texto para editar</span>${pushSwitch(!!(state.ui&&state.ui.tapEdit), "setTapEdit("+((state.ui&&state.ui.tapEdit)?'false':'true')+")", 'Tocar el texto para editar')}</div>
     <div class="thlab" style="margin-top:12px">Instalar como app</div>
     <div class="thmodes">${pwaInstallUI()}</div>`;
 }
@@ -2793,6 +2828,8 @@ function saneEstado(raw){
     st.checks = {};
   }
   if(!st.ui || typeof st.ui!=='object' || Array.isArray(st.ui)) st.ui = {};
+  if(!Array.isArray(st.labels)) st.labels=[];
+  st.labels = st.labels.filter(l=>l&&typeof l==='object'&&l.id&&typeof l.name==='string').map(l=>({id:String(l.id), name:l.name}));
   return st;
 }
 function migrate(){
@@ -2800,6 +2837,8 @@ function migrate(){
   if(!state.tasks) state.tasks=[];
   if(!state.notes) state.notes=[];
   if(!state.logs)  state.logs=[];
+  if(!Array.isArray(state.labels)) state.labels=[];
+  if(typeof state.ui.tapEdit==='undefined') state.ui.tapEdit=false;
   if(!state.savedColors) state.savedColors=[];
   if(!state.ui) state.ui={};
   if(typeof state.ui.lastBackup==='undefined') state.ui.lastBackup=null;   /* fecha ISO de la última copia */
@@ -3024,11 +3063,67 @@ function renderTodayBar(){
 /* ==========================================================
    METAS (barra global plegable, con ámbitos)
 ========================================================== */
+/* v164: etiquetas personalizadas compartidas (Metas + Logros) ------------- */
+let goalAddScope='general';   /* etiqueta elegida al AÑADIR una meta */
+let logAddLabel='general';    /* etiqueta elegida al APUNTAR un logro */
+let editLabelFor=null;
+const newLabelOpen={metas:false,logros:false};
+const LABEL_GRIS='#A2ABBD';
+function labelById(id){ return (state.labels||[]).find(l=>l.id===id); }
+function labelChooserHtml(kind){
+  const sel = kind==='metas'?goalAddScope:logAddLabel;
+  const opts=['general', ...state.habits.filter(h=>!h.archived).map(h=>h.id), ...(state.labels||[]).map(l=>l.id)];
+  const chips=opts.map(k=>{
+    const on=sel===k;
+    const info = k==='general'?{name:'General',color:'#8B93A3'}:(habitById(k)?{name:habitById(k).name,color:habitById(k).color}:{name:(labelById(k)?labelById(k).name:'?'),color:LABEL_GRIS});
+    const st=on?`style="color:${ink(info.color)};border-color:${ink(info.color)};background:${hexRgba(info.color,.12)}"`:'';
+    return `<button type="button" class="lchip" aria-pressed="${on}" ${st} onclick="pickAddLabel('${kind}','${k}')">${esc(info.name)}</button>`;
+  }).join('');
+  return `<div class="lblrow"><span class="lblcap">Etiqueta:</span>${chips}<button type="button" class="lchip ladd" onclick="toggleNewLabel('${kind}')">＋ Nueva etiqueta</button>
+    <div class="newlblbox ${newLabelOpen[kind]?'on':''}"><input type="text" id="nlbl_${kind}" placeholder="Ej: Trabajo, Personal…" maxlength="24" onkeydown="if(event.key==='Enter')createLabel('${kind}')"><button type="button" class="mini" onclick="createLabel('${kind}')">Crear</button></div></div>`;
+}
+function pickAddLabel(kind,id){ if(kind==='metas'){ goalAddScope=id; renderGoals(); } else { logAddLabel=id; renderLogs(); } }
+function toggleNewLabel(kind){ newLabelOpen[kind]=!newLabelOpen[kind]; if(kind==='metas')renderGoals(); else renderLogs(); const i=document.getElementById('nlbl_'+kind); if(i) i.focus(); }
+function createLabel(kind){
+  const i=document.getElementById('nlbl_'+kind); const name=(i?i.value:'').trim(); if(!name) return;
+  let l=(state.labels||[]).find(x=>x.name.toLowerCase()===name.toLowerCase());
+  if(!l){ l={id:'lbl_'+Date.now(), name}; state.labels.push(l); announce('Etiqueta «'+name+'» creada.'); }
+  else announce('Ya existe la etiqueta «'+l.name+'».');
+  if(kind==='metas') goalAddScope=l.id; else logAddLabel=l.id;
+  newLabelOpen[kind]=false; persist(); if(kind==='metas')renderGoals(); else renderLogs();
+}
+function labelManagerHtml(){
+  if(!(state.labels||[]).length) return '';
+  const rows=state.labels.map(l=>{
+    if(editLabelFor===l.id){
+      return `<div class="lmrow"><input type="text" id="lme_${l.id}" value="${esc(l.name)}" maxlength="24" onkeydown="if(event.key==='Enter')saveLabelEdit('${l.id}');if(event.key==='Escape')cancelLabelEdit()"><button class="mini" onclick="saveLabelEdit('${l.id}')">Guardar</button><button class="mini gray" onclick="cancelLabelEdit()">Cancelar</button></div>`;
+    }
+    const used=state.goals.filter(g=>(g.scope||'general')===l.id).length + state.logs.filter(x=>(x.habit||'general')===l.id).length;
+    return `<div class="lmrow"><span class="chipmini" style="color:${LABEL_GRIS};border-color:${LABEL_GRIS}">🏷️ ${esc(l.name)}</span><span class="lmused">${used} uso${used===1?'':'s'}</span><button class="edith" title="Renombrar etiqueta" onclick="startLabelEdit('${l.id}')">✎</button><button class="delh" title="Eliminar etiqueta" onclick="delLabel('${l.id}')">✕</button></div>`;
+  }).join('');
+  return `<details class="donegroup lblmgr"><summary class="donesum">🏷️ Etiquetas personalizadas <span class="donecount">· ${state.labels.length}</span></summary>${rows}<div class="hint" style="margin-top:8px">Se comparten entre Metas y Logros. Al borrar una, lo que la tenía pasa a General.</div></details>`;
+}
+function startLabelEdit(id){ editLabelFor=id; renderGoals(); renderLogs(); const i=document.getElementById('lme_'+id); if(i){ i.focus(); i.select(); } }
+function cancelLabelEdit(){ editLabelFor=null; renderGoals(); renderLogs(); }
+function saveLabelEdit(id){ const l=labelById(id); if(!l) return; const i=document.getElementById('lme_'+id); const v=(i?i.value:'').trim(); if(v) l.name=v; editLabelFor=null; persist(); renderGoals(); renderLogs(); announce('Etiqueta renombrada.'); }
+function delLabel(id){
+  const before=snapshot(); const l=labelById(id);
+  state.labels=state.labels.filter(x=>x.id!==id);
+  state.goals.forEach(g=>{ if((g.scope||'general')===id) g.scope='general'; });
+  state.logs.forEach(x=>{ if((x.habit||'general')===id) x.habit='general'; });
+  if(goalAddScope===id) goalAddScope='general'; if(logAddLabel===id) logAddLabel='general';
+  if(goalScope===id) goalScope='all'; if(logFilter===id) logFilter='all';
+  editLabelFor=null; persist(); renderGoals(); renderLogs();
+  offerUndo('Etiqueta «'+(l?l.name:'')+'» eliminada', before);
+}
 function scopeName(sc){
   if(sc==='all') return 'Todo';
   if(sc==='general') return '🌐 General';
   const h=habitById(sc);
-  return h ? h.name : '🌐 General';
+  if(h) return h.name;
+  const l=labelById(sc);
+  if(l) return '🏷️ '+l.name;
+  return '🌐 General';
 }
 /* --- v50: estado derivado de metas con sub-pasos --- */
 function goalDone(g){ return (g.steps && g.steps.length) ? g.steps.every(s=>s.done) : !!g.done; }
@@ -3038,14 +3133,44 @@ function findStepAnywhere(sid){ for(const g of state.goals){ if(!Array.isArray(g
 function discardEmptyStep(){ if(editStepFor){ const c=findStepAnywhere(editStepFor); if(c && !c.step.text){ c.goal.steps.splice(c.index,1); } } }
 function goalInScope(g){ return goalScope==='all' || (g.scope||'general')===goalScope; }
 function goalsDoneToggle(open){ state.ui.goalsDoneOpen=!!open; persist(); }
-function goalScopeColor(g){ const h=(g&&g.scope&&g.scope!=='general')?habitById(g.scope):null; return (h&&h.color)?h.color:'var(--tab)'; }  /* v104: color del corchete = categoría */
+function goalScopeColor(g){ const sc=g&&g.scope; if(sc && sc!=='general'){ const h=habitById(sc); if(h&&h.color) return h.color; if(labelById(sc)) return LABEL_GRIS; } return 'var(--tab)'; }  /* v104/v164: color = hábito, o gris si es etiqueta */
+/* v165: edición en el sitio (contenteditable) ----------------------------- */
+function edAttrs(kind,id){ return (state.ui&&state.ui.tapEdit) ? `contenteditable="true" spellcheck="false" data-ed="${kind}:${id}" onkeydown="edKey(event)" onblur="edCommit(this)"` : ''; }
+function edLookup(spec){
+  const ci=spec.indexOf(':'); if(ci<0) return null; const kind=spec.slice(0,ci), rest=spec.slice(ci+1);
+  if(kind==='task'){ const t=findTaskById(rest); return t&&{get:()=>t.text,set:v=>t.text=v,deps:['hoy']}; }
+  if(kind==='goal'){ const g=state.goals.find(x=>x.id===rest); return g&&{get:()=>g.text,set:v=>g.text=v,deps:['agenda']}; }
+  if(kind==='step'){ const p=rest.split('~'); const g=state.goals.find(x=>x.id===p[0]); const s=g&&(g.steps||[]).find(x=>x.id===p[1]); return s&&{get:()=>s.text,set:v=>s.text=v,deps:[]}; }
+  if(kind==='log'){ const l=state.logs.find(x=>x.id===rest); return l&&{get:()=>l.text,set:v=>l.text=v,deps:['pano']}; }
+  if(kind==='diary'){ const d=state.diary.find(x=>x.id===rest); return d&&{get:()=>d.text,set:v=>d.text=v,deps:['pano']}; }
+  if(kind==='deadline'){ const z=state.deadlines.find(x=>x.id===rest); return z&&{get:()=>z.title,set:v=>z.title=v,deps:['agenda','hoy']}; }
+  if(kind==='event'){ const e=state.events.find(x=>x.id===rest); return e&&{get:()=>e.title,set:v=>e.title=v,deps:['hoy']}; }
+  if(kind==='habit'){ const h=habitById(rest); return h&&{get:()=>h.name,set:v=>h.name=v.slice(0,60),deps:['pano','logs']}; }
+  return null;
+}
+function edCommit(el){
+  const L=edLookup(el.getAttribute('data-ed')||''); if(!L){ return; }
+  const val=(el.textContent||'').replace(/\s+/g,' ').trim();
+  const cur=L.get();
+  if(!val || val===cur){ el.textContent=cur; return; }   /* no vaciar; sin cambios, revertir */
+  L.set(val); el.textContent=L.get();
+  persist();
+  (L.deps||[]).forEach(v=>{ if(v in dirty) dirty[v]=true; });
+}
+function edKey(e){
+  if(e.key==='Enter'){ e.preventDefault(); e.currentTarget.blur(); }
+  else if(e.key==='Escape'){ e.preventDefault(); const L=edLookup(e.currentTarget.getAttribute('data-ed')||''); if(L) e.currentTarget.textContent=L.get(); e.currentTarget.blur(); }
+}
+function applyTapEdit(){ try{ document.body.classList.toggle('tapedit', !!(state.ui&&state.ui.tapEdit)); }catch(e){} }
+function setTapEdit(v){ state.ui.tapEdit=!!v; applyTapEdit(); persist(); renderAll(); renderSetPop(); announce(v?'Ahora puedes tocar el texto para editarlo.':'Edición con el lápiz.'); }
 function renderGoals(){
   const el=document.getElementById('viewGoals'); if(!el) return;
   const scoped = state.goals.filter(goalInScope);
   const activeG = scoped.filter(g=>!goalDone(g));      /* v86: pendientes arriba */
   const doneG = scoped.filter(goalDone);               /* v86: cumplidas → grupo */
   const total=scoped.length, done=doneG.length;
-  const chips = ['all', 'general', ...state.habits.filter(h=>!h.archived).map(h=>h.id)].map(sc=>
+  const usedGLbl = (state.labels||[]).filter(l=>state.goals.some(g=>(g.scope||'general')===l.id)).map(l=>l.id);
+  const chips = ['all', 'general', ...state.habits.filter(h=>!h.archived).map(h=>h.id), ...usedGLbl].map(sc=>
     `<button class="scope ${goalScope===sc?'on':''}" aria-pressed="${goalScope===sc}" onclick="setGoalScope('${sc}')">${esc(scopeName(sc))}</button>`
   ).join('');
   const list = activeG.length ? activeG.map((g,gi)=>{
@@ -3083,7 +3208,7 @@ function renderGoals(){
           onpointerdown="goalPointerDown(event,'${g.id}')" onpointermove="goalPointerMove(event)" onpointerup="goalPointerUp(event)" onpointercancel="goalPointerUp(event)"
           onkeydown="if(event.key==='ArrowUp'){event.preventDefault();moveGoalKey('${g.id}',-1);} else if(event.key==='ArrowDown'){event.preventDefault();moveGoalKey('${g.id}',1);}">⠿</button>
         <button class="gcheck ${gdone?'on':''}" aria-label="Meta cumplida" aria-pressed="${gdone}" onclick="toggleGoal('${g.id}')">✓</button>
-        <div class="gt">${esc(g.text)}</div><span class="rowacts">${goalScope==='all'?`<span class="gscope">${esc(scopeName(g.scope||'general'))}</span>`:''}${gdueCtl}
+        <div class="gt ed" ${edAttrs('goal',g.id)}>${esc(g.text)}</div><span class="rowacts">${goalScope==='all'?`<span class="gscope">${esc(scopeName(g.scope||'general'))}</span>`:''}${gdueCtl}
         ${hasSteps?`<span class="subprog ${st.done===st.total?'full':''}" title="${st.done} de ${st.total} pasos hechos">${st.done}/${st.total}</span>`:''}
         <button class="subadd" title="Añadir paso" aria-label="Añadir paso a la meta" onclick="addGoalStep('${g.id}')">＋</button>
         <button class="edith" title="Editar meta" onclick="startGoalEdit('${g.id}')">✎</button>
@@ -3108,7 +3233,7 @@ function renderGoals(){
           onpointerdown="stepPointerDown(event,'${g.id}','${s.id}')" onpointermove="stepPointerMove(event)" onpointerup="stepPointerUp(event)" onpointercancel="stepPointerUp(event)"
           onkeydown="if(event.key==='ArrowUp'){event.preventDefault();moveGoalStepKey('${g.id}','${s.id}',-1);} else if(event.key==='ArrowDown'){event.preventDefault();moveGoalStepKey('${g.id}','${s.id}',1);}">⠿</button>
         <button class="gcheck ${s.done?'on':''}" aria-label="Paso hecho" aria-pressed="${s.done}" onclick="toggleGoalStep('${g.id}','${s.id}')">✓</button>
-        <div class="gt">${esc(s.text)}</div>
+        <div class="gt ed" ${edAttrs('step',g.id+'~'+s.id)}>${esc(s.text)}</div>
         <button class="edith" title="Editar paso" onclick="startStepEdit('${g.id}','${s.id}')">✎</button>
         <button class="delh" title="Eliminar paso" onclick="delGoalStep('${g.id}','${s.id}')">✕</button>
       </div>`;
@@ -3130,24 +3255,32 @@ function renderGoals(){
       ${gdoneRows}
     </details>` : '';
   el.innerHTML = `
-    <div class="scopes">${chips}</div>
-    <div class="hint" style="margin:2px 2px 14px">${total?`${done}/${total} cumplidas`:'Aún no hay metas en este ámbito'}</div>
-    ${state.goals.length?`<div class="lgexp" style="margin:0 2px 12px"><button class="mini gray" onclick="goalsCopyMd()">Copiar Markdown</button><button class="mini gray" onclick="goalsDownloadMd()">Descargar .md</button><span class="bkmsg" id="goalsMdMsg"></span></div>`:''}
-    ${list}${emptyMsg}${doneCard}
-    <div class="card" style="margin-top:12px">
-      <div class="addrow">
-        <input id="newGoal" placeholder="${goalScope==='all'?'Nueva meta (irá a General)':'Nueva meta en '+esc(scopeName(goalScope))}" maxlength="140"
+    <div class="card logtop" style="margin-bottom:14px">
+      <div>
+        <div class="kicker">Alcanzadas</div>
+        <div class="logcount" style="color:var(--tab)">${done}<span style="color:var(--muted);font-size:0.9375rem"> ${done===1?'meta':'metas'}</span></div>
+      </div>
+      <div class="hint" style="margin-left:auto;max-width:300px;text-align:right">${total?`${done}/${total} cumplidas · lo que ya conseguiste`:'Aún no hay metas en este ámbito'}</div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="kicker"><span aria-hidden="true">🎯</span> Añadir una meta</div>
+      <div class="addrow" style="margin-top:8px">
+        <input id="newGoal" placeholder="${goalAddScope==='general'?'Nueva meta…':'Nueva meta en '+esc(scopeName(goalAddScope))}" maxlength="140"
           onkeydown="if(event.key==='Enter')addGoal()">
         <button class="btn" onclick="addGoal()">Añadir</button>
       </div>
-    </div>`;
+      ${labelChooserHtml('metas')}
+    </div>
+    <div class="scopes">${chips}</div>
+    ${state.goals.length?`<div class="lgexp" style="margin:8px 2px 12px"><button class="mini gray" onclick="goalsCopyMd()">Copiar Markdown</button><button class="mini gray" onclick="goalsDownloadMd()">Descargar .md</button><span class="bkmsg" id="goalsMdMsg"></span></div>`:''}
+    ${list}${emptyMsg}${doneCard}${labelManagerHtml()}`;
 }
 function setGoalScope(sc){ goalScope=sc; renderGoals(); }
 function addGoal(){
   const inp=document.getElementById('newGoal');
   const text=inp.value.trim(); if(!text) return;
   const nid='g_'+Date.now();
-  state.goals.push({id:nid, text, done:false, scope:(goalScope==='all'?'general':goalScope), steps:[]});
+  state.goals.push({id:nid, text, done:false, scope:(goalAddScope||'general'), steps:[]});
   animarProxima('grow:'+nid, 'an-in');
   renderGoals(); aplicarAnimHint(); persist();
   const n=document.getElementById('newGoal'); if(n) n.focus();
@@ -3418,7 +3551,7 @@ function renderHabits(){
       </div>`;
     } else {
       nameArea = `<div class="hmain">
-        <div class="nline"><div class="n" style="color:${ink(c)}">${esc(h.name)}</div><button class="edith" title="Editar hábito" onclick="startEditHabit('${h.id}')">✎</button>${habitRemindOK(h)?`<span class="rembadge" title="Aviso a las ${h.remindAt}">🔔 ${h.remindAt}</span>`:''}</div>
+        <div class="nline"><div class="n ed" style="color:${ink(c)}" ${edAttrs('habit',h.id)}>${esc(h.name)}</div><button class="edith" title="Editar hábito" onclick="startEditHabit('${h.id}')">✎</button>${habitRemindOK(h)?`<span class="rembadge" title="Aviso a las ${h.remindAt}">🔔 ${h.remindAt}</span>`:''}</div>
         <div class="cnt"><span class="cntn" data-cid="${h.id}" data-n="${count}">${count}</span>/${h.target} esta semana${met?' <span class="met">✓</span>':''}</div>
         <div class="hbar" aria-hidden="true" style="background:${hexRgba(h.color,.18)}"><i data-bid="${h.id}" data-pct="${pct}" style="width:${pct}%;background:${lighten(h.color,.15)}"></i></div>
         ${h.core?`<div class="coreline" title="Lo mínimo que cuenta en un día malo" style="border-left-color:${lighten(h.color,.15)}"><span class="clbl" style="background:${lighten(h.color,.15)}">mín</span><span>${esc(h.core)}</span></div>`:''}
@@ -4295,7 +4428,10 @@ function logsOn(dIso, hid){   /* logros de ese día; hid opcional para filtrar p
 function logHabit(hid){
   if(hid==='general' || !hid) return {name:'General', color:'#F0A84B'};
   const h=habitById(hid);
-  return h ? {name:h.name, color:h.color} : {name:'General', color:'#F0A84B'};
+  if(h) return {name:h.name, color:h.color};
+  const l=labelById(hid);
+  if(l) return {name:l.name, color:LABEL_GRIS};
+  return {name:'General', color:'#F0A84B'};
 }
 function daysInMonth(y,m){ return new Date(y, m+1, 0).getDate(); }
 function firstOffset(y,m){ return (new Date(y,m,1).getDay()+6)%7; }
@@ -4658,7 +4794,7 @@ function renderLogs(){
 
   /* filtros: Todos + General + cada hábito con logros */
   const usados = new Set(all.map(l=>l.habit));
-  const opts = ['all','general', ...state.habits.filter(h=>usados.has(h.id)).map(h=>h.id)];
+  const opts = ['all','general', ...state.habits.filter(h=>usados.has(h.id)).map(h=>h.id), ...(state.labels||[]).filter(l=>usados.has(l.id)).map(l=>l.id)];
   const chips = opts.filter((v,i,a)=>a.indexOf(v)===i).map(k=>{
     const on = logFilter===k;
     const info = k==='all' ? {name:'Todo', color:'#8B93A3'} : logHabit(k);
@@ -4701,7 +4837,7 @@ function renderLogs(){
             <button class="delh" title="Eliminar logro" onclick="delLog('${l.id}')">✕</button>
           </div>
           <div class="tktop"><span class="tkwhen">${logFmt(l.date)}</span><span class="tkkind" style="color:${ink(inf.color)};border-color:${ink(inf.color)}">${esc(inf.name)}</span></div>
-          <div class="tktitle">${esc(l.text)}</div>
+          <div class="tktitle ed" ${edAttrs('log',l.id)}>${esc(l.text)}</div>
         </div>
       </div>`;
     }).join('');
@@ -4735,13 +4871,14 @@ function renderLogs(){
         <input type="text" id="nl_text" placeholder="Ej: Acabé el currículo de shaders" maxlength="140"
           onkeydown="if(event.key==='Enter')addLogFromTab()" autocomplete="off">
         <input type="date" id="nl_date" value="${iso(new Date())}" title="Cuándo lo conseguiste">
-        <select id="nl_habit" title="¿De qué hábito? General si no encaja en ninguno">${sel}</select>
         <button class="btn" onclick="addLogFromTab()">Añadir logro</button>
       </div>
+      ${labelChooserHtml('logros')}
     </div>
     <div style="height:14px"></div>
     ${chips ? `<div class="hchips">${chips}</div>` : ''}
     ${tl}
+    ${labelManagerHtml()}
 `;
 }
 function logsToMarkdown(){
@@ -4773,9 +4910,9 @@ function logsDownloadMd(){
 }
 function setLogFilter(k){ logFilter=k; renderLogs(); }
 function addLogFromTab(){
-  const d=document.getElementById('nl_date'), t=document.getElementById('nl_text'), h=document.getElementById('nl_habit');
+  const d=document.getElementById('nl_date'), t=document.getElementById('nl_text');
   const text=(t?t.value:'').trim(); if(!text) return;
-  state.logs.unshift({id:'l_'+Date.now(), habit:(h?h.value:'general'), date:(d&&d.value)?d.value:iso(new Date()), text});
+  state.logs.unshift({id:'l_'+Date.now(), habit:(logAddLabel||'general'), date:(d&&d.value)?d.value:iso(new Date()), text});
   refresh('logs','pano'); persist();
   announce('Logro apuntado: '+text);
   const t2=document.getElementById('nl_text'); if(t2){ t2.value=''; t2.focus(); }
@@ -5009,7 +5146,7 @@ function renderDiary(){
           <button class="delh" title="Eliminar apunte" onclick="delDiary('${d.id}')">✕</button>
         </div>
         <div class="tktop"><span class="tkwhen">${logFmt(d.date)}${esHoy?' · hoy':''}</span></div>
-        <div class="tktitle plain">${veil(d.text)}</div>
+        <div class="tktitle plain ed" ${(!hideNotes)?edAttrs('diary',d.id):''}>${veil(d.text)}</div>
       </div>
     </div>`;
   };
@@ -5278,7 +5415,7 @@ function renderTaskNode(t, i, siblings){
         onpointerdown="taskPointerDown(event,'${t.id}')" onpointermove="taskPointerMove(event)" onpointerup="taskPointerUp(event)" onpointercancel="taskPointerUp(event)"
         onkeydown="if(event.key==='ArrowUp'){event.preventDefault();moveTaskKey('${t.id}',-1);} else if(event.key==='ArrowDown'){event.preventDefault();moveTaskKey('${t.id}',1);}">⠿</button>
       <button class="gcheck ${done?'on':''}" aria-label="Tarea hecha" aria-pressed="${done}" onclick="toggleTask('${t.id}')">✓</button>
-      <div class="gt">${esc(t.text)}</div>
+      <div class="gt ed" ${edAttrs('task',t.id)}>${esc(t.text)}</div>
       <span class="tacts"><button class="edith" title="Editar tarea" onclick="startTaskEdit('${t.id}')">✎</button><button class="delh" title="Eliminar tarea" onclick="delTask('${t.id}')">✕</button></span>
     </div>
     <div class="tattrs">${hasSubs?`<button class="tcollapse" title="${t.collapsed?'Desplegar subtareas':'Plegar subtareas'}" aria-label="${t.collapsed?'Desplegar':'Plegar'} subtareas de ${esc(t.text)}" aria-expanded="${!t.collapsed}" onclick="toggleTaskCollapse('${t.id}')">${t.collapsed?'▸':'▾'} <span class="tacnt">${N}/${t.subs.length}</span></button>`:''}${rep?'':dueCtl}${repCtl}${repTag}<button class="subadd" title="Añadir subtarea" aria-label="Añadir subtarea" onclick="addSub('${t.id}')">＋ subtarea</button><button class="addbelow" title="Añadir tarea debajo" aria-label="Añadir tarea debajo" onclick="addBelow('${t.id}')">＋ debajo</button></div>${subsHtml}</div>`;
@@ -5789,7 +5926,7 @@ function renderPlazos(){
         <button class="rgrip" aria-label="Reordenar «${esc(z.title)}» dentro de su día" title="Arrastra o usa ↑/↓" onpointerdown="rowGripDown(event,'dz','${z.id}')" onpointermove="rowGripMove(event)" onpointerup="rowGripUp(event)" onpointercancel="rowGripUp(event)" onkeydown="if(event.key==='ArrowUp'){event.preventDefault();moveDeadlineKey('${z.id}',-1);}else if(event.key==='ArrowDown'){event.preventDefault();moveDeadlineKey('${z.id}',1);}">⠿</button>
       </div>
       <div class="dzbody">
-        <div class="dztitle">${esc(z.title)}<span class="dzkind ${kind}">${kindLbl}</span></div>
+        <div class="dztitle"><span class="ed" ${edAttrs('deadline',z.id)}>${esc(z.title)}</span><span class="dzkind ${kind}">${kindLbl}</span></div>
         <div class="dzmeta">${dzFmt(z.due)}${z.note?` · ${esc(z.note)}`:''}</div>
         ${taskBtn}
       </div>
@@ -5941,7 +6078,7 @@ function agNode(it){
     <div class="agrow">
       ${btns}
       <div class="agtop"><span class="agwhen">${agWhen(it)}</span><span class="agkind">${k.lbl}</span>${(it.kind==='event'&&it.hrEvery>0)?`<span class="agrep" title="Avisos repetidos">🔁 cada ${it.hrEvery} h · ${it.hrFrom}–${it.hrTo}</span>`:''}${(it.kind==='event'&&it.repeat&&it.repeat!=='none')?`<span class="agrep">${repLabel(it.repeat,it.every)}</span>`:''}${(it.kind==='event'&&it.until&&it.repeat&&it.repeat!=='none')?`<span class="agrep hasta" title="Deja de repetirse el ${it.until}">hasta ${agHasta(it.until)}</span>`:''}${(function(){var _a=(it.kind==='event')?eventLeads(it):[];return _a.length?`<span class="agrep" title="Avisos anticipados">🔔 ${leadsHuman(_a)} antes</span>`:'';})()}</div>
-      <div class="agtitle">${esc(it.title)}</div>
+      <div class="agtitle${it.kind==='event'?' ed':''}" ${it.kind==='event'?edAttrs('event',it.id):''}>${esc(it.title)}</div>
       ${sub}
     </div>
   </div>`;
@@ -6636,6 +6773,7 @@ function switchTab(t){
   if(t==='habits') requestAnimationFrame(centerHabitsToday);
 }
 function renderAll(){
+  applyTapEdit();
   initTabColors(); setViewHead(activeTab);
   renderBackupWarn(); renderTodayBar(); renderGoals(); renderBackup(); renderUndo();
   Object.keys(dirty).forEach(k=>dirty[k]=false);

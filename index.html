@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v165</title>
+<title>Hábitos v166</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1088,9 +1088,9 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 .lmused{font-size:0.72rem;color:var(--muted);margin-left:auto}
 .chipmini{font-family:'Space Grotesk',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid;flex:none}
 /* v165: texto siempre editable (Opción A) --------------------------------- */
-.tapedit .ed{cursor:text;border-radius:6px;transition:background .12s,box-shadow .12s}
+.tapedit .ed{cursor:pointer;border-radius:6px;transition:background .12s}
 .tapedit .ed:hover{background:rgba(255,255,255,.045)}
-.tapedit .ed:focus{outline:none;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--acc)}
+.tapedit .ed:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
 .tapedit .edith{display:none}
 </style>
 </head>
@@ -1102,7 +1102,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v165</span></h1>
+      <h1>Hábitos <span class="ver">v166</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1190,6 +1190,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v166</b> — Mejora del «Tocar el texto para editar»: ahora, con el ajuste encendido, tocar el texto <b>abre la edición completa</b> del elemento (igual que el lápiz), no solo el texto. Así puedes cambiar también <b>fecha, hora, etiqueta, repetición…</b> —todo lo del evento, tarea, plazo, etc.— de un toque. (Solo cliente.)</div>
   <div class="vrow"><b>v165</b> — <b>Texto editable con solo tocarlo</b> (opcional): en <b>⚙️ Ajustes</b> hay un interruptor nuevo, «Tocar el texto para editar». Con él encendido, tocas el texto de una tarea, meta, apunte, logro, plazo, evento o el nombre de un hábito y lo editas ahí mismo —se guarda solo al salir del texto o con Enter—, sin usar el lápiz (que se esconde mientras está activo). Apagado por defecto. (Solo cliente.)</div>
   <div class="vrow"><b>v164</b> — <b>Etiquetas personalizadas</b> en <b>Metas</b> y <b>Logros</b>: al crear una meta o apuntar un logro eliges el hábito al que pertenece o una <b>etiqueta propia</b> (Trabajo, Personal…). Las etiquetas son <b>compartidas</b> entre las dos pestañas —la creas una vez y sirve en ambas—, aparecen en los filtros, y puedes <b>renombrarlas o borrarlas</b> desde «🏷️ Etiquetas personalizadas» (al borrar una, lo que la tenía vuelve a General; con Deshacer). (Solo cliente.)</div>
   <div class="vrow"><b>v163</b> — <b>Flechas de contraer/expandir más grandes</b> en todas las pestañas (se veían diminutas, sobre todo en el móvil). Y en <b>Metas</b>: el número de metas <b>alcanzadas</b> se ve arriba del todo (como en Logros) y el «Añadir una meta» sube al principio. (Solo cliente.)</div>
@@ -1365,7 +1366,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v165';
+const APPVER='v166';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -3134,32 +3135,19 @@ function discardEmptyStep(){ if(editStepFor){ const c=findStepAnywhere(editStepF
 function goalInScope(g){ return goalScope==='all' || (g.scope||'general')===goalScope; }
 function goalsDoneToggle(open){ state.ui.goalsDoneOpen=!!open; persist(); }
 function goalScopeColor(g){ const sc=g&&g.scope; if(sc && sc!=='general'){ const h=habitById(sc); if(h&&h.color) return h.color; if(labelById(sc)) return LABEL_GRIS; } return 'var(--tab)'; }  /* v104/v164: color = hábito, o gris si es etiqueta */
-/* v165: edición en el sitio (contenteditable) ----------------------------- */
-function edAttrs(kind,id){ return (state.ui&&state.ui.tapEdit) ? `contenteditable="true" spellcheck="false" data-ed="${kind}:${id}" onkeydown="edKey(event)" onblur="edCommit(this)"` : ''; }
-function edLookup(spec){
-  const ci=spec.indexOf(':'); if(ci<0) return null; const kind=spec.slice(0,ci), rest=spec.slice(ci+1);
-  if(kind==='task'){ const t=findTaskById(rest); return t&&{get:()=>t.text,set:v=>t.text=v,deps:['hoy']}; }
-  if(kind==='goal'){ const g=state.goals.find(x=>x.id===rest); return g&&{get:()=>g.text,set:v=>g.text=v,deps:['agenda']}; }
-  if(kind==='step'){ const p=rest.split('~'); const g=state.goals.find(x=>x.id===p[0]); const s=g&&(g.steps||[]).find(x=>x.id===p[1]); return s&&{get:()=>s.text,set:v=>s.text=v,deps:[]}; }
-  if(kind==='log'){ const l=state.logs.find(x=>x.id===rest); return l&&{get:()=>l.text,set:v=>l.text=v,deps:['pano']}; }
-  if(kind==='diary'){ const d=state.diary.find(x=>x.id===rest); return d&&{get:()=>d.text,set:v=>d.text=v,deps:['pano']}; }
-  if(kind==='deadline'){ const z=state.deadlines.find(x=>x.id===rest); return z&&{get:()=>z.title,set:v=>z.title=v,deps:['agenda','hoy']}; }
-  if(kind==='event'){ const e=state.events.find(x=>x.id===rest); return e&&{get:()=>e.title,set:v=>e.title=v,deps:['hoy']}; }
-  if(kind==='habit'){ const h=habitById(rest); return h&&{get:()=>h.name,set:v=>h.name=v.slice(0,60),deps:['pano','logs']}; }
-  return null;
-}
-function edCommit(el){
-  const L=edLookup(el.getAttribute('data-ed')||''); if(!L){ return; }
-  const val=(el.textContent||'').replace(/\s+/g,' ').trim();
-  const cur=L.get();
-  if(!val || val===cur){ el.textContent=cur; return; }   /* no vaciar; sin cambios, revertir */
-  L.set(val); el.textContent=L.get();
-  persist();
-  (L.deps||[]).forEach(v=>{ if(v in dirty) dirty[v]=true; });
-}
-function edKey(e){
-  if(e.key==='Enter'){ e.preventDefault(); e.currentTarget.blur(); }
-  else if(e.key==='Escape'){ e.preventDefault(); const L=edLookup(e.currentTarget.getAttribute('data-ed')||''); if(L) e.currentTarget.textContent=L.get(); e.currentTarget.blur(); }
+/* v166: tocar el texto abre el modo edición COMPLETO (como el lápiz) ------- */
+function edAttrs(kind,id){ return (state.ui&&state.ui.tapEdit) ? `role="button" tabindex="0" data-ed="${kind}:${id}" onclick="edOpen(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();edOpen(this);}"` : ''; }
+function edOpen(el){
+  const spec=(el&&el.getAttribute)?el.getAttribute('data-ed'):''; if(!spec) return;
+  const ci=spec.indexOf(':'); if(ci<0) return; const kind=spec.slice(0,ci), rest=spec.slice(ci+1);
+  if(kind==='task') startTaskEdit(rest);
+  else if(kind==='goal') startGoalEdit(rest);
+  else if(kind==='step'){ const p=rest.split('~'); startStepEdit(p[0],p[1]); }
+  else if(kind==='log') startLogEdit(rest);
+  else if(kind==='diary') startDiaryEdit(rest);
+  else if(kind==='deadline') startDeadlineEdit(rest);
+  else if(kind==='event') startAgEdit(rest);
+  else if(kind==='habit') startEditHabit(rest);
 }
 function applyTapEdit(){ try{ document.body.classList.toggle('tapedit', !!(state.ui&&state.ui.tapEdit)); }catch(e){} }
 function setTapEdit(v){ state.ui.tapEdit=!!v; applyTapEdit(); persist(); renderAll(); renderSetPop(); announce(v?'Ahora puedes tocar el texto para editarlo.':'Edición con el lápiz.'); }

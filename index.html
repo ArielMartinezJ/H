@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v167</title>
+<title>Hábitos v173</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1096,6 +1096,23 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 .agjump{cursor:pointer;border-radius:9px;transition:background .12s}
 .agjump:hover{background:rgba(255,255,255,.04)}
 .agjump:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+/* v168: filas del desglose de día que saltan a su pestaña ------------------ */
+.dbkgo{cursor:pointer;position:relative;padding-right:22px;transition:background .12s}
+.dbkgo::after{content:'\203A';position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.95rem}
+.dbkgo:hover{background:rgba(255,255,255,.05)}
+.dbkgo:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+/* v171: en Semana, tocar una fila salta a su pestaña ---------------------- */
+.smjump{cursor:pointer;border-radius:9px;transition:background .12s}
+.smjump:hover{background:rgba(255,255,255,.05)}
+.smjump:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.smgo{position:relative;padding-right:20px}
+.smgo::after{content:'\203A';position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.95rem}
+.smhb.smjump{padding:2px 4px;margin:0 -4px;border-radius:7px}
+.smval .smjump{display:inline-block;padding:1px 6px;margin:0 -3px}
+/* v172: enlace de vuelta — botón «→ Ver plazo» en tarea/meta ------------- */
+.tgoplz{flex:none;font-size:0.6875rem;padding:1px 8px;border-radius:99px;border:1px solid var(--line2);color:var(--muted);cursor:pointer;white-space:nowrap;line-height:1.5;background:transparent;transition:.14s}
+.tgoplz:hover{color:#7C86F0;border-color:rgba(124,134,240,.5);background:rgba(124,134,240,.1)}
+.tgoplz:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -1106,7 +1123,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v167</span></h1>
+      <h1>Hábitos <span class="ver">v173</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1194,6 +1211,12 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v173</b> — <b>Recordatorio por plazo</b>: cada plazo puede llevar su propio aviso, con <b>antelación</b> (el día de la entrega / 1 día / 3 días / 1 semana antes) y <b>hora</b>. Se activa en el editor del plazo (apagado por defecto) y muestra un badge 🔔 en la fila. Reutiliza la tubería de avisos del servidor; necesita los avisos 🔔 activados. (Solo cliente.)</div>
+  <div class="vrow"><b>v172</b> — <b>Enlace de vuelta plazo ↔ tarea/meta</b>: una tarea o meta con fecha muestra ahora, junto al chip ⏰, un botón <b>«→ Ver plazo»</b> que te lleva a Plazos y resalta ese plazo. (El plazo ya enlazaba a su tarea/meta; ahora funciona en los dos sentidos.) (Solo cliente.)</div>
+  <div class="vrow"><b>v171</b> — En <b>Semana</b>, tocar una fila te lleva a su pestaña: Hábitos, Ejercicio, Diario y Tareas; cada <b>barra de hábito</b> salta a ESE hábito y lo resalta; y en «Metas y logros» hay <b>dos zonas</b> (metas→Metas, logros→Logros). (Solo cliente.)</div>
+  <div class="vrow"><b>v170</b> — <b>Buscador en Tareas</b>: un campo «Buscar en tareas…» filtra por texto (título o subtareas) tanto las pendientes como las completadas, con contador de resultados y ✕ para limpiar. Igual que el de Notas. (Solo cliente.)</div>
+  <div class="vrow"><b>v169</b> — Ahora puedes <b>cambiar la etiqueta de una meta o un logro al editarlos</b> (antes solo se elegía al crearlos): el selector de etiqueta aparece también en el formulario de edición. (Solo cliente.)</div>
+  <div class="vrow"><b>v168</b> — En el <b>desglose de un día</b> (al tocar un día en el calendario de Agenda o de Panorama), cada fila es ahora <b>pulsable</b>: te lleva a su pestaña y resalta ese elemento (evento, plazo, logro, apunte, hábito o entreno). (Solo cliente.)</div>
   <div class="vrow"><b>v167</b> — En <b>Agenda</b>, tocar un <b>plazo</b> o un <b>logro</b> (los que ponen «Viene de Plazos/Logros») te lleva a su pestaña y resalta esa fila —igual que en Hoy—. Los eventos, que sí son propios de la Agenda, se siguen editando ahí mismo. (Solo cliente.)</div>
   <div class="vrow"><b>v166</b> — Mejora del «Tocar el texto para editar»: ahora, con el ajuste encendido, tocar el texto <b>abre la edición completa</b> del elemento (igual que el lápiz), no solo el texto. Así puedes cambiar también <b>fecha, hora, etiqueta, repetición…</b> —todo lo del evento, tarea, plazo, etc.— de un toque. (Solo cliente.)</div>
   <div class="vrow"><b>v165</b> — <b>Texto editable con solo tocarlo</b> (opcional): en <b>⚙️ Ajustes</b> hay un interruptor nuevo, «Tocar el texto para editar». Con él encendido, tocas el texto de una tarea, meta, apunte, logro, plazo, evento o el nombre de un hábito y lo editas ahí mismo —se guarda solo al salir del texto o con Enter—, sin usar el lápiz (que se esconde mientras está activo). Apagado por defecto. (Solo cliente.)</div>
@@ -1371,7 +1394,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v167';
+const APPVER='v173';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1534,9 +1557,11 @@ function highlight(text, q){
 /* en resultados de búsqueda: resalta si no está oculto; si está oculto, se difumina */
 function hlText(text, q){ return hideNotes ? veil(text) : highlight(text, q); }
 let noteSearch='';
+let taskSearch='';   /* v170: buscador de Tareas */
 let diarySearch='';
 function refocusSearch(id){ const i=document.getElementById(id); if(i){ i.focus(); const L=i.value.length; try{ i.setSelectionRange(L,L); }catch(e){} } }
 window.setNoteSearch=function(v){ noteSearch=v; renderNotes(); refocusSearch('noteSearch'); };
+window.setTaskSearch=function(v){ taskSearch=v; renderTasks(); refocusSearch('taskSearch'); };
 window.growNote=function(ta){ if(!ta) return; ta.style.height='auto'; ta.style.height=(ta.scrollHeight)+'px'; };
 function growAllNotes(){ document.querySelectorAll('#viewNotes .notecard textarea').forEach(ta=>window.growNote(ta)); }
 window.setDiarySearch=function(v){ diarySearch=v; renderDiary(); refocusSearch('diarySearch'); };
@@ -2312,7 +2337,66 @@ function setHabitRemindTime(hid, v){
   const h=habitById(hid); if(!h) return;
   if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ h.remindAt=v; renderHabits(); persist(); try{ syncServerHabitReminders(); }catch(e){} announce('Aviso de "'+h.name+'" a las '+v+'.'); }
 }
-function syncAllServerReminders(){ try{ syncServerReminder(); }catch(e){} try{ syncServerEventReminders(); }catch(e){} try{ syncServerWeekly(); }catch(e){} try{ syncServerHabitReminders(); }catch(e){} }
+function deadlineRemindOK(z){ return !!(z && !dlDone(z) && typeof z.remindAt==='string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(z.remindAt)); }
+function nextDeadlineFire(z, now){
+  const m=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(z.remindAt||''); if(!m) return null;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(z.due||'')) return null;
+  const p=z.due.split('-').map(Number);
+  const d=new Date(p[0],p[1]-1,p[2],+m[1],+m[2],0,0);
+  d.setDate(d.getDate()-(+z.remindLead||0));
+  if(d.getTime()<=now.getTime()+30000) return null;   // (fecha − antelación) ya pasó → no se agenda
+  return d;
+}
+function remWhenShort(z){ const lead=+z.remindLead||0; return (lead>0?(lead+'d·'):'')+(z.remindAt||'09:00'); }
+function deadlineRemindWhenLong(z){ const lead=+z.remindLead||0, t=z.remindAt||'09:00';
+  if(lead===0) return 'el día de la entrega, a las '+t;
+  if(lead===1) return '1 día antes, a las '+t;
+  if(lead===7) return '1 semana antes, a las '+t;
+  return lead+' días antes, a las '+t; }
+function deadlinePushBody(z){ const lead=+z.remindLead||0; const when=lead===0?'vence hoy':(lead===1?'vence mañana':('faltan '+lead+' días')); let b='Plazo: '+((z.title||'entrega').trim())+' — '+when; if(z.note && z.note.trim()) b+=' · '+z.note.trim(); return b; }
+async function syncServerDeadlineReminders(){
+  try{
+    if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return;
+    const uid=CLOUD.session.user_id; const now=new Date();
+    const pushOn=(typeof pushCfg==='function') && pushCfg().on;
+    let changed=false;
+    for(const z of state.deadlines){
+      const on = pushOn && deadlineRemindOK(z);
+      let f = on ? nextDeadlineFire(z, now) : null;
+      if(f) f=dndAdjust(f);
+      const id = f ? ('plazo-'+uid+'-'+z.id+'-'+f.getFullYear()+String(f.getMonth()+1).padStart(2,'0')+String(f.getDate()).padStart(2,'0')) : '';
+      if(z.remindSchedId && z.remindSchedId!==id){
+        const _oy=String(z.remindSchedId).slice(-8); let _safe=true;
+        if(/^\d{8}$/.test(_oy)){ const _m=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(z.remindAt||'00:00'); const _of=new Date(+_oy.slice(0,4),+_oy.slice(4,6)-1,+_oy.slice(6,8), _m?+_m[1]:0, _m?+_m[2]:0, 0, 0); _safe=_of.getTime()<=now.getTime()-REM_GUARD_MS; }
+        if(_safe){ try{ await api('/rest/v1/reminders?id=eq.'+encodeURIComponent(z.remindSchedId), {method:'DELETE'}); }catch(e){} }
+        z.remindSchedId=''; changed=true;
+      }
+      if(!f) continue;
+      await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:[{id:id, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:deadlinePushBody(z), url:'https://arielmartinezj.github.io/H/#plazos'}]});
+      if(z.remindSchedId!==id){ z.remindSchedId=id; changed=true; }
+    }
+    if(changed) persist();
+  }catch(e){ /* best-effort, silencioso */ }
+}
+const DEADLINE_LEADS=[{v:0,lbl:'El día'},{v:1,lbl:'1 día antes'},{v:3,lbl:'3 días antes'},{v:7,lbl:'1 semana antes'}];
+function _dzCommitEditInputs(z){ if(plzEdit!==z.id) return; const tEl=document.getElementById('dze_'+z.id), dEl=document.getElementById('dzd_'+z.id), nEl=document.getElementById('dzn_'+z.id); if(tEl && tEl.value.trim()) z.title=tEl.value.trim(); if(dEl && dEl.value) z.due=dEl.value; if(nEl) z.note=nEl.value.trim(); }
+function deadlineRemindEditUI(z){
+  const on=deadlineRemindOK(z), t=on?z.remindAt:'09:00', lead=on?(+z.remindLead||0):0;
+  let leadBtns='';
+  if(on){ leadBtns='<div class="remtime" style="flex-wrap:wrap"><span class="rlab">avisar</span>'+DEADLINE_LEADS.map(function(o){ return '<button class="mini'+(o.v===lead?'':' gray')+'" onclick="setDeadlineRemindLead(\''+z.id+'\','+o.v+')">'+o.lbl+'</button>'; }).join('')+'</div>'; }
+  return '<div class="remedit" style="flex-basis:100%">'
+    +'<div class="nrow"><span class="ntxt">🔔 recordarme este plazo (opcional)</span>'+pushSwitch(on, "toggleDeadlineRemind('"+z.id+"')", 'Recordatorio para '+esc(z.title))+'</div>'
+    +(on
+      ? leadBtns
+        +'<div class="remtime"><span class="rlab">a las</span><input type="time" value="'+t+'" onchange="setDeadlineRemindTime(\''+z.id+'\',this.value)" aria-label="Hora del recordatorio"></div>'
+        +'<div class="hint">Te avisaré <b>'+deadlineRemindWhenLong(z)+'</b>. Necesita los avisos 🔔 activados arriba.</div>'
+      : '<div class="hint">Un aviso propio antes de la entrega, con la antelación y hora que elijas.</div>')
+    +'</div>';
+}
+function toggleDeadlineRemind(id){ const z=state.deadlines.find(x=>x.id===id); if(!z) return; _dzCommitEditInputs(z); if(deadlineRemindOK(z)){ delete z.remindAt; } else { z.remindAt='09:00'; if(typeof z.remindLead!=='number') z.remindLead=0; } const nowOn=deadlineRemindOK(z); renderPlazos(); persist(); try{ syncServerDeadlineReminders(); }catch(e){} announce(nowOn?('Recordatorio de «'+z.title+'» activado.'):('Recordatorio de «'+z.title+'» desactivado.')); }
+function setDeadlineRemindTime(id,v){ const z=state.deadlines.find(x=>x.id===id); if(!z) return; if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ _dzCommitEditInputs(z); z.remindAt=v; renderPlazos(); persist(); try{ syncServerDeadlineReminders(); }catch(e){} } }
+function setDeadlineRemindLead(id,v){ const z=state.deadlines.find(x=>x.id===id); if(!z) return; _dzCommitEditInputs(z); z.remindLead=+v||0; renderPlazos(); persist(); try{ syncServerDeadlineReminders(); }catch(e){} }
+function syncAllServerReminders(){ try{ syncServerReminder(); }catch(e){} try{ syncServerEventReminders(); }catch(e){} try{ syncServerWeekly(); }catch(e){} try{ syncServerHabitReminders(); }catch(e){} try{ syncServerDeadlineReminders(); }catch(e){} }
 /* v149: syncAllServerReminders reescrito arriba (ahora también agenda los avisos por hábito). */
 function toggleReminder(){ const r=reminderCfg(); r.on=!r.on; r.lastShown=''; renderNotifPop(); persist(); announce(r.on?('Recordatorio diario activado a las '+r.time+'.'):'Recordatorio desactivado.'); if(r.on) maybeRemind(); syncAllServerReminders(); }
 function setReminderTime(v){ const r=reminderCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ r.time=v; r.lastShown=''; persist(); renderNotifPop(); syncAllServerReminders(); } }
@@ -3072,12 +3156,17 @@ function renderTodayBar(){
 /* v164: etiquetas personalizadas compartidas (Metas + Logros) ------------- */
 let goalAddScope='general';   /* etiqueta elegida al AÑADIR una meta */
 let logAddLabel='general';    /* etiqueta elegida al APUNTAR un logro */
+let editGoalScope='general';  /* v169: etiqueta al EDITAR una meta */
+let editLogLabel='general';   /* v169: etiqueta al EDITAR un logro */
 let editLabelFor=null;
-const newLabelOpen={metas:false,logros:false};
+const newLabelOpen={metas:false,logros:false,emeta:false,elog:false};
 const LABEL_GRIS='#A2ABBD';
 function labelById(id){ return (state.labels||[]).find(l=>l.id===id); }
+function lblSelGet(kind){ return kind==='metas'?goalAddScope:kind==='logros'?logAddLabel:kind==='emeta'?editGoalScope:editLogLabel; }
+function lblSelSet(kind,id){ if(kind==='metas')goalAddScope=id; else if(kind==='logros')logAddLabel=id; else if(kind==='emeta')editGoalScope=id; else editLogLabel=id; }
+function lblRerender(kind){ if(kind==='metas'||kind==='emeta') renderGoals(); else renderLogs(); }
 function labelChooserHtml(kind){
-  const sel = kind==='metas'?goalAddScope:logAddLabel;
+  const sel=lblSelGet(kind);
   const opts=['general', ...state.habits.filter(h=>!h.archived).map(h=>h.id), ...(state.labels||[]).map(l=>l.id)];
   const chips=opts.map(k=>{
     const on=sel===k;
@@ -3088,15 +3177,15 @@ function labelChooserHtml(kind){
   return `<div class="lblrow"><span class="lblcap">Etiqueta:</span>${chips}<button type="button" class="lchip ladd" onclick="toggleNewLabel('${kind}')">＋ Nueva etiqueta</button>
     <div class="newlblbox ${newLabelOpen[kind]?'on':''}"><input type="text" id="nlbl_${kind}" placeholder="Ej: Trabajo, Personal…" maxlength="24" onkeydown="if(event.key==='Enter')createLabel('${kind}')"><button type="button" class="mini" onclick="createLabel('${kind}')">Crear</button></div></div>`;
 }
-function pickAddLabel(kind,id){ if(kind==='metas'){ goalAddScope=id; renderGoals(); } else { logAddLabel=id; renderLogs(); } }
-function toggleNewLabel(kind){ newLabelOpen[kind]=!newLabelOpen[kind]; if(kind==='metas')renderGoals(); else renderLogs(); const i=document.getElementById('nlbl_'+kind); if(i) i.focus(); }
+function pickAddLabel(kind,id){ lblSelSet(kind,id); lblRerender(kind); }
+function toggleNewLabel(kind){ newLabelOpen[kind]=!newLabelOpen[kind]; lblRerender(kind); const i=document.getElementById('nlbl_'+kind); if(i) i.focus(); }
 function createLabel(kind){
   const i=document.getElementById('nlbl_'+kind); const name=(i?i.value:'').trim(); if(!name) return;
   let l=(state.labels||[]).find(x=>x.name.toLowerCase()===name.toLowerCase());
   if(!l){ l={id:'lbl_'+Date.now(), name}; state.labels.push(l); announce('Etiqueta «'+name+'» creada.'); }
   else announce('Ya existe la etiqueta «'+l.name+'».');
-  if(kind==='metas') goalAddScope=l.id; else logAddLabel=l.id;
-  newLabelOpen[kind]=false; persist(); if(kind==='metas')renderGoals(); else renderLogs();
+  lblSelSet(kind,l.id);
+  newLabelOpen[kind]=false; persist(); lblRerender(kind);
 }
 function labelManagerHtml(){
   if(!(state.labels||[]).length) return '';
@@ -3171,7 +3260,7 @@ function renderGoals(){
     const pct=hasSteps?Math.round(st.done/st.total*100):0;
     const gdl = g.deadlineId ? state.deadlines.find(z=>z.id===g.deadlineId) : null;
     const gdueCtl = gdl
-      ? `<button class="tdl" style="${dzBadgeStyle(dzDays(gdl.due))}" title="Cambiar o quitar la fecha de entrega" onclick="startGoalDue('${g.id}')">⏰ ${dzFmt(gdl.due)}</button>`
+      ? `<button class="tdl" style="${dzBadgeStyle(dzDays(gdl.due))}" title="Cambiar o quitar la fecha de entrega" onclick="startGoalDue('${g.id}')">⏰ ${dzFmt(gdl.due)}</button><button class="tgoplz" title="Ver el plazo vinculado" aria-label="Ver el plazo de esta meta" onclick="gsGoDeadline('${gdl.id}')">→ Ver plazo</button>`
       : `<button class="tdue-add" title="Poner fecha de entrega" aria-label="Poner fecha de entrega a esta meta" onclick="startGoalDue('${g.id}')">📅</button>`;
     let row;
     if(dueEditGoalFor===g.id){
@@ -3194,7 +3283,7 @@ function renderGoals(){
           <button class="mini" onclick="saveGoalEdit('${g.id}')">Guardar</button>
           <button class="mini gray" onclick="cancelGoalEdit()">Cancelar</button>
         </div>
-      </div>`;
+      </div>${labelChooserHtml('emeta')}`;
     } else {
       row = `<div class="goalrow">
         <button class="grip" aria-label="Mover meta: arrástrala, o usa las flechas ↑/↓ del teclado" title="Arrastra para mover · o ↑/↓ con el teclado"
@@ -3307,7 +3396,7 @@ function clearGoalDue(id){
   dueEditGoalFor=null; renderGoals(); refresh('plazos','hoy'); renderDueWarn(); persist();
   offerUndo('Fecha quitada', before);
 }
-function startGoalEdit(id){ editGoalFor=id; renderGoals(); const i=document.getElementById('ge_'+id); if(i){ i.focus(); i.select(); } }
+function startGoalEdit(id){ editGoalFor=id; const g=state.goals.find(x=>x.id===id); editGoalScope=(g&&g.scope)||'general'; renderGoals(); const i=document.getElementById('ge_'+id); if(i){ i.focus(); i.select(); } }
 function cancelGoalEdit(){ editGoalFor=null; renderGoals(); }
 function saveGoalEdit(id){
   const g=state.goals.find(x=>x.id===id); if(!g) return;
@@ -3315,6 +3404,7 @@ function saveGoalEdit(id){
   const t=(el?el.value:'').trim();
   if(t) g.text=t;
   if(g.deadlineId){ const z=state.deadlines.find(x=>x.id===g.deadlineId); if(z) z.title=g.text; }
+  g.scope=editGoalScope;
   editGoalFor=null; renderGoals(); refresh('plazos','hoy'); renderDueWarn(); persist();
   announce('Meta actualizada.');
 }
@@ -4530,10 +4620,10 @@ function panoGreen(f){ f=Math.max(0,Math.min(1,f)); const r=Math.round(30+110*f)
 function panoHeatMonth(frac){ if(frac===null||frac===0) return ''; const f=Math.max(0,Math.min(1,frac)); const txt=f>0.55?'#0B0E14':'#EAFBF1'; return `background:rgb(${panoGreen(f)});border-color:rgba(126,226,168,${(0.40+0.50*f).toFixed(2)});color:${txt}`; }
 function panoDayItems(dIso){
   const out=[];
-  state.habits.forEach(function(h){ if(h.archived) return; if(isChecked(dIso,h.id)) out.push({c:'#7EE2A8',kind:'Hábito',title:h.name,meta:'',done:true}); });
-  state.workouts.forEach(function(w){ if(w && w.date===dIso){ const exs=(w.exercises||[]).map(function(e){return e.name;}).join(', '); out.push({c:TABMETA.exercise.c,kind:'Ejercicio',title:muscle(w.muscle).name+(exs?': '+exs:''),meta:'',done:false}); } });
-  logsOn(dIso).forEach(function(l){ out.push({c:TABMETA.logs.c,kind:'Logro',title:l.text||'logro',meta:'',done:false}); });
-  state.diary.forEach(function(d){ if(d && d.date===dIso) out.push({c:TABMETA.diary.c,kind:'Diario',title:d.text||'apunte',meta:'',done:false}); });
+  state.habits.forEach(function(h){ if(h.archived) return; if(isChecked(dIso,h.id)) out.push({c:'#7EE2A8',kind:'Hábito',title:h.name,meta:'',done:true,goKind:'habit',goId:h.id}); });
+  state.workouts.forEach(function(w){ if(w && w.date===dIso){ const exs=(w.exercises||[]).map(function(e){return e.name;}).join(', '); out.push({c:TABMETA.exercise.c,kind:'Ejercicio',title:muscle(w.muscle).name+(exs?': '+exs:''),meta:'',done:false,goKind:'exercise',goId:w.id}); } });
+  logsOn(dIso).forEach(function(l){ out.push({c:TABMETA.logs.c,kind:'Logro',title:l.text||'logro',meta:'',done:false,goKind:'log',goId:l.id}); });
+  state.diary.forEach(function(d){ if(d && d.date===dIso) out.push({c:TABMETA.diary.c,kind:'Diario',title:d.text||'apunte',meta:'',done:false,goKind:'diary',goId:d.id}); });
   return out;
 }
 function panoDayDesglose(dIso){ return dbkPanel(dIso, panoDayItems(dIso), "panoPick('"+dIso+"')"); }
@@ -4693,7 +4783,7 @@ function renderPano(){
 
   el.innerHTML = `<div class="hchips">${chips}</div>${modes}${body}`;
 }
-function startLogEdit(id){ editLogFor=id; refresh('pano','logs'); const i=document.getElementById('lte_'+id); if(i){ i.focus(); i.select(); } }
+function startLogEdit(id){ editLogFor=id; const l=state.logs.find(x=>x.id===id); editLogLabel=(l&&l.habit)||'general'; refresh('pano','logs'); const i=document.getElementById('lte_'+id); if(i){ i.focus(); i.select(); } }
 function cancelLogEdit(){ editLogFor=null; refresh('pano','logs'); }
 function saveLogEdit(id){
   const l=state.logs.find(x=>x.id===id); if(!l) return;
@@ -4701,6 +4791,7 @@ function saveLogEdit(id){
   const t=(tEl?tEl.value:'').trim();
   if(dEl && dEl.value) l.date=dEl.value;
   if(t) l.text=t;
+  l.habit=editLogLabel;
   editLogFor=null; refresh('pano','logs'); persist();
   announce('Logro actualizado.');
 }
@@ -4818,6 +4909,7 @@ function renderLogs(){
             <button class="mini" onclick="saveLogEdit('${l.id}')">Guardar</button>
             <button class="mini gray" onclick="cancelLogEdit()">Cancelar</button>
           </div>
+          ${labelChooserHtml('elog')}
         </div></div>`;
       }
       const li=state.logs.indexOf(l);
@@ -5401,7 +5493,7 @@ function renderTaskNode(t, i, siblings){
     : '';
   const repTag = repState ? `<span class="trecstate ${repState.today?'today':''}">${repState.txt}</span>` : '';
   const dueCtl = dl
-    ? `<button class="tdl" style="${dzBadgeStyle(dzDays(dl.due))}" title="Cambiar o quitar la fecha de entrega" onclick="startTaskDue('${t.id}')">⏰ ${dzFmt(dl.due)}</button>`
+    ? `<button class="tdl" style="${dzBadgeStyle(dzDays(dl.due))}" title="Cambiar o quitar la fecha de entrega" onclick="startTaskDue('${t.id}')">⏰ ${dzFmt(dl.due)}</button><button class="tgoplz" title="Ver el plazo vinculado" aria-label="Ver el plazo de esta tarea" onclick="gsGoDeadline('${dl.id}')">→ Ver plazo</button>`
     : `<button class="tdue-add" title="Poner fecha de entrega" aria-label="Poner fecha de entrega a esta tarea" onclick="startTaskDue('${t.id}')">📅</button>`;
   return `<div class="tasknode"><div class="goal ${done?'done':''} ${repMuted?'trecmuted':''}" data-anim="trow:${t.id}">
       <button class="grip" aria-label="Mover tarea: arrástrala, o usa las flechas ↑/↓ del teclado" title="Arrastra para mover · o ↑/↓ con el teclado"
@@ -5423,11 +5515,16 @@ function renderTasks(){
   let _bf=false; state.tasks.forEach(function(t){ if(!t.repeat && taskDone(t) && !t.doneAt){ t.doneAt=iso(new Date()); _bf=true; } }); if(_bf) persist();   /* v146: fecha a tareas ya completadas sin ella */
   const active = state.tasks.filter(t=> t.repeat || !taskDone(t));      /* v85: recurrentes y no-hechas arriba */
   const doneTops = state.tasks.filter(t=> !t.repeat && taskDone(t));     /* v85: totalmente hechas → «Completadas» */
-  const list = active.map((t,i)=>renderTaskNode(t,i,state.tasks)).join('');
+  const q = (typeof taskSearch==='string'?taskSearch:'').trim();
+  const matchTask = t => matchText(t.text,q) || (t.subs||[]).some(s=>matchText(s.text,q));
+  const activeF = q ? active.filter(matchTask) : active;
+  const doneF   = q ? doneTops.filter(matchTask) : doneTops;
+  const list = activeF.map((t,i)=>renderTaskNode(t,i,state.tasks)).join('');
   const emptyMsg = !state.tasks.length
     ? `<div class="empty">Sin tareas pendientes. Apunta aquí lo suelto del día para que no se escape.</div>`
-    : (active.length ? '' : `<div class="empty">¡Todo hecho! Lo completado está abajo. 🎉</div>`);
-  const doneRows = doneTops.map(function(t){
+    : (q ? ((!activeF.length && !doneF.length) ? `<div class="empty">Sin tareas que coincidan con «${esc(q)}».</div>` : '')
+        : (active.length ? '' : `<div class="empty">¡Todo hecho! Lo completado está abajo. 🎉</div>`));
+  const doneRows = doneF.map(function(t){
     const hasSubs = t.subs && t.subs.length;
     const total = hasSubs ? t.subs.length : 0;
     const subs = (hasSubs && !t.collapsed) ? doneSubList(t.subs) : '';
@@ -5442,8 +5539,8 @@ function renderTasks(){
       </div>${meta}${subs}
     </div>`;
   }).join('');
-  const doneCard = doneTops.length ? `<details class="donegroup" ${state.ui.tasksDoneOpen?'open':''} ontoggle="tasksDoneToggle(this.open)">
-      <summary class="donesum">Completadas <span class="donecount">· ${doneTops.length}</span></summary>
+  const doneCard = doneF.length ? `<details class="donegroup" ${state.ui.tasksDoneOpen?'open':''} ontoggle="tasksDoneToggle(this.open)">
+      <summary class="donesum">Completadas <span class="donecount">· ${doneF.length}</span></summary>
       ${doneRows}
       <div class="vaciar"><button class="mini gray" onclick="clearCompletedTasks()">Vaciar completadas</button></div>
     </details>` : '';
@@ -5456,6 +5553,8 @@ function renderTasks(){
         <button class="btn" onclick="addTask()">Añadir</button>
       </div>
       ${state.tasks.length?`<div class="lgexp"><button class="mini gray" onclick="tasksCopyMd()">Copiar Markdown</button><button class="mini gray" onclick="tasksDownloadMd()">Descargar .md</button><span class="bkmsg" id="tasksMdMsg"></span></div>`:''}
+      ${state.tasks.length?`<div class="addrow" style="margin:8px 0 2px"><input type="text" id="taskSearch" placeholder="Buscar en tareas…" value="${esc(taskSearch)}" oninput="setTaskSearch(this.value)" autocomplete="off" aria-label="Buscar en tareas" style="flex:1">${q?`<button class="mini gray" onclick="setTaskSearch('')" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">✕</button>`:''}</div>`:''}
+      ${q?`<div class="hint" style="margin:2px 2px 6px">${activeF.length+doneF.length} ${(activeF.length+doneF.length)===1?'resultado':'resultados'} para «${esc(q)}»</div>`:''}
       ${list?`<div class="tasklist">${list}</div>`:''}
       ${emptyMsg}
       ${doneCard}
@@ -5799,10 +5898,10 @@ function saveDeadlineEdit(id){
   const t=(tEl?tEl.value:'').trim(); if(t) z.title=t;
   if(dEl && dEl.value) z.due=dEl.value;
   if(nEl) z.note=nEl.value.trim();
-  plzEdit=null; renderPlazos(); persist(); announce('Plazo actualizado.');
+  plzEdit=null; renderPlazos(); persist(); try{ syncServerDeadlineReminders(); }catch(e){} announce('Plazo actualizado.');
 }
-function delDeadline(id){ const before=snapshot(); const z=state.deadlines.find(x=>x.id===id); if(z && z.taskId){ const t=findTaskById(z.taskId); if(t && t.deadlineId===id) t.deadlineId=undefined; } state.deadlines=state.deadlines.filter(x=>x.id!==id); plzEdit=null; renderPlazos(); refresh('tasks'); persist(); offerUndo('Plazo eliminado', before); }
-function toggleDeadlineDone(id){ const z=state.deadlines.find(x=>x.id===id); if(!z) return; const before=snapshot(); z.done=!z.done; if(z.done){ if(!z.doneAt) z.doneAt=iso(new Date()); } else z.doneAt=undefined; renderPlazos(); persist(); if(z.done) offerUndo('Plazo entregado', before); else announce('Plazo reactivado.'); }
+function delDeadline(id){ const before=snapshot(); const z=state.deadlines.find(x=>x.id===id); if(z && z.remindSchedId){ try{ if(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session) api('/rest/v1/reminders?id=eq.'+encodeURIComponent(z.remindSchedId), {method:'DELETE'}); }catch(e){} } if(z && z.taskId){ const t=findTaskById(z.taskId); if(t && t.deadlineId===id) t.deadlineId=undefined; } state.deadlines=state.deadlines.filter(x=>x.id!==id); plzEdit=null; renderPlazos(); refresh('tasks'); persist(); offerUndo('Plazo eliminado', before); }
+function toggleDeadlineDone(id){ const z=state.deadlines.find(x=>x.id===id); if(!z) return; const before=snapshot(); z.done=!z.done; if(z.done){ if(!z.doneAt) z.doneAt=iso(new Date()); } else z.doneAt=undefined; renderPlazos(); persist(); try{ syncServerDeadlineReminders(); }catch(e){} if(z.done) offerUndo('Plazo entregado', before); else announce('Plazo reactivado.'); }
 function plzDoneToggle(open){ state.ui.plzDoneOpen=!!open; persist(); }
 function movePlzMonth(dir){ plzM+=dir; if(plzM<0){plzM=11;plzY--;} if(plzM>11){plzM=0;plzY++;} renderPlazos(); }
 function deadlineToTask(id){
@@ -5900,6 +5999,7 @@ function renderPlazos(){
           onkeydown="if(event.key==='Enter')saveDeadlineEdit('${z.id}'); if(event.key==='Escape')cancelDeadlineEdit()">
         <input type="date" id="dzd_${z.id}" value="${z.due}">
         <input type="text" id="dzn_${z.id}" value="${esc(z.note)}" maxlength="120" placeholder="Nota (opcional)">
+        ${deadlineRemindEditUI(z)}
         <button class="mini" onclick="saveDeadlineEdit('${z.id}')">Guardar</button>
         <button class="mini gray" onclick="cancelDeadlineEdit()">Cancelar</button>
       </div></div>`;
@@ -5921,7 +6021,7 @@ function renderPlazos(){
       </div>
       <div class="dzbody">
         <div class="dztitle"><span class="ed" ${edAttrs('deadline',z.id)}>${esc(z.title)}</span><span class="dzkind ${kind}">${kindLbl}</span></div>
-        <div class="dzmeta">${dzFmt(z.due)}${z.note?` · ${esc(z.note)}`:''}</div>
+        <div class="dzmeta">${dzFmt(z.due)}${z.note?` · ${esc(z.note)}`:''}${deadlineRemindOK(z)?` <span class="rembadge" title="Recordatorio: ${deadlineRemindWhenLong(z)}">🔔 ${remWhenShort(z)}</span>`:''}</div>
         ${taskBtn}
       </div>
       <span class="dzacts"><button class="edith" title="Editar plazo" onclick="startDeadlineEdit('${z.id}')">✎</button><button class="delh" title="Eliminar plazo" onclick="delDeadline('${z.id}')">✕</button></span>
@@ -6207,13 +6307,24 @@ function agCalItems(y,m){
   return map;
 }
 function moveAgCalMonth(delta){ agCalM+=delta; if(agCalM<0){ agCalM=11; agCalY--; } else if(agCalM>11){ agCalM=0; agCalY++; } agCalSel=null; renderAgenda(); }
+function dbkGo(kind,id){
+  if(kind==='event') gsGoEvent(id);
+  else if(kind==='deadline') gsGoDeadline(id);
+  else if(kind==='log') gsGoLog(id);
+  else if(kind==='diary') gsGoDiary(id);
+  else if(kind==='habit') gsGoHabit(id);
+  else if(kind==='exercise') gsGoExercise(id);
+}
 function dbkTitle(dIso){ const p=dIso.split('-').map(Number); const dt=new Date(p[0],p[1]-1,p[2]); const wd=DAYFULL[(dt.getDay()+6)%7]; return wd.charAt(0).toUpperCase()+wd.slice(1)+' '+p[2]+' de '+MONTHS[p[1]-1]; }
 function dbkRows(items){
   return items.map(function(x){
     const col=ink(x.c);
     const chk=x.done?'<span class="dbkcheck" aria-hidden="true">✓</span>':'';
     const meta=x.meta?'<div class="dbkmeta">'+esc(x.meta)+'</div>':'';
-    return '<div class="dbkrow" style="border-left-color:'+col+'"><span class="dbklbl" style="color:'+col+';border-color:'+col+'">'+x.kind+'</span><div class="dbkbody"><div class="dbktitle">'+chk+esc(x.title)+'</div>'+meta+'</div></div>';
+    const clickable=!!x.goKind;
+    const cls='dbkrow'+(clickable?' dbkgo':'');
+    const attrs=clickable?(' role="button" tabindex="0" aria-label="Ver «'+esc(x.title)+'» en su pestaña" onclick="dbkGo(\''+x.goKind+'\',\''+x.goId+'\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();dbkGo(\''+x.goKind+'\',\''+x.goId+'\')}"'):'';
+    return '<div class="'+cls+'"'+attrs+' style="border-left-color:'+col+'"><span class="dbklbl" style="color:'+col+';border-color:'+col+'">'+x.kind+'</span><div class="dbkbody"><div class="dbktitle">'+chk+esc(x.title)+'</div>'+meta+'</div></div>';
   }).join('');
 }
 function dbkPanel(dIso, items, closeCall){
@@ -6222,10 +6333,10 @@ function dbkPanel(dIso, items, closeCall){
 }
 function agDayItems(dIso){
   const out=[];
-  state.events.forEach(function(e){ if(!e||!e.title) return; if(eventOccurrencesInRange(e,dIso,dIso).length) out.push({c:TABMETA.agenda.c,kind:'Evento',title:e.title,meta:e.time?('a las '+e.time):'todo el día',done:false}); });
-  state.deadlines.forEach(function(z){ if(z && z.due===dIso){ const k=dlLinkedTask(z)?'Tarea':(dlLinkedGoal(z)?'Meta':'Plazo'); out.push({c:agCalKind(z),kind:k,title:z.title||'(sin título)',meta:z.note||'',done:!!z.done}); } });
-  state.logs.forEach(function(l){ if(l && l.date===dIso) out.push({c:TABMETA.logs.c,kind:'Logro',title:l.text||'logro',meta:'',done:false}); });
-  state.diary.forEach(function(d){ if(d && d.date===dIso) out.push({c:TABMETA.diary.c,kind:'Diario',title:d.text||'apunte',meta:'',done:false}); });
+  state.events.forEach(function(e){ if(!e||!e.title) return; if(eventOccurrencesInRange(e,dIso,dIso).length) out.push({c:TABMETA.agenda.c,kind:'Evento',title:e.title,meta:e.time?('a las '+e.time):'todo el día',done:false,goKind:'event',goId:e.id}); });
+  state.deadlines.forEach(function(z){ if(z && z.due===dIso){ const k=dlLinkedTask(z)?'Tarea':(dlLinkedGoal(z)?'Meta':'Plazo'); out.push({c:agCalKind(z),kind:k,title:z.title||'(sin título)',meta:z.note||'',done:!!z.done,goKind:'deadline',goId:z.id}); } });
+  state.logs.forEach(function(l){ if(l && l.date===dIso) out.push({c:TABMETA.logs.c,kind:'Logro',title:l.text||'logro',meta:'',done:false,goKind:'log',goId:l.id}); });
+  state.diary.forEach(function(d){ if(d && d.date===dIso) out.push({c:TABMETA.diary.c,kind:'Diario',title:d.text||'apunte',meta:'',done:false,goKind:'diary',goId:d.id}); });
   return out;
 }
 function agDayDesglose(dIso){ return dbkPanel(dIso, agDayItems(dIso), "agCalPick('"+dIso+"')"); }
@@ -6676,7 +6787,7 @@ function weekBoundsForDate(dt){ const x=new Date(dt); x.setHours(0,0,0,0); const
 function semanaStats(offset){ return semanaStatsFrom(weekBounds(offset)); }
 function semanaStatsFrom(wb){ const inWk=function(d){ return d && d>=wb.from && d<=wb.to; };
   const habs=state.habits.filter(function(h){ return !h.archived; });
-  const perHab=habs.map(function(h){ let c=0; wb.days.forEach(function(ds){ if(isChecked(ds,h.id)) c++; }); return {name:h.name, color:h.color||'var(--acc)', count:c, target:(h.target||7)}; });
+  const perHab=habs.map(function(h){ let c=0; wb.days.forEach(function(ds){ if(isChecked(ds,h.id)) c++; }); return {name:h.name, id:h.id, color:h.color||'var(--acc)', count:c, target:(h.target||7)}; });
   const marcas=perHab.reduce(function(s,x){ return s+x.count; },0);
   const tocados=perHab.filter(function(x){ return x.count>0; }).length;
   const wDays=[]; state.workouts.forEach(function(w){ if(inWk(w.date) && wDays.indexOf(w.date)<0) wDays.push(w.date); });
@@ -6727,6 +6838,16 @@ function fmtWkRangeLong(wb){ const s=new Date(wb.mon); s.setDate(wb.mon.getDate(
   const mA=MONTHS[wb.mon.getMonth()].slice(0,3), mB=MONTHS[s.getMonth()].slice(0,3);
   const sameM=(wb.mon.getMonth()===s.getMonth());
   return dA+' '+wb.mon.getDate()+(sameM?'':' '+mA)+' – '+dB+' '+s.getDate()+' '+mB; }
+function smKey(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.currentTarget.click(); } }
+function smGo(tab){
+  switchTab(tab);
+  if(tab==='habits') renderHabits();
+  else if(tab==='exercise') renderExercise();
+  else if(tab==='diary') renderDiary();
+  else if(tab==='tasks') renderTasks();
+  else if(tab==='logs') renderLogs();
+  else if(tab==='goals') renderGoals();
+}
 function renderSemana(){
   const el=document.getElementById('viewSemana'); if(!el) return;
   const S=semanaStats(semanaOffset);
@@ -6736,12 +6857,12 @@ function renderSemana(){
   const total=S.marcas+S.wDays.length+S.diario+S.tareas+S.metas+S.logros;
   if(total===0){ el.innerHTML='<div class="card smcard">'+head+'<div class="smintro">'+rel+'</div><div class="empty">Aún no hay nada registrado esta semana. En cuanto marques un hábito, entrenes o apuntes algo, aparecerá aquí. 🌱</div></div>'; return; }
   let rows='';
-  if(S.marcas>0){ const bars=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ const pct=Math.max(6,Math.min(100, Math.round(x.count/(x.target||7)*100))); return '<div class="smhb"><span class="smnm">'+esc(x.name)+'</span><span class="smtr"><i style="width:'+pct+'%;background:'+x.color+'"></i></span><span class="smct">'+x.count+'</span></div>'; }).join('');
-    rows+='<div class="smrow"><div class="smic">✅</div><div style="flex:1"><div class="smlab">Hábitos</div><div class="smval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div><div class="smbars">'+bars+'</div></div></div>'; }
-  if(S.wDays.length>0){ const dn=S.wDays.slice().sort().map(wkDayName).join(', '); rows+='<div class="smrow"><div class="smic">🏋️</div><div><div class="smlab">Ejercicio</div><div class="smval"><b>'+S.wDays.length+'</b> '+(S.wDays.length===1?'sesión':'sesiones')+' · '+dn+'</div></div></div>'; }
-  if(S.diario>0){ rows+='<div class="smrow"><div class="smic">📓</div><div><div class="smlab">Diario</div><div class="smval"><b>'+S.diario+'</b> '+(S.diario===1?'apunte':'apuntes')+' de lo que hiciste</div></div></div>'; }
-  if(S.tareas>0){ rows+='<div class="smrow"><div class="smic">✔️</div><div><div class="smlab">Tareas</div><div class="smval"><b>'+S.tareas+'</b> '+(S.tareas===1?'completada':'completadas')+'</div></div></div>'; }
-  if(S.metas>0||S.logros>0){ const parts=[]; if(S.metas>0) parts.push('<b>'+S.metas+'</b> '+(S.metas===1?'meta alcanzada':'metas alcanzadas')); if(S.logros>0) parts.push('<b>'+S.logros+'</b> '+(S.logros===1?'logro nuevo':'logros nuevos')); rows+='<div class="smrow"><div class="smic">🎯</div><div><div class="smlab">Metas y logros</div><div class="smval">'+parts.join(' · ')+'</div></div></div>'; }
+  if(S.marcas>0){ const bars=S.perHab.filter(function(x){return x.count>0;}).sort(function(a,b){return b.count-a.count;}).map(function(x){ const pct=Math.max(6,Math.min(100, Math.round(x.count/(x.target||7)*100))); return '<div class="smhb smjump" role="button" tabindex="0" onkeydown="smKey(event)" onclick="gsGoHabit(\''+x.id+'\')" aria-label="Ver «'+esc(x.name)+'» en Hábitos"><span class="smnm">'+esc(x.name)+'</span><span class="smtr"><i style="width:'+pct+'%;background:'+x.color+'"></i></span><span class="smct">'+x.count+'</span></div>'; }).join('');
+    rows+='<div class="smrow"><div class="smic">✅</div><div style="flex:1"><div class="smjump smgo" role="button" tabindex="0" onkeydown="smKey(event)" onclick="smGo(\'habits\')" aria-label="Ir a Hábitos"><div class="smlab">Hábitos</div><div class="smval"><b>'+S.marcas+'</b> '+(S.marcas===1?'marca':'marcas')+' · tocaste <b>'+S.tocados+'</b> de '+S.totalHab+'</div></div><div class="smbars">'+bars+'</div></div></div>'; }
+  if(S.wDays.length>0){ const dn=S.wDays.slice().sort().map(wkDayName).join(', '); rows+='<div class="smrow"><div class="smic">🏋️</div><div class="smjump smgo" style="flex:1" role="button" tabindex="0" onkeydown="smKey(event)" onclick="smGo(\'exercise\')" aria-label="Ir a Ejercicio"><div class="smlab">Ejercicio</div><div class="smval"><b>'+S.wDays.length+'</b> '+(S.wDays.length===1?'sesión':'sesiones')+' · '+dn+'</div></div></div>'; }
+  if(S.diario>0){ rows+='<div class="smrow"><div class="smic">📓</div><div class="smjump smgo" style="flex:1" role="button" tabindex="0" onkeydown="smKey(event)" onclick="smGo(\'diary\')" aria-label="Ir a Diario"><div class="smlab">Diario</div><div class="smval"><b>'+S.diario+'</b> '+(S.diario===1?'apunte':'apuntes')+' de lo que hiciste</div></div></div>'; }
+  if(S.tareas>0){ rows+='<div class="smrow"><div class="smic">✔️</div><div class="smjump smgo" style="flex:1" role="button" tabindex="0" onkeydown="smKey(event)" onclick="smGo(\'tasks\')" aria-label="Ir a Tareas"><div class="smlab">Tareas</div><div class="smval"><b>'+S.tareas+'</b> '+(S.tareas===1?'completada':'completadas')+'</div></div></div>'; }
+  if(S.metas>0||S.logros>0){ const parts=[]; if(S.metas>0) parts.push('<span class="smjump" role="button" tabindex="0" onkeydown="smKey(event)" onclick="smGo(\'goals\')" aria-label="Ir a Metas"><b>'+S.metas+'</b> '+(S.metas===1?'meta alcanzada':'metas alcanzadas')+' ›</span>'); if(S.logros>0) parts.push('<span class="smjump" role="button" tabindex="0" onkeydown="smKey(event)" onclick="smGo(\'logs\')" aria-label="Ir a Logros"><b>'+S.logros+'</b> '+(S.logros===1?'logro nuevo':'logros nuevos')+' ›</span>'); rows+='<div class="smrow"><div class="smic">🎯</div><div style="flex:1"><div class="smlab">Metas y logros</div><div class="smval">'+parts.join(' · ')+'</div></div></div>'; }
   const wkc=(typeof weeklyCfg==='function')?weeklyCfg():{on:false,time:'10:00'};
   const chip=wkc.on?'<span class="smchip">🔔 Resumen los domingos · '+wkc.time+'</span>':'';
   el.innerHTML='<div class="card smcard">'+head+'<div class="smintro">Esto es lo que hiciste.</div>'+rows+'<div class="smfoot"><span>Una mirada a lo que sí hiciste — sin rachas ni notas.</span>'+chip+'</div>';

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v166</title>
+<title>Hábitos v167</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1092,6 +1092,10 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 .tapedit .ed:hover{background:rgba(255,255,255,.045)}
 .tapedit .ed:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
 .tapedit .edith{display:none}
+/* v167: en Agenda, tocar un plazo/logro salta a su pestaña ----------------- */
+.agjump{cursor:pointer;border-radius:9px;transition:background .12s}
+.agjump:hover{background:rgba(255,255,255,.04)}
+.agjump:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -1102,7 +1106,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v166</span></h1>
+      <h1>Hábitos <span class="ver">v167</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1190,6 +1194,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v167</b> — En <b>Agenda</b>, tocar un <b>plazo</b> o un <b>logro</b> (los que ponen «Viene de Plazos/Logros») te lleva a su pestaña y resalta esa fila —igual que en Hoy—. Los eventos, que sí son propios de la Agenda, se siguen editando ahí mismo. (Solo cliente.)</div>
   <div class="vrow"><b>v166</b> — Mejora del «Tocar el texto para editar»: ahora, con el ajuste encendido, tocar el texto <b>abre la edición completa</b> del elemento (igual que el lápiz), no solo el texto. Así puedes cambiar también <b>fecha, hora, etiqueta, repetición…</b> —todo lo del evento, tarea, plazo, etc.— de un toque. (Solo cliente.)</div>
   <div class="vrow"><b>v165</b> — <b>Texto editable con solo tocarlo</b> (opcional): en <b>⚙️ Ajustes</b> hay un interruptor nuevo, «Tocar el texto para editar». Con él encendido, tocas el texto de una tarea, meta, apunte, logro, plazo, evento o el nombre de un hábito y lo editas ahí mismo —se guarda solo al salir del texto o con Enter—, sin usar el lápiz (que se esconde mientras está activo). Apagado por defecto. (Solo cliente.)</div>
   <div class="vrow"><b>v164</b> — <b>Etiquetas personalizadas</b> en <b>Metas</b> y <b>Logros</b>: al crear una meta o apuntar un logro eliges el hábito al que pertenece o una <b>etiqueta propia</b> (Trabajo, Personal…). Las etiquetas son <b>compartidas</b> entre las dos pestañas —la creas una vez y sirve en ambas—, aparecen en los filtros, y puedes <b>renombrarlas o borrarlas</b> desde «🏷️ Etiquetas personalizadas» (al borrar una, lo que la tenía vuelve a General; con Deshacer). (Solo cliente.)</div>
@@ -1366,7 +1371,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v166';
+const APPVER='v167';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -5861,6 +5866,7 @@ function gsGoTask(id){ closeGlobalSearch(); goToTask(id); }
 function gsGoGoal(id){ closeGlobalSearch(); goToGoal(id); }
 function gsGoNote(id){ closeGlobalSearch(); const nt=state.notes.find(x=>x.id===id); if(noteSearch) setNoteSearch(''); if(nt&&nt.done) state.ui.notesDoneOpen=true; switchTab('notes'); renderNotes(); flashRow(`.notecard[data-anim="nrow:${id}"]`); }
 function gsGoDiary(id){ closeGlobalSearch(); if(diarySearch) setDiarySearch(''); switchTab('diary'); renderDiary(); flashRow(`.tknode[data-anim="drow:${id}"]`); }
+function agJump(kind,id){ if(kind==='plazo') gsGoDeadline(id); else if(kind==='logro') gsGoLog(id); }
 function gsGoLog(id){ closeGlobalSearch(); logFilter='all'; switchTab('logs'); renderLogs(); flashRow(`.tknode[data-anim="lrow:${id}"]`); }
 function gsGoDeadline(id){ closeGlobalSearch(); const z=state.deadlines.find(x=>x.id===id); if(z&&dlDone(z)) state.ui.plzDoneOpen=true; switchTab('plazos'); renderPlazos(); flashRow(`.dzrow[data-anim="dzrow:${id}"]`); }
 function gsGoHabit(id){ closeGlobalSearch(); switchTab('habits'); renderHabits(); flashRow(`[data-anim="hrow:${id}"]`); }
@@ -6058,12 +6064,12 @@ function agNode(it){
   const btns = it.kind==='event'
     ? `<div class="agbtns"><button class="edith" title="Editar evento" onclick="startAgEdit('${it.id}')">✎</button><button class="delh" title="Eliminar evento" onclick="delEvent('${it.id}')">✕</button></div>`
     : '';
-  const sub = it.kind==='plazo' ? '<div class="agsub">Viene de Plazos</div>'
-            : it.kind==='logro' ? '<div class="agsub">Viene de Logros</div>'
+  const sub = it.kind==='plazo' ? '<div class="agsub">Viene de Plazos ›</div>'
+            : it.kind==='logro' ? '<div class="agsub">Viene de Logros ›</div>'
             : (it.note?`<div class="agsub">${esc(it.note)}</div>`:'');
   return `<div class="agnode" data-anim="agrow:${it.id}" style="--c:${k.c}">
     <span class="agdot"></span>
-    <div class="agrow">
+    <div class="agrow${(it.kind==='plazo'||it.kind==='logro')?' agjump':''}"${(it.kind==='plazo'||it.kind==='logro')?` role="button" tabindex="0" title="Ver en su pestaña" aria-label="Ver «${esc(it.title)}» en su pestaña" onclick="agJump('${it.kind}','${it.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();agJump('${it.kind}','${it.id}')}"`:''}>
       ${btns}
       <div class="agtop"><span class="agwhen">${agWhen(it)}</span><span class="agkind">${k.lbl}</span>${(it.kind==='event'&&it.hrEvery>0)?`<span class="agrep" title="Avisos repetidos">🔁 cada ${it.hrEvery} h · ${it.hrFrom}–${it.hrTo}</span>`:''}${(it.kind==='event'&&it.repeat&&it.repeat!=='none')?`<span class="agrep">${repLabel(it.repeat,it.every)}</span>`:''}${(it.kind==='event'&&it.until&&it.repeat&&it.repeat!=='none')?`<span class="agrep hasta" title="Deja de repetirse el ${it.until}">hasta ${agHasta(it.until)}</span>`:''}${(function(){var _a=(it.kind==='event')?eventLeads(it):[];return _a.length?`<span class="agrep" title="Avisos anticipados">🔔 ${leadsHuman(_a)} antes</span>`:'';})()}</div>
       <div class="agtitle${it.kind==='event'?' ed':''}" ${it.kind==='event'?edAttrs('event',it.id):''}>${esc(it.title)}</div>

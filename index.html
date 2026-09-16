@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v173</title>
+<title>Hábitos v174</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -760,6 +760,8 @@ mark{background:var(--acc);color:#111;border-radius:3px;padding:0 2px}
 /* v59: burbuja de aviso (toast) */
 .toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(8px);z-index:80;background:var(--surface2);border:1px solid var(--line2);border-radius:12px;padding:10px 16px;font-size:0.8125rem;color:var(--text);box-shadow:0 10px 30px var(--shadow);max-width:calc(100vw - 24px);text-align:center;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.tappable{pointer-events:auto;cursor:pointer;border-color:var(--acc);color:var(--text)}
+.toast.tappable:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.toast{transition:opacity .2s}}
 @media (max-width:560px){.toast{left:10px;right:10px;bottom:calc(72px + env(safe-area-inset-bottom));transform:translateY(8px)}.toast.show{transform:translateY(0)}}
 /* Hoy toca */
@@ -1123,7 +1125,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v173</span></h1>
+      <h1>Hábitos <span class="ver">v174</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1211,6 +1213,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v174</b> — El <b>aviso que sale al abrir la app</b> ahora <b>dura 10 s</b> (antes 2,6 s; con mensajes largos no daba tiempo) y es <b>pulsable</b>: al tocarlo te lleva a su sitio de forma inteligente —solo eventos→Agenda, solo tareas→Tareas, solo hábitos→Hábitos, mezcla→Hoy—. Además, <b>arreglo del apilado de notificaciones</b>: cada aviso de evento aparece por separado en «Medio/Individual» (antes se pisaban por compartir etiqueta). <b>Hay que re-subir también sw.js.</b></div>
   <div class="vrow"><b>v173</b> — <b>Recordatorio por plazo</b>: cada plazo puede llevar su propio aviso, con <b>antelación</b> (el día de la entrega / 1 día / 3 días / 1 semana antes) y <b>hora</b>. Se activa en el editor del plazo (apagado por defecto) y muestra un badge 🔔 en la fila. Reutiliza la tubería de avisos del servidor; necesita los avisos 🔔 activados. (Solo cliente.)</div>
   <div class="vrow"><b>v172</b> — <b>Enlace de vuelta plazo ↔ tarea/meta</b>: una tarea o meta con fecha muestra ahora, junto al chip ⏰, un botón <b>«→ Ver plazo»</b> que te lleva a Plazos y resalta ese plazo. (El plazo ya enlazaba a su tarea/meta; ahora funciona en los dos sentidos.) (Solo cliente.)</div>
   <div class="vrow"><b>v171</b> — En <b>Semana</b>, tocar una fila te lleva a su pestaña: Hábitos, Ejercicio, Diario y Tareas; cada <b>barra de hábito</b> salta a ESE hábito y lo resalta; y en «Metas y logros» hay <b>dos zonas</b> (metas→Metas, logros→Logros). (Solo cliente.)</div>
@@ -1394,7 +1397,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v173';
+const APPVER='v174';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1989,12 +1992,25 @@ function srSpeak(t){
   setTimeout(()=>{ el.textContent=t; }, 30);
 }
 let toastTimer=null;
-function showToast(msg){
+function _toastReset(el){ el.classList.remove('show','tappable'); el.onclick=null; el.onkeydown=null; el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-label'); }
+function hideToast(){ const el=document.getElementById('toast'); if(!el) return; clearTimeout(toastTimer); _toastReset(el); }
+function showToast(msg, opts){
+  opts=opts||{};
   const el=document.getElementById('toast'); if(!el) return;
-  el.textContent=msg; el.classList.add('show');
+  const go=opts.go||null, ms=opts.ms||2600;
+  el.textContent = msg + (go?' ›':'');
+  if(go){
+    el.classList.add('tappable'); el.setAttribute('role','button'); el.setAttribute('tabindex','0');
+    el.setAttribute('aria-label', msg+' — toca para ver');
+    el.onclick=function(){ hideToast(); toastGo(go); };
+    el.onkeydown=function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); el.onclick(); } };
+  } else { el.classList.remove('tappable'); el.onclick=null; el.onkeydown=null; el.removeAttribute('role'); el.removeAttribute('tabindex'); el.removeAttribute('aria-label'); }
+  el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'), 2600);
+  toastTimer=setTimeout(()=>_toastReset(el), ms);
 }
+function toastGo(dest){ if(dest==='agenda'){ switchTab('agenda'); renderAgenda(); } else if(dest==='tasks'){ switchTab('tasks'); renderTasks(); } else if(dest==='habits'){ switchTab('habits'); renderHabits(); } else { switchTab('hoy'); renderHoy(); } }
+function smartRemindDest(hasEv, hasTsk, hasHab){ const nk=(hasEv?1:0)+(hasTsk?1:0)+(hasHab?1:0); if(nk===1){ if(hasEv) return 'agenda'; if(hasTsk) return 'tasks'; return 'habits'; } return 'hoy'; }
 function announce(t){ srSpeak(t); showToast(t); }   /* v59: lector de pantalla + burbuja visible */
 
 /* ---------- deshacer ---------- */
@@ -2532,7 +2548,9 @@ function maybeRemind(){ try{
       Object.keys(byDay).map(Number).sort((a,b)=>a-b).forEach(dd=>{ const when=dd===1?'mañana':('en '+dd+' días'); const nm=byDay[dd].slice(0,3).join(', ')+(byDay[dd].length>3?'…':''); chunks.push(when+': '+nm); }); }
     const pend=[]; if(p.habs) pend.push(p.habs+' '+(p.habs===1?'hábito':'hábitos')); if(p.tsk) pend.push(p.tsk+' '+(p.tsk===1?'tarea':'tareas'));
     if(pend.length) chunks.push('te '+((p.habs+p.tsk)>1?'quedan':'queda')+' '+pend.join(' y ')+' por hacer');
-    announce('Recordatorio: '+chunks.join(' · ')+'.');
+    const _msg='Recordatorio: '+chunks.join(' · ')+'.';
+    const _dest=smartRemindDest((evT.length>0||ahead.length>0), p.tsk>0, p.habs>0);
+    srSpeak(_msg); showToast(_msg, {ms:10000, go:_dest});   /* v174: dura 10 s y al tocarlo lleva a su sitio */
   }catch(e){} }
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) maybeRemind(); });
 /* v103: a11y — aria-label automático desde placeholder en inputs/textarea sin nombre accesible */

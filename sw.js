@@ -202,7 +202,11 @@ self.addEventListener('push', function (e) {
     body:  data.body || '',
     icon:  'icon192.png',
     badge: 'favicon32.png',
-    tag:   data.tag || 'habitos',
+    // v174: tag por CONTENIDO+destino en vez de fijo 'habitos'. El tag fijo hacia que
+    // cada notificacion reemplazara a la anterior (solo se veia una). Con un tag
+    // derivado del texto+url, los avisos de distinto texto se APILAN por separado
+    // (Medio/Individual) y el diario (mismo texto) sigue reemplazandose sin duplicar.
+    tag:   data.tag || ('hab:' + (data.url || './') + '|' + (data.body || '')),
     data:  { url: data.url || './' },
     // v154: botón de acción propio en la notificación (además de tocar el cuerpo)
     actions: [{ action: 'open', title: 'Abrir' }]

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v174</title>
+<title>Hábitos v176</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1083,6 +1083,15 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 .newlblbox{display:none;gap:6px;width:100%;margin-top:6px}
 .newlblbox.on{display:flex}
 .newlblbox input{flex:1;min-width:140px}
+/* v175: fila de etiquetas contraída en el alta de Metas/Logros */
+.lbltoggle{display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;min-height:34px;cursor:pointer;transition:.12s}
+.lbltoggle:hover{border-color:var(--line2)}
+.lbltoggle:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.lbltoggle .lblcap{color:var(--muted)}
+.lbltoggle b{font-weight:700}
+.lbltoggle .chev{color:var(--muted);font-size:1rem;line-height:1}
+.lblcapbtn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:0.72rem;padding:0;min-height:34px;display:inline-flex;align-items:center;gap:3px}
+.lblcapbtn:hover{color:var(--text)}
 .lblmgr{margin-top:16px}
 .lmrow{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid var(--line)}
 .lmrow:last-child{border-bottom:none}
@@ -1125,7 +1134,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v174</span></h1>
+      <h1>Hábitos <span class="ver">v176</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1213,6 +1222,8 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v176</b> — En <b>Panorama</b>, la fila de arriba («Todo» + un chip por cada hábito) aparece ahora <b>contraída</b> (una línea «Ver: … ›»), para que el calendario no quede lejos. Al tocarla se despliega la fila completa; se contrae con «Ver ▾» y también al elegir qué ver. (Mismo patrón que las etiquetas de Metas/Logros. Solo cliente.)</div>
+  <div class="vrow"><b>v175</b> — En <b>Metas</b> y <b>Logros</b>, la fila de <b>etiquetas del alta</b> aparece ahora <b>contraída</b> (una línea «🏷️ Etiqueta: … ›»), para que tus metas/logros no queden lejos. Al tocarla se despliega la fila completa como antes; se vuelve a contraer con «Etiqueta ▾» y tras añadir. (Solo cliente.)</div>
   <div class="vrow"><b>v174</b> — El <b>aviso que sale al abrir la app</b> ahora <b>dura 10 s</b> (antes 2,6 s; con mensajes largos no daba tiempo) y es <b>pulsable</b>: al tocarlo te lleva a su sitio de forma inteligente —solo eventos→Agenda, solo tareas→Tareas, solo hábitos→Hábitos, mezcla→Hoy—. Además, <b>arreglo del apilado de notificaciones</b>: cada aviso de evento aparece por separado en «Medio/Individual» (antes se pisaban por compartir etiqueta). <b>Hay que re-subir también sw.js.</b></div>
   <div class="vrow"><b>v173</b> — <b>Recordatorio por plazo</b>: cada plazo puede llevar su propio aviso, con <b>antelación</b> (el día de la entrega / 1 día / 3 días / 1 semana antes) y <b>hora</b>. Se activa en el editor del plazo (apagado por defecto) y muestra un badge 🔔 en la fila. Reutiliza la tubería de avisos del servidor; necesita los avisos 🔔 activados. (Solo cliente.)</div>
   <div class="vrow"><b>v172</b> — <b>Enlace de vuelta plazo ↔ tarea/meta</b>: una tarea o meta con fecha muestra ahora, junto al chip ⏰, un botón <b>«→ Ver plazo»</b> que te lleva a Plazos y resalta ese plazo. (El plazo ya enlazaba a su tarea/meta; ahora funciona en los dos sentidos.) (Solo cliente.)</div>
@@ -1397,7 +1408,7 @@ button.hoy-plz.hoy-go{width:100%;border-radius:9px}
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v174';
+const APPVER='v176';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1509,6 +1520,7 @@ function onSessSearch(v){
 }
 function clearSessSearch(){ sessQuery=''; sessLimit=SESS_PAGE; renderExercise(); }
 let panoHabit = null, panoMode = 'month', panoAll = true;   /* v89: panoAll = píldora «Todas» (todos los hábitos a la vez) */
+let panoChipsOpen=false;   /* v176: fila de hábitos de Panorama contraída por defecto */
 let statWin = 'month';   /* v76: ventana del panel de constancia: 'month' | '4w' */
 let panoY = new Date().getFullYear(), panoM = new Date().getMonth();
 let plzY = new Date().getFullYear(), plzM = new Date().getMonth();
@@ -3178,23 +3190,35 @@ let editGoalScope='general';  /* v169: etiqueta al EDITAR una meta */
 let editLogLabel='general';   /* v169: etiqueta al EDITAR un logro */
 let editLabelFor=null;
 const newLabelOpen={metas:false,logros:false,emeta:false,elog:false};
+let labelChooserOpen={metas:false,logros:false};   /* v175: fila de etiquetas contraída por defecto en el alta */
 const LABEL_GRIS='#A2ABBD';
 function labelById(id){ return (state.labels||[]).find(l=>l.id===id); }
 function lblSelGet(kind){ return kind==='metas'?goalAddScope:kind==='logros'?logAddLabel:kind==='emeta'?editGoalScope:editLogLabel; }
 function lblSelSet(kind,id){ if(kind==='metas')goalAddScope=id; else if(kind==='logros')logAddLabel=id; else if(kind==='emeta')editGoalScope=id; else editLogLabel=id; }
 function lblRerender(kind){ if(kind==='metas'||kind==='emeta') renderGoals(); else renderLogs(); }
+function labelInfoOf(k){ return k==='general'?{name:'General',color:'#8B93A3'}:(habitById(k)?{name:habitById(k).name,color:habitById(k).color}:{name:(labelById(k)?labelById(k).name:'General'),color:LABEL_GRIS}); }
 function labelChooserHtml(kind){
   const sel=lblSelGet(kind);
   const opts=['general', ...state.habits.filter(h=>!h.archived).map(h=>h.id), ...(state.labels||[]).map(l=>l.id)];
   const chips=opts.map(k=>{
     const on=sel===k;
-    const info = k==='general'?{name:'General',color:'#8B93A3'}:(habitById(k)?{name:habitById(k).name,color:habitById(k).color}:{name:(labelById(k)?labelById(k).name:'?'),color:LABEL_GRIS});
+    const info=labelInfoOf(k);
     const st=on?`style="color:${ink(info.color)};border-color:${ink(info.color)};background:${hexRgba(info.color,.12)}"`:'';
     return `<button type="button" class="lchip" aria-pressed="${on}" ${st} onclick="pickAddLabel('${kind}','${k}')">${esc(info.name)}</button>`;
   }).join('');
-  return `<div class="lblrow"><span class="lblcap">Etiqueta:</span>${chips}<button type="button" class="lchip ladd" onclick="toggleNewLabel('${kind}')">＋ Nueva etiqueta</button>
+  const collapsible=(kind==='metas'||kind==='logros');
+  if(collapsible && !labelChooserOpen[kind]){
+    const info=labelInfoOf(sel);
+    return `<div class="lblrow"><button type="button" class="lbltoggle" aria-expanded="false" onclick="openLabelChooser('${kind}')" title="Elegir etiqueta"><span class="lblcap">🏷️ Etiqueta:</span> <b style="color:${ink(info.color)}">${esc(info.name)}</b> <span class="chev" aria-hidden="true">›</span></button></div>`;
+  }
+  const cap = collapsible
+    ? `<button type="button" class="lblcapbtn" onclick="closeLabelChooser('${kind}')" title="Contraer etiquetas" aria-expanded="true">Etiqueta ▾</button>`
+    : `<span class="lblcap">Etiqueta:</span>`;
+  return `<div class="lblrow">${cap}${chips}<button type="button" class="lchip ladd" onclick="toggleNewLabel('${kind}')">＋ Nueva etiqueta</button>
     <div class="newlblbox ${newLabelOpen[kind]?'on':''}"><input type="text" id="nlbl_${kind}" placeholder="Ej: Trabajo, Personal…" maxlength="24" onkeydown="if(event.key==='Enter')createLabel('${kind}')"><button type="button" class="mini" onclick="createLabel('${kind}')">Crear</button></div></div>`;
 }
+function openLabelChooser(kind){ labelChooserOpen[kind]=true; lblRerender(kind); }
+function closeLabelChooser(kind){ labelChooserOpen[kind]=false; newLabelOpen[kind]=false; lblRerender(kind); }
 function pickAddLabel(kind,id){ lblSelSet(kind,id); lblRerender(kind); }
 function toggleNewLabel(kind){ newLabelOpen[kind]=!newLabelOpen[kind]; lblRerender(kind); const i=document.getElementById('nlbl_'+kind); if(i) i.focus(); }
 function createLabel(kind){
@@ -3381,6 +3405,7 @@ function addGoal(){
   const text=inp.value.trim(); if(!text) return;
   const nid='g_'+Date.now();
   state.goals.push({id:nid, text, done:false, scope:(goalAddScope||'general'), steps:[]});
+  labelChooserOpen.metas=false;   /* v175: se re-contrae tras añadir */
   animarProxima('grow:'+nid, 'an-in');
   renderGoals(); aplicarAnimHint(); persist();
   const n=document.getElementById('newGoal'); if(n) n.focus();
@@ -4710,7 +4735,9 @@ function panoAllYear(){
     <div class="statline">${pct}% de los hábitos que tocaban, cumplidos al día (media del año hasta hoy)</div>
   </div>`;
 }
-function setPanoAll(){ panoAll=true; panoSelDay=null; renderPano(); }
+function setPanoAll(){ panoAll=true; panoSelDay=null; panoChipsOpen=false; renderPano(); }
+function panoOpenChips(){ panoChipsOpen=true; renderPano(); }
+function panoCloseChips(){ panoChipsOpen=false; renderPano(); }
 function renderPano(){
   const el = document.getElementById('viewPano');
   if(!state.habits.length){ el.innerHTML = `<div class="card"><div class="empty">Añade hábitos primero en la pestaña Hábitos.</div></div>`; return; }
@@ -4799,7 +4826,11 @@ function renderPano(){
     </div>`;
   }
 
-  el.innerHTML = `<div class="hchips">${chips}</div>${modes}${body}`;
+  const panoCur = panoAll ? {name:'Todo', color:TABMETA.pano.c} : {name:h.name, color:h.color};
+  const chipsBlock = panoChipsOpen
+    ? `<div class="hchips"><button type="button" class="lblcapbtn" onclick="panoCloseChips()" title="Contraer" aria-expanded="true">Ver ▾</button>${chips}</div>`
+    : `<div class="hchips"><button type="button" class="lbltoggle" aria-expanded="false" onclick="panoOpenChips()" title="Elegir qué ver"><span class="lblcap">Ver:</span> <b style="color:${ink(panoCur.color)}">${esc(panoCur.name)}</b> <span class="chev" aria-hidden="true">›</span></button></div>`;
+  el.innerHTML = `${chipsBlock}${modes}${body}`;
 }
 function startLogEdit(id){ editLogFor=id; const l=state.logs.find(x=>x.id===id); editLogLabel=(l&&l.habit)||'general'; refresh('pano','logs'); const i=document.getElementById('lte_'+id); if(i){ i.focus(); i.select(); } }
 function cancelLogEdit(){ editLogFor=null; refresh('pano','logs'); }
@@ -4819,7 +4850,7 @@ function delLog(id){
   refresh('pano','logs'); persist();
   offerUndo('Logro eliminado', before);
 }
-function setPanoHabit(id){ panoAll=false; panoHabit=id; panoSelDay=null; renderPano(); }
+function setPanoHabit(id){ panoAll=false; panoHabit=id; panoSelDay=null; panoChipsOpen=false; renderPano(); }
 function setPanoMode(m){ panoMode=m; panoSelDay=null; renderPano(); }
 function movePanoMonth(dir){
   panoM += dir;
@@ -5016,6 +5047,7 @@ function addLogFromTab(){
   const d=document.getElementById('nl_date'), t=document.getElementById('nl_text');
   const text=(t?t.value:'').trim(); if(!text) return;
   state.logs.unshift({id:'l_'+Date.now(), habit:(logAddLabel||'general'), date:(d&&d.value)?d.value:iso(new Date()), text});
+  labelChooserOpen.logros=false;   /* v175: se re-contrae tras añadir */
   refresh('logs','pano'); persist();
   announce('Logro apuntado: '+text);
   const t2=document.getElementById('nl_text'); if(t2){ t2.value=''; t2.focus(); }

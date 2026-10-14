@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Hábitos">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: https://tyfqmnfcmbljfginqebc.supabase.co; worker-src 'self'; manifest-src 'self' blob: data:; base-uri 'self'; form-action 'none'">
-<title>Hábitos v178</title>
+<title>Hábitos v180</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1143,6 +1143,13 @@ input[type=date]::-webkit-calendar-picker-indicator{
 :root[data-effmode="light"] input[type=time]::-webkit-calendar-picker-indicator{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B4771B' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.2v5l3.2 2'/%3E%3C/svg%3E")}
 :root[data-effmode="dark"] input[type=date]::-webkit-calendar-picker-indicator{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F0A84B' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2.5'/%3E%3Cpath d='M8 3v4M16 3v4M3 10.5h18'/%3E%3C/svg%3E")}
 :root[data-effmode="light"] input[type=date]::-webkit-calendar-picker-indicator{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23B4771B' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2.5'/%3E%3Cpath d='M8 3v4M16 3v4M3 10.5h18'/%3E%3C/svg%3E")}
+/* v180 — el icono del calendario, pegado a la fecha ------------------------
+   El campo de fecha se dibujaba mas ancho de lo que pide su texto y Chrome
+   mandaba el icono al borde derecho, lejos del numero; el de la hora no tiene
+   ese hueco. Ancho fijo en em para que siga a la escala de texto de Ajustes.
+   Medido con 14/10/2026 en las 4 escalas y en movil y escritorio: el caso mas
+   apretado deja 4 px de margen, asi que no se corta. */
+.agadd input[type="date"],.ageditrow input[type="date"]{width:9.4em}
 </style>
 </head>
 <body>
@@ -1153,7 +1160,7 @@ input[type=date]::-webkit-calendar-picker-indicator{
   <div class="hdrtop">
     <div class="hdrleft">
       <div class="kicker">Diario interactivo</div>
-      <h1>Hábitos <span class="ver">v178</span></h1>
+      <h1>Hábitos <span class="ver">v180</span></h1>
     </div>
   </div>
   <div class="sub" id="subFrase">Aparecer ya cuenta.</div>
@@ -1241,6 +1248,8 @@ input[type=date]::-webkit-calendar-picker-indicator{
 </details>
 <details class="verbox">
   <summary>Registro de versiones</summary>
+  <div class="vrow"><b>v180</b> — En Agenda, <b>el icono del calendario se pega a la fecha</b>, a la misma distancia que el reloj de la hora. El campo se estrecha a la medida de su texto, y como va en «em» se ajusta solo si cambias el tamaño de letra en ⚙️ Ajustes. (Solo cliente.)</div>
+  <div class="vrow"><b>v179</b> — <b>El aviso de los eventos del día tiene hora propia.</b> Antes se colgaba de la hora del recordatorio diario, así que no podías separarlos, y solo cubría los eventos sin hora. Ahora, en 🔔 arriba del todo, hay un interruptor con su hora: a esa hora te llega un aviso con los eventos de ese día, tengan hora propia o no. Viene apagado; enciéndelo cuando quieras. (Solo cliente.)</div>
   <div class="vrow"><b>v178</b> — <b>Apagar el aviso de un hábito o de un plazo ahora lo apaga de verdad.</b> Antes la app no llegaba a borrar del servidor el aviso ya programado, así que seguía sonando aunque el interruptor estuviera apagado. Además, al abrir esta versión se limpian una sola vez los avisos que quedaron sueltos de antes. (Solo cliente.)</div>
   <div class="vrow"><b>v177</b> — <b>El iconito que abre el reloj y el calendario ahora se ve</b>: estaba dibujado en oscuro sobre fondo oscuro en los 28 campos de hora y fecha. Pasa a ámbar y a 18 px, y el reloj que abre el navegador sale oscuro con el tema oscuro. Además, <b>la hora del recordatorio diario y la del resumen del domingo se pueden editar siempre</b>, con el aviso encendido o apagado: el interruptor solo decide si suena. (Solo cliente.)</div>
   <div class="vrow"><b>v176</b> — En <b>Panorama</b>, la fila de arriba («Todo» + un chip por cada hábito) aparece ahora <b>contraída</b> (una línea «Ver: … ›»), para que el calendario no quede lejos. Al tocarla se despliega la fila completa; se contrae con «Ver ▾» y también al elegir qué ver. (Mismo patrón que las etiquetas de Metas/Logros. Solo cliente.)</div>
@@ -1429,7 +1438,7 @@ input[type=date]::-webkit-calendar-picker-indicator{
    Regla de oro: nunca reordenar lo existente; lo nuevo al final.
    Rendimiento: repintar PRIMERO, guardar DESPUÉS en segundo plano.
 ========================================================== */
-const APPVER='v178';
+const APPVER='v180';
 const KEY = 'diario_habitos_v1';
 const THEME_KEY = 'diario_habitos_theme_v1';
 
@@ -1816,7 +1825,8 @@ function renderNotifPop(){
   if(!el || el.classList.contains('hidden')) return;
   const rem=reminderCfg();
   el.innerHTML = `
-    <div class="thlab">Recordatorio diario</div>
+    ${evDayUI()}
+    <div class="thlab" style="margin-top:12px">Recordatorio diario</div>
     <div class="nrow"><span class="ntxt">Recordatorio diario</span><span style="display:flex;align-items:center;gap:8px"><input type="time" value="${rem.time}" onchange="setReminderTime(this.value)" aria-label="Hora del recordatorio" style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">${pushSwitch(rem.on, "toggleReminder()", 'Recordatorio diario')}</span></div>
     <div class="hint">Al abrir la app pasada esa hora, te recuerda tus hábitos y tareas pendientes y los eventos que tengas hoy. (No suena con la app cerrada.)</div>
     ${pushSettingUI()}
@@ -2286,11 +2296,16 @@ async function syncServerEventReminders(){
     const endIso=iso(new Date(now.getFullYear(),now.getMonth(),now.getDate()+EV_HORIZON,0,0,0,0));
     const scanEndIso=iso(new Date(now.getFullYear(),now.getMonth(),now.getDate()+EV_HORIZON+21,0,0,0,0));   /* pre-alarmas: hasta ~4 semanas */
     const digest={};   /* Resumen: por día -> {f, titles:[], prox} */
+    /* v179: resumen del día a hora propia, con TODOS los eventos de ese día */
+    const _evd=evDayCfg(); const _evdm=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(_evd.time||'');
+    const evdOn=!!(_evd.on && _evdm); const evdig={};
     state.events.forEach(e=>{
       const title=(e.title||'').trim(); if(!title) return;
       const hm=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(e.time||'');
       eventOccurrencesInRange(e, todayIso, scanEndIso).forEach(dIso=>{
         const [oy,om,od]=dIso.split('-').map(Number); const ymdD=''+oy+pad(om)+pad(od);
+        /* v179: entra en el resumen del día TODO lo de ese día (con hora, sin hora y por franja) */
+        if(evdOn && dIso<=endIso) (evdig[ymdD]=evdig[ymdD]||[]).push(title);
         const _HR=eventHourly(e);
         if(_HR.every>0){ if(dIso<=endIso){ hourlySlots(_HR.from,_HR.to,_HR.every).forEach(function(slot){ const sm=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(slot); if(!sm) return; const f=new Date(oy,om-1,od,+sm[1],+sm[2],0,0); if(f.getTime()>now.getTime()) rows.push({id:'evhr-'+uid+'-'+e.id+'-'+ymdD+'-'+sm[1]+sm[2], user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:title+' · '+slot, url:URL_}); }); } return; }
         /* PRE-ALARMA (antelación): hora del evento − X (todo el día -> 00:00). Puede ir más allá de 7 días. */
@@ -2302,7 +2317,7 @@ async function syncServerEventReminders(){
           if(f.getTime()>now.getTime()) rows.push({id:'evtime-'+uid+'-'+e.id+'-'+ymdD, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos', body:title+' · hoy '+e.time, url:URL_});
           return;
         }
-        if(!avisos) return;
+        if(!avisos || evdOn) return;   /* v179: con el aviso del día encendido, lo da el resumen nuevo */
         const f=new Date(oy,om-1,od,avisos.getHours(),avisos.getMinutes(),0,0);
         if(f.getTime()<=now.getTime()) return;
         if(mode==='res'){ (digest[ymdD]=digest[ymdD]||{f:f, titles:[]}).titles.push(title); }
@@ -2312,6 +2327,17 @@ async function syncServerEventReminders(){
     /* Resumen: un digest "Hoy: …" por día (la antelación va como pre-alarma propia, evpre). */
     if(mode==='res'){
       Object.keys(digest).forEach(k=>{ const dg=digest[k]; const hoyPart=dg.titles.length?('Hoy: '+dg.titles.slice(0,6).join(', ')+(dg.titles.length>6?'…':'')):''; if(hoyPart) rows.push({id:'evsum-'+uid+'-'+k, user_id:uid, fire_at:dg.f.toISOString(), title:'Diario de Hábitos', body:hoyPart, url:URL_}); });
+    }
+    /* v179: una fila por día con eventos, a la hora elegida */
+    if(evdOn){
+      Object.keys(evdig).forEach(function(k){
+        const yy=+k.slice(0,4), mm=+k.slice(4,6), dd=+k.slice(6,8);
+        const f=new Date(yy,mm-1,dd,+_evdm[1],+_evdm[2],0,0);
+        if(f.getTime()<=now.getTime()) return;
+        const ts=evdig[k]; if(!ts.length) return;
+        rows.push({id:'evtoday-'+uid+'-'+k, user_id:uid, fire_at:f.toISOString(), title:'Diario de Hábitos',
+                   body:'Hoy: '+ts.slice(0,6).join(', ')+(ts.length>6?'…':''), url:URL_});
+      });
     }
     if(dndCfg().on) rows.forEach(r=>{ if(/^ev(time|hr)-/.test(r.id)) return; const ff=new Date(r.fire_at); if(inQuietHours(ff)) r.fire_at=dndShift(ff).toISOString(); });   // v131: horas de silencio (los de hora propia se respetan)
     if(rows.length) await api('/rest/v1/reminders?on_conflict=id', {method:'POST', headers:{'Prefer':'resolution=merge-duplicates,return=minimal'}, body:rows});
@@ -2495,6 +2521,24 @@ const VAPID_PUBLIC='BK-tM0X_xU8y2LTf2az0bCmsKKkS6wSVvU16dFiaPiWN87pLZU4M1eAVi6kv
 function urlB64ToU8(b){ const pad='='.repeat((4-b.length%4)%4); const s=(b+pad).replace(/-/g,'+').replace(/_/g,'/'); const raw=atob(s); const a=new Uint8Array(raw.length); for(let i=0;i<raw.length;i++)a[i]=raw.charCodeAt(i); return a; }
 function pushSupported(){ return ('serviceWorker' in navigator) && (typeof PushManager!=='undefined') && (typeof Notification!=='undefined'); }
 function pushCfg(){ if(!state.ui)state.ui={}; if(!state.ui.push)state.ui.push={on:false,endpoint:''}; return state.ui.push; }
+/* v179 — AVISO DE LOS EVENTOS DEL DIA, con hora propia.
+   Hasta la v178 este aviso se colgaba de la hora del recordatorio diario y solo
+   cubria los eventos SIN hora. Ahora tiene interruptor y hora propios, y cubre
+   TODOS los eventos de ese dia (alcance elegido por Leandro). */
+function evDayCfg(){ if(!state.ui)state.ui={}; if(!state.ui.evDay)state.ui.evDay={on:false,time:'09:00'};
+  if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(state.ui.evDay.time)) state.ui.evDay.time='09:00'; return state.ui.evDay; }
+function toggleEvDay(){ const c=evDayCfg(); c.on=!c.on; renderNotifPop(); persist();
+  announce(c.on?('Aviso de los eventos del dia a las '+c.time+'.'):'Aviso de los eventos del dia desactivado.');
+  try{ syncServerEventReminders(); }catch(e){} }
+function setEvDayTime(v){ const c=evDayCfg(); if(/^([01]\d|2[0-3]):[0-5]\d$/.test(v)){ c.time=v; persist(); renderNotifPop(); try{ syncServerEventReminders(); }catch(e){} } }
+function evDayUI(){ const c=evDayCfg();
+  return '<div class="thlab">Aviso del evento del d\u00eda</div>'
+    /* el texto de la fila va corto: la cabecera de arriba ya dice el nombre largo,
+       y «Aviso del evento del día» se parte en tres líneas a 360 px */
+    +'<div class="nrow"><span class="ntxt">Eventos del d\u00eda</span><span style="display:flex;align-items:center;gap:8px">'
+    +'<input type="time" value="'+c.time+'" onchange="setEvDayTime(this.value)" aria-label="Hora del aviso de los eventos del d\u00eda" style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:5px 8px;font-size:0.8125rem">'
+    +pushSwitch(c.on,'toggleEvDay()','Aviso del evento del d\u00eda')+'</span></div>'
+    +'<div class="hint">A esa hora te llega un aviso con los eventos que tengas ese d\u00eda, tengan hora propia o no. Los que tienen hora propia adem\u00e1s suenan a su hora. Necesita los avisos de la Agenda activados (m\u00e1s abajo).</div>'; }
 function eventPushCfg(){ if(!state.ui)state.ui={}; if(!state.ui.eventPush)state.ui.eventPush={on:false,mode:'med'}; if(!state.ui.eventPush.mode)state.ui.eventPush.mode='med'; return state.ui.eventPush; }
 function pushState(){
   if(!(typeof CLOUD!=='undefined' && CLOUD && CLOUD.session)) return 'nocloud';
